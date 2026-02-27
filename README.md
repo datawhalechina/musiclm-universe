@@ -33,8 +33,8 @@
 
 [**第 3 章 Music Transformer**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/notebook) *@田佳铭*
 
-- [Model Training 模型训练](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c3_1_MusicTransformer_Training.ipynb)
-- [Music Generation 音乐生成](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c3_2_MusicTransformer_Generation.ipynb)
+- [3.1 Model Training 模型训练](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c3_1_MusicTransformer_Training.ipynb)
+- [3.2 Music Generation 音乐生成](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c3_2_MusicTransformer_Generation.ipynb)
 
 ### **二、Music 生成基础知识文档部分**
 
@@ -52,15 +52,10 @@
 - [6.1 Diffrhythm2 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/DiffRhythm2_Setup_and_Usage.md)
 - [6.2 Diffrhythm2 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/DiffRhythm2_Codebase_Analysis.md)
   
-[**第 7 章 Dual-track LM** 音乐生成模型 **- SongGeneration**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/SongGeneration) *@* 
-
-- 7.1 SongGeneration 部署及使用
-- 7.2 SongGeneration 开源代码分析
-  
-[**第 8 章 Transformer & Diffusion** 音乐生成模型 **- ACE-Step**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/ACE-Step) *@田佳铭*
+[**第 7 章 Transformer & Diffusion** 音乐生成模型 **- ACE-Step**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/ACE-Step) *@田佳铭*
 
 - [8.1 ACE-Step 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Setup_and_Usage.md)
-- 8.2 ACE-Step 开源代码分析
+- [8.2 ACE-Step 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Codebase_Analysis.md)
 
 
 ## 参与贡献
