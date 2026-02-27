@@ -59,7 +59,7 @@
   
 [**第 8 章 Transformer & Diffusion** 音乐生成模型 **- ACE-Step**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/ACE-Step) *@田佳铭*
 
-- [8.1 ACE-Step 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step%20%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B.md)
+- [8.1 ACE-Step 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Setup_and_Usage.md)
 - 8.2 ACE-Step 开源代码分析
 
 
