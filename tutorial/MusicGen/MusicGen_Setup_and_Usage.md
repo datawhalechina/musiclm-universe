@@ -1,4 +1,4 @@
-# 第5章 主流音乐大模型介绍与调用
+# 第5章 Transformer 音乐大模型介绍与调用
 
 ## 5.1 MusicGen 部署及使用
 
@@ -100,5 +100,6 @@ wavfile.write("musicgen_out.wav", rate=sampling_rate, data=audio_values.numpy())
 ```
 
 ---
+
 
 
