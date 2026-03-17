@@ -1,4 +1,4 @@
-# musiclm-universe | 音乐生成大模型原理与实践教程
+# musiclm-universe | 音乐生成模型原理、项目实战与优化框架
 
 ## 项目简介
 **musiclm-universe** 是一个系统化讲解 **音乐生成语言模型（Music Language Model, MusicLM）** 的开源教程项目。
