@@ -1,4 +1,4 @@
-# musiclm-universe | 音乐生成模型原理、项目实战与优化框架
+## **musiclm-universe** | 音乐生成模型原理、项目实战与优化框架
 
 ###  项目简介
 **musiclm-universe** 是一个系统化讲解 **音乐生成语言模型（Music Language Model, MusicLM）** 的开源教程项目。
@@ -43,7 +43,7 @@
 | [第四章 **Transformer** 架构模型应用 **- MusicGen**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/MusicGen)                 | [**5.1 MusicGen** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/MusicGen/MusicGen_Setup_and_Usage.md) <br> [**5.2 MusicGen** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/MusicGen/MusicGen_Codebase_Analysis.md)  | ✅    | 
 | [第五章 **Diffusion** 架构模型应用 **- Diffrhythm2**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/Diffrhythm2) | [**6.1 Diffrhythm2** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/DiffRhythm2_Setup_and_Usage.md) <br> [**6.2 Diffrhythm2** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/DiffRhythm2_Codebase_Analysis.md)   | ✅    |
 | [第六章 **Transformer & Diffusion** 架构模型应用 **- ACE-Step**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/ACE-Step)                             | [**7.1 ACE-Step** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Setup_and_Usage.md) <br> [**7.2 ACE-Step 1.5** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Codebase_Analysis.md) | ✅    |
-| <strong>第三部分：音乐生成优化框架构建：MusicGen（SFT）+ DPO + Reasoning </strong>                                                     |              |
+| <strong>第三部分：音乐生成优化框架构建：<br> **MusicGen（SFT）+ DPO + Reasoning** </strong>                                                     |              |
 | [第七章 **SFT：** 分布对齐](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/notebook)                                 | 高质量的文本-音频对微调 MusicGen                            | 进行中  |
 | [第八章 **DPO：** 偏好优化](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/notebook)                                | 构建偏好对，优化模型生成                         |  进行中  |
 | [第九章 **Reasoning**（可选）](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/notebook)                       | “生成前推理”机制，使模型具备音乐结构规划能力                      |  进行中   |
