@@ -1,8 +1,7 @@
-# MusicLM-Universe | 音乐生成大模型原理与实践教程
+# musiclm-universe | 音乐生成大模型原理与实践教程
 
 ## 项目简介
-
-**MusicLM-Universe** 是一个系统化讲解 **音乐生成大模型（Music Language Model, MusicLM）** 的开源教程项目。
+**musiclm-universe** 是一个系统化讲解 **音乐生成语言模型（Music Language Model, MusicLM）** 的开源教程项目。
 
 随着大语言模型的发展，音乐生成模型正从 MIDI 建模走向端到端纯音频生成，形成 Transformer、Diffusion、Hybrid 等多种技术路线。
 
@@ -16,6 +15,14 @@
 
 通过 Notebook 实现，文档讲解和开源模型源码分析，我们希望帮助读者建立音乐大模型如何被构建的完整技术流程。
 
+同时，本项目基于 Meta 的 MusicGen，构建了一个结合 SFT（Supervised Fine-Tuning） 与 DPO（Direct Preference Optimization） 的音乐生成优化框架，旨在提升：
+
+- 指令遵循能力（Instruction Following）
+- 音频质量与审美（Audio Quality & Aesthetics）
+- 生成前规划能力（Optional: Reasoning）
+
+该方法受到 “统一音频语言模型（UALM）” 思路启发，采用更轻量、可复现的工程路径，在中等规模数据下实现显著提升。
+
 
 ## 项目受众
 
@@ -25,38 +32,44 @@
 
 ## 目录
 
-### **一、MusicLM 完整实现流程 Notebook 部分** 
+| 章节                                                                                        | 分级内容                                      | 状态 |
+| ------------------------------------------------------------------------------------------- | --------------------------------------------- | ---- |
+| [引言：音乐生成模型基础知识](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/docs)   |                     | ✅    |
+| <strong>第一部分：音乐生成模型完整实现流程 Notebook 演示</strong>                                                                                            |
+| [第一章 **Music Representations** 音乐数据表示](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c1_Music_Representations.ipynb)    |     | ✅    |
+| [第二章 **Audio Tokenizer**](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c2_Audio_Tokenizer_Encodec.ipynb)                             | Encodec             | ✅    |
+| [第三章 **Music Transformer**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/notebook) | [**3.1 Model Training** 模型训练](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c3_1_MusicTransformer_Training.ipynb) <br>[**3.2 Music Generation** 音乐生成](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c3_2_MusicTransformer_Generation.ipynb)         | ✅    |
+| <strong>第二部分：开源音乐生成模型部署实践与代码分析</strong>                                         |                                               |      |
+| [第四章 **Transformer** 架构模型应用 **- MusicGen**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/MusicGen)                 | [**5.1 MusicGen** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/MusicGen/MusicGen_Setup_and_Usage.md) <br> [**5.2 MusicGen** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/MusicGen/MusicGen_Codebase_Analysis.md)  | ✅    | 
+| [第五章 **Diffusion** 架构模型应用 **- Diffrhythm2**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/Diffrhythm2) | [**6.1 Diffrhythm2** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/DiffRhythm2_Setup_and_Usage.md) <br> [**6.2 Diffrhythm2** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/DiffRhythm2_Codebase_Analysis.md)   | ✅    |
+| [第六章 **Transformer & Diffusion** 架构模型应用 **- ACE-Step**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/ACE-Step)                             | [**7.1 ACE-Step** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Setup_and_Usage.md) <br> [**7.2 ACE-Step 1.5** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Codebase_Analysis.md) | ✅    |
+| <strong>第三部分：音乐生成优化框架构建：MusicGen（SFT）+ DPO + Reasoning </strong>                                                     |              |
+| [第七章 **SFT：** 分布对齐](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/notebook)                                 | 高质量的文本-音频对微调 MusicGen                            | 进行中  |
+| [第八章 **DPO：** 偏好优化](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/notebook)                                | 构建偏好对，优化模型生成                         |  进行中  |
+| [第九章 **Reasoning**（可选）](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/notebook)                       | “生成前推理”机制，使模型具备音乐结构规划能力                      |  进行中   |
+| [第十章 评估](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/notebook)                    | 核心指标、基准测试与评估框架                  |  进行中   |
 
-[**第 1 章 Music Representations** 音乐数据表示](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c1_Music_Representations.ipynb) *@田佳铭*
-  
-[**第 2 章 Audio Tokenizer**](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c2_Audio_Tokenizer_Encodec.ipynb) *@田佳铭*
+### MusicGen-DPO 音乐生成优化框架构建：MusicGen（SFT）+ DPO + Reasoning 偏好优化提升音乐生成
 
-[**第 3 章 Music Transformer**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/notebook) *@田佳铭*
+**项目核心方法：**
 
-- [**3.1 Model Training** 模型训练](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c3_1_MusicTransformer_Training.ipynb)
-- [**3.2 Music Generation** 音乐生成](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c3_2_MusicTransformer_Generation.ipynb)
+整个系统由三阶段组成：
 
-### **二、Music 生成基础知识文档部分**
+1、SFT：分布对齐（Supervised Fine-Tuning）
 
-[**第 4 章** 音乐生成大模型基础知识](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/docs) *@王泊轩* 
+使用高质量的文本-音频对（Rich Caption）对 MusicGen 进行微调，使模型适应目标数据分布。
 
-### **三、开源音乐生成大模型部署使用及代码分析**
+2、DPO：偏好优化（Preference Optimization）
 
-[**第 5 章 Transformer** 音乐生成模型 **- MusicGen**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/MusicGen) *@林睿哲*
-  
-- [**5.1 MusicGen** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/MusicGen/MusicGen_Setup_and_Usage.md)
-- [**5.2 MusicGen** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/MusicGen/MusicGen_Codebase_Analysis.md)
-  
-[**第 6 章 Diffusion** 音乐生成模型 **- Diffrhythm2**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/Diffrhythm2) *@刘秋杰*
+通过构建 (prompt, chosen, rejected) 偏好对，优化模型生成更符合文本语义（CLAP）、更符合人类审美（Aesthetic）
 
-- [**6.1 Diffrhythm2** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/DiffRhythm2_Setup_and_Usage.md)
-- [**6.2 Diffrhythm2** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/DiffRhythm2_Codebase_Analysis.md)
-  
-[**第 7 章 Transformer & Diffusion** 音乐生成模型 **- ACE-Step**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/ACE-Step) *@田佳铭*
+并引入 Adaptation 阶段（解决分布偏移）和 CE 正则（稳定训练）
 
-- [**7.1 ACE-Step** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Setup_and_Usage.md)
-- [**7.2 ACE-Step 1.5** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Codebase_Analysis.md)
+3、Reasoning（可选）
 
+引入“生成前推理”机制，使模型具备音乐结构规划能力和更强 controllability。
+
+该方法受到 “统一音频语言模型（UALM）” 思路启发，采用更轻量、可复现的工程路径，在中等规模数据下实现显著提升。
 
 ## 参与贡献
 
