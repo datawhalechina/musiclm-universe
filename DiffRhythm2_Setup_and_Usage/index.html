@@ -1,0 +1,1969 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://datawhalechina.github.io/musiclm-universe/DiffRhythm2_Setup_and_Usage/">
+      
+      
+        <link rel="prev" href="../MusicGen_Codebase_Analysis/">
+      
+      
+        <link rel="next" href="../DiffRhythm2_Codebase_Analysis/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>5.1 Diffrhythm2 部署及使用 - MusicLM Universe</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../overrides/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="deeporange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#diffrhythm2_minimal_demo" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="MusicLM Universe" class="md-header__button md-logo" aria-label="MusicLM Universe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MusicLM Universe
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5.1 Diffrhythm2 部署及使用
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="MusicLM Universe" class="md-nav__button md-logo" aria-label="MusicLM Universe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MusicLM Universe
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一部分：音乐生成模型完整实现流程 Notebook 演示
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第一部分：音乐生成模型完整实现流程 Notebook 演示
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Music_Representations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 Music Representations 音乐数据表示
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio Tokenizer.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 Audio Tokenizer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 Music Transformer
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第三章 Music Transformer
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Model Training.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Model Training 模型训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Music Generation.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.2 Music Generation 音乐生成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二部分：开源音乐生成模型部署实践与代码分析
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第二部分：开源音乐生成模型部署实践与代码分析
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 Transformer 架构模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第四章 Transformer 架构模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MusicGen_Setup_and_Usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 MusicGen 部署及使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MusicGen_Codebase_Analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.2 MusicGen 开源代码分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 Diffusion 架构模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第五章 Diffusion 架构模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Diffrhythm2 部署及使用
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Diffrhythm2 部署及使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        快速开始
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="快速开始">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 确保环境准备就绪
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 运行最小化 Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 查看结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何自定义生成？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="如何自定义生成？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修改歌词
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修改音乐风格
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修改输出设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        时间控制说明
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="时间控制说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        为什么生成的歌曲时间相似？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        理论时间控制公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何控制生成时长？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实际应用示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vs-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        对比：完整框架 vs 最小化 Demo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        技术要点（如果你想理解代码）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="技术要点（如果你想理解代码）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心流程（5个步骤）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键技术
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常见问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-unknown-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q: 运行时报错 "Unknown language"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q: 生成时间太长
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q: 生成的音乐质量不好
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q: 想生成中文歌曲
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q: 可以用自己的风格音频吗？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何进一步简化？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何扩展功能？
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DiffRhythm2_Codebase_Analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Diffrhythm2 开源代码分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 混合架构模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第六章 混合架构模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ACE-Step_Setup_and_Usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 ACE-Step 部署及使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ACE-Step_Codebase_Analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.2 ACE-Step 1.5 开源代码分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../framework.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三部分：音乐生成优化框架构建 MusicGen（SFT）+ DPO + Reasoning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        快速开始
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="快速开始">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 确保环境准备就绪
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 运行最小化 Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 查看结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何自定义生成？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="如何自定义生成？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修改歌词
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修改音乐风格
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修改输出设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        时间控制说明
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="时间控制说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        为什么生成的歌曲时间相似？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        理论时间控制公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何控制生成时长？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实际应用示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vs-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        对比：完整框架 vs 最小化 Demo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        技术要点（如果你想理解代码）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="技术要点（如果你想理解代码）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心流程（5个步骤）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键技术
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常见问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q-unknown-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q: 运行时报错 "Unknown language"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q: 生成时间太长
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q: 生成的音乐质量不好
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q: 想生成中文歌曲
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q: 可以用自己的风格音频吗？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何进一步简化？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何扩展功能？
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="diffrhythm2_minimal_demo">DiffRhythm2_minimal_Demo 使用指南</h1>
+<p><code>minimal_demo.py</code> 是从 DiffRhythm2 完整框架中提取的核心功能演示脚本。<strong>只保留生成音乐所必需的最少代码</strong>，去掉所有复杂性，让你能快速理解和使用 AI 音乐生成功能。</p>
+<p>与完整框架相比：</p>
+<ul>
+<li><strong>代码量</strong>: 500行 vs 2000+行（多个文件）</li>
+<li><strong>文件数</strong>: 1个 vs 50+个</li>
+<li><strong>依赖</strong>: 相同（但理解更容易）</li>
+<li><strong>功能</strong>: 保留核心功能，去掉批处理和高级选项</li>
+</ul>
+<h2 id="_1">快速开始</h2>
+<h3 id="1">1. 确保环境准备就绪</h3>
+<pre><code class="language-bash"># 检查 Python 版本
+python --version  # 需要 3.10+
+
+# 检查 GPU 是否可用
+cd diffrhythm2
+python -c &quot;import torch; print(f'CUDA 可用: {torch.cuda.is_available()}')&quot;
+</code></pre>
+<p><strong>如果没有正确配置环境</strong>，请参考 <code>DiffRhythm2_部署问题解决记录.md</code> </p>
+<p><a href="https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/Diffrhythm2%E9%83%A8%E7%BD%B2%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E8%AE%B0%E5%BD%95.md">DiffRhythm2 部署问题解决记录</a></p>
+<p>或运行：</p>
+<pre><code class="language-bash"># 安装核心依赖
+pip install torch==2.3.1+cu121 torchaudio==2.3.1+cu121 --index-url https://download.pytorch.org/whl/cu121
+pip install transformers==4.47.1 numpy==1.26.0
+pip install muq safetensors huggingface_hub pedalboard
+
+# 安装音频处理依赖
+pip install phonemizer jieba cn2an pypinyin
+
+# Windows 用户还需要安装 eSpeak NG:
+# 下载: https://github.com/espeak-ng/espeak-ng/releases
+</code></pre>
+<h3 id="2-demo">2. 运行最小化 Demo</h3>
+<pre><code class="language-bash">cd diffrhythm2
+python minimal_demo.py
+</code></pre>
+<p><strong>第一次运行会自动下载模型</strong>（约 4.8GB，需要等待）。</p>
+<h3 id="3">3. 查看结果</h3>
+<p>生成的音乐保存在：</p>
+<pre><code>./results/demo/my_song.mp3
+</code></pre>
+<h2 id="_2">如何自定义生成？</h2>
+<p>编辑 <code>minimal_demo.py</code> 开头的配置区域：</p>
+<h3 id="_3">修改歌词</h3>
+<p>找到 <code>LYRICS</code> 变量：</p>
+<pre><code class="language-python">LYRICS = &quot;&quot;&quot;[start]
+[intro]
+[verse]
+你的歌词第一行
+你的歌词第二行
+[chorus]
+副歌部分的歌词
+[outro]
+&quot;&quot;&quot;
+</code></pre>
+<p><strong>歌词格式说明</strong>：</p>
+<ul>
+<li>每行一句歌词</li>
+<li>结构标签（可选）：<code>[intro]</code>, <code>[verse]</code>, <code>[chorus]</code>, <code>[bridge]</code>, <code>[outro]</code></li>
+<li>空行会被自动忽略</li>
+<li>支持英文和中文混输</li>
+</ul>
+<h3 id="_4">修改音乐风格</h3>
+<p>找到 <code>STYLE_PROMPT</code> 变量：</p>
+<pre><code class="language-python">STYLE_PROMPT = &quot;Pop, Cheerful, Upbeat, Beatles Style, Rock and Roll&quot;
+# 可以是任何文本描述
+
+# 或者使用音频文件作为风格参考：
+# STYLE_PROMPT = &quot;./path/to/reference_audio.wav&quot;
+</code></pre>
+<p><strong>风格提示示例</strong>：</p>
+<ul>
+<li><code>Pop, Happy, Energetic, Piano, Drums</code></li>
+<li><code>Rock, Electric Guitar, Heavy Bass, Aggressive</code></li>
+<li><code>Jazz, Smooth, Saxophone, Lounge Music</code></li>
+<li><code>Classical, Orchestra, Epic, Cinematic</code></li>
+<li><code>Electronic, Synthwave, Retro, 80s</code></li>
+</ul>
+<h3 id="_5">修改输出设置</h3>
+<pre><code class="language-python">OUTPUT_DIR = &quot;./results/demo&quot;  # 输出目录
+SONG_NAME = &quot;my_song&quot;          # 文件名（不需要 .mp3）
+CFG_STRENGTH = 2.0             # 控制生成的一致性，1.0-3.0
+SAMPLE_STEPS = 16              # 采样步数，16（快）或 32（质量更好）
+MAX_DURATION = 210.0           # 最大时长（秒）
+</code></pre>
+<h3 id="_6">时间控制说明</h3>
+<h4 id="_7">为什么生成的歌曲时间相似？</h4>
+<p>你生成的歌曲可能都是2分38秒左右，这是<strong>正常现象</strong>，原因如下：</p>
+<ol>
+<li>
+<p><strong>时间由歌词行数决定</strong></p>
+</li>
+<li>
+<p>每行歌词 ≈ 5秒</p>
+</li>
+<li>30行歌词 ≈ 150秒（2分30秒）</li>
+<li>
+<p>结构标签（[intro], [verse]等）也会占用时间</p>
+</li>
+<li>
+<p><strong>MAX_DURATION 是上限，不是精确值</strong></p>
+</li>
+</ol>
+<p><code>python
+   MAX_DURATION = 210.0  # 最多生成3.5分钟</code></p>
+<p>这个参数限制了<strong>最长时长</strong>，实际时长由歌词内容决定</p>
+<h4 id="_8">理论时间控制公式</h4>
+<pre><code>总时长 ≈ 歌词行数 × 5秒 + 结构标签 × 2-3秒
+</code></pre>
+<p><strong>示例</strong>：</p>
+<ul>
+<li>10行歌词 ≈ 50秒</li>
+<li>20行歌词 ≈ 100秒（1分40秒）</li>
+<li>30行歌词 ≈ 150秒（2分30秒）</li>
+<li>40行歌词 ≈ 200秒（3分20秒）</li>
+</ul>
+<h4 id="_9">如何控制生成时长？</h4>
+<p>有3种方法：</p>
+<p><strong>方法1：调整歌词行数（最简单）</strong></p>
+<pre><code class="language-python"># 生成短歌（约1分钟）
+LYRICS = &quot;&quot;&quot;[start]
+[intro]
+[verse]
+第一行歌词
+第二行歌词
+[chorus]
+副歌部分歌词
+[outro]
+&quot;&quot;&quot;
+# 约5-6行 ≈ 30-40秒
+
+# 生成长歌（约3分钟）
+LYRICS = &quot;&quot;&quot;[start]
+[intro]
+[verse]
+歌词第1行
+歌词第2行
+...
+[verse]
+歌词第N行
+[chorus]
+副歌部分
+[bridge]
+桥段歌词
+[outro]
+&quot;&quot;&quot;
+# 约40行 ≈ 3分钟
+</code></pre>
+<p><strong>方法2：使用 --max-secs 参数（批量生成时）</strong></p>
+<p>如果使用 <code>inference.py</code> 批量生成，可以指定最大时长：</p>
+<pre><code class="language-bash"># 生成长达5分钟的歌
+python inference.py --max-secs 300 ...
+
+# 生成1分钟短歌
+python inference.py --max-secs 60 ...
+</code></pre>
+<p><strong>方法3：调整 duration 系数（高级）</strong></p>
+<p>编辑 <code>inference.py</code> 第173行：</p>
+<pre><code class="language-python"># 默认：duration=int(max_secs * 5)
+# 改为：duration=int(max_secs * 3)  # 每句歌词更短
+</code></pre>
+<h4 id="_10">实际应用示例</h4>
+<p>如果你想生成不同时长的歌曲：</p>
+<pre><code class="language-python"># 30秒铃声（简洁）
+LYRICS = &quot;&quot;&quot;[start]
+[verse]
+简短的歌词一行
+再一行
+[chorus]
+铃声音符
+[outro]
+&quot;&quot;&quot;
+
+# 5分钟完整歌曲（详细）
+LYRICS = &quot;&quot;&quot;[start]
+[intro]
+[verse1]
+第1段主歌歌词...
+...更多行...
+[verse2]
+第2段主歌歌词...
+...更多行...
+[pre-chorus]
+[chorus]
+副歌部分...
+...重复段落...
+[bridge]
+桥段...
+[outro]
+&quot;&quot;&quot;
+</code></pre>
+<p><strong>总结</strong>：</p>
+<ul>
+<li>时间完全可控</li>
+<li>行数越多 = 时间越长</li>
+<li>每行 ≈ 5秒</li>
+<li>结构标签也会占用时间</li>
+</ul>
+<p><strong>技巧</strong>：</p>
+<ul>
+<li>测试用：5-8行歌词（30-40秒）</li>
+<li>标准歌：15-20行歌词（1.5-2分钟）</li>
+<li>完整歌：30-40行歌词（2.5-3.5分钟）</li>
+</ul>
+<h2 id="vs-demo">对比：完整框架 vs 最小化 Demo</h2>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>完整框架</th>
+<th>最小化 Demo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代码行数</td>
+<td>2000+</td>
+<td>~500</td>
+</tr>
+<tr>
+<td>支持批量生成</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>支持音频风格</td>
+<td>✅</td>
+<td>✅ (简化)</td>
+</tr>
+<tr>
+<td>支持文本风格</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>中英双语</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>多语言支持</td>
+<td>✅ (日、韩、法、德)</td>
+<td>❌ (已注释掉)</td>
+</tr>
+<tr>
+<td>命令行参数</td>
+<td>✅ (复杂)</td>
+<td>❌ (直接修改代码)</td>
+</tr>
+<tr>
+<td>进度条</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>生成质量</td>
+<td>相同</td>
+<td>相同</td>
+</tr>
+<tr>
+<td>学习难度</td>
+<td>高</td>
+<td>低</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_11">技术要点（如果你想理解代码）</h2>
+<h3 id="5">核心流程（5个步骤）</h3>
+<ol>
+<li><strong>加载模型</strong> (~2分钟)</li>
+<li>DiffRhythm2（扩散主模型，4.3GB）</li>
+<li>MuLan（风格编码器）</li>
+<li>
+<p>BigVGAN（音频解码器）</p>
+</li>
+<li>
+<p><strong>解析歌词</strong> (&lt; 1秒)</p>
+</li>
+<li>分词并转换为 token ID</li>
+<li>处理结构标签 <code>[verse]</code>, <code>[chorus]</code> 等</li>
+<li>
+<p>中英文分开处理</p>
+</li>
+<li>
+<p><strong>编码风格</strong> (&lt; 1秒)</p>
+</li>
+<li>文本描述 → 向量</li>
+<li>
+<p>或 参考音频 → 向量</p>
+</li>
+<li>
+<p><strong>生成音频</strong> (2-3分钟)</p>
+</li>
+<li>扩散模型采样</li>
+<li>
+<p>从随机噪声逐步生成音频特征</p>
+</li>
+<li>
+<p><strong>解码保存</strong> (&lt; 10秒)</p>
+</li>
+<li>音频特征 → 波形</li>
+<li>保存为 MP3 文件</li>
+</ol>
+<h3 id="_12">关键技术</h3>
+<ul>
+<li><strong>扩散模型（Diffusion Model）</strong>: 核心生成技术</li>
+<li><strong>CFG（Classifier-Free Guidance）</strong>: 控制生成的一致性</li>
+<li><strong>MuLan</strong>: 多模态音乐理解模型，用于风格编码</li>
+<li><strong>BigVGAN</strong>: 高质量音频解码器</li>
+</ul>
+<h2 id="_13">常见问题</h2>
+<h3 id="q-unknown-language">Q: 运行时报错 "Unknown language"</h3>
+<p>A: 确保歌词文件中没有空行，或检查 <code>parse_lyrics_simple</code> 函数是否有空行跳过逻辑</p>
+<h3 id="q">Q: 生成时间太长</h3>
+<p>A: 降低 <code>SAMPLE_STEPS</code> 到 8-12，或者换更好的 GPU</p>
+<h3 id="q_1">Q: 生成的音乐质量不好</h3>
+<p>A: 提高 <code>SAMPLE_STEPS</code> 到 32，或调整 <code>CFG_STRENGTH</code>（1.5-2.5 之间尝试）</p>
+<h3 id="q_2">Q: 想生成中文歌曲</h3>
+<p>A: 修改 <code>LYRICS</code> 为中文歌词即可，代码已支持中英文混输</p>
+<h3 id="q_3">Q: 可以用自己的风格音频吗？</h3>
+<p>A: 可以！将 <code>STYLE_PROMPT</code> 设置为音频文件路径：</p>
+<pre><code class="language-python">STYLE_PROMPT = &quot;./my_style.wav&quot;
+</code></pre>
+<h2 id="_14">如何进一步简化？</h2>
+<p>如果你想要<strong>更简化</strong>的版本（比如用于教学演示）：</p>
+<ol>
+<li><strong>移除立体声处理</strong>：去掉 <code>make_fake_stereo</code> 相关代码，输出单声道</li>
+<li><strong>硬编码参数</strong>：将 <code>CFG_STRENGTH</code> 等参数直接写死在函数里</li>
+<li><strong>固定歌词</strong>：在代码里写死一行歌词，不需要解析</li>
+<li><strong>移除错误处理</strong>：去掉所有 try-except 和检查</li>
+</ol>
+<p>这样可以进一步减少到 <strong>300行左右</strong>。</p>
+<h2 id="_15">如何扩展功能？</h2>
+<p>如果你想要<strong>更完整</strong>的功能，可以参考 <code>inference.py</code>：</p>
+<ol>
+<li><strong>批量生成</strong>：读取 JSONL 文件批量生成多首歌</li>
+<li><strong>更多参数</strong>：支持命令行参数调整所有配置</li>
+<li><strong>更多语言</strong>：启用日语、韩语、法语、德语支持</li>
+<li><strong>更多音频格式</strong>：支持 WAV, FLAC 等输出格式</li>
+<li><strong>音频后处理</strong>：添加混响、均衡器等效果</li>
+</ol>
+<hr />
+<p><strong>记住</strong>：这个 demo 的目的是让你<strong>快速理解核心原理</strong>，而不是替代完整框架。当你熟悉后，可以逐步探索完整框架的更多功能！</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

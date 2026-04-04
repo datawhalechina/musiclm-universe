@@ -1,0 +1,5464 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://datawhalechina.github.io/musiclm-universe/DiffRhythm2_Codebase_Analysis/">
+      
+      
+        <link rel="prev" href="../DiffRhythm2_Setup_and_Usage/">
+      
+      
+        <link rel="next" href="../ACE-Step_Setup_and_Usage/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>5.2 Diffrhythm2 开源代码分析 - MusicLM Universe</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../overrides/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="deeporange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#diffrhythm2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="MusicLM Universe" class="md-header__button md-logo" aria-label="MusicLM Universe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MusicLM Universe
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5.2 Diffrhythm2 开源代码分析
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="MusicLM Universe" class="md-nav__button md-logo" aria-label="MusicLM Universe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MusicLM Universe
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一部分：音乐生成模型完整实现流程 Notebook 演示
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第一部分：音乐生成模型完整实现流程 Notebook 演示
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Music_Representations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 Music Representations 音乐数据表示
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio Tokenizer.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 Audio Tokenizer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 Music Transformer
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第三章 Music Transformer
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Model Training.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Model Training 模型训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Music Generation.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.2 Music Generation 音乐生成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二部分：开源音乐生成模型部署实践与代码分析
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第二部分：开源音乐生成模型部署实践与代码分析
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 Transformer 架构模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第四章 Transformer 架构模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MusicGen_Setup_and_Usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 MusicGen 部署及使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MusicGen_Codebase_Analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.2 MusicGen 开源代码分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 Diffusion 架构模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第五章 Diffusion 架构模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DiffRhythm2_Setup_and_Usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Diffrhythm2 部署及使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Diffrhythm2 开源代码分析
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Diffrhythm2 开源代码分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        目录
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构概览
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="架构概览">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        模型规格
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心组件
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="核心组件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-tokenization-g2p" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 歌词处理与tokenization (g2p/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 歌词处理与tokenization (g2p/)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置要点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mulan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 风格编码器 (MuLan)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-diffrhythm2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 扩散模型 (DiffRhythm2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-bigvgan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 音频解码器 (BigVGAN)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        技术原理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="技术原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#block-flow-matching-bfm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block Flow Matching (BFM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classifier-free-guidance-cfg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classifier-Free Guidance (CFG)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mulan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MuLan 多模态理解
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bigvgan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BigVGAN 声码器
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置参数详解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="配置参数详解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inferencepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inference.py 参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jsonl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JSONL输入格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lrc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LRC歌词格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置参数影响分析
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="配置参数影响分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cfg-strength-10-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CFG Strength (1.0 - 3.0)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-steps-8-16-32-50-100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sample Steps (8, 16, 32, 50, 100)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        跨平台部署
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="跨平台部署">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统要求对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python环境管理（跨平台）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Python环境管理（跨平台）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-venvlinuxmacos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方案1: venv（内置，推荐Linux/macOS）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-conda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方案2: conda（跨平台通用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PyTorch安装（各平台）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PyTorch安装（各平台）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windowscuda-121" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows（CUDA 12.1）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linuxcuda-121" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux（CUDA 12.1）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macosapple-silicon-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS（Apple Silicon GPU加速）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macosintel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS（Intel芯片）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#espeakespeak-ngphonemizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        espeak/espeak-ng配置（phonemizer依赖）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="espeak/espeak-ng配置（phonemizer依赖）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        路径处理（跨平台兼容）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker部署（跨平台通用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        各平台性能调优
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="各平台性能调优">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux性能优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS性能优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows性能优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        各平台常见问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="各平台常见问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux常见问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS常见问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows常见问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cicdgithub-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        跨平台CI/CD（GitHub Actions）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        性能优化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="性能优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. GPU内存优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 推理速度优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 多GPU推理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. I/O优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 性能基准测试
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        高级故障排查
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="高级故障排查">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 模型加载问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 推理质量问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 性能问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 多语言问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 音频质量问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自定义与扩展
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="自定义与扩展">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 自定义风格编码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 自定义扩散调度器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 自定义后处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 数据集准备
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-diffrhythm2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 微调DiffRhythm2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API参考
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API参考">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diffrhythm2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DiffRhythm2类
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DiffRhythm2类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        前向传播
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        生成方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mulan_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MuLan类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bigvgan_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BigVGAN类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        工具函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最佳实践
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="最佳实践">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 生产环境部署
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 监控和日志
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 测试和验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 安全最佳实践
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 版本管理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附录
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="附录">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-configjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. 模型配置文件 (config.json)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. 质量评估指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C. 常见错误码
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 混合架构模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第六章 混合架构模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ACE-Step_Setup_and_Usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 ACE-Step 部署及使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ACE-Step_Codebase_Analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.2 ACE-Step 1.5 开源代码分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../framework.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三部分：音乐生成优化框架构建 MusicGen（SFT）+ DPO + Reasoning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        目录
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构概览
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="架构概览">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        模型规格
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心组件
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="核心组件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-tokenization-g2p" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 歌词处理与tokenization (g2p/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 歌词处理与tokenization (g2p/)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置要点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mulan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 风格编码器 (MuLan)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-diffrhythm2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 扩散模型 (DiffRhythm2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-bigvgan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 音频解码器 (BigVGAN)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        技术原理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="技术原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#block-flow-matching-bfm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block Flow Matching (BFM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classifier-free-guidance-cfg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classifier-Free Guidance (CFG)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mulan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MuLan 多模态理解
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bigvgan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BigVGAN 声码器
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置参数详解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="配置参数详解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inferencepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inference.py 参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jsonl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JSONL输入格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lrc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LRC歌词格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置参数影响分析
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="配置参数影响分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cfg-strength-10-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CFG Strength (1.0 - 3.0)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-steps-8-16-32-50-100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sample Steps (8, 16, 32, 50, 100)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        跨平台部署
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="跨平台部署">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统要求对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python环境管理（跨平台）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Python环境管理（跨平台）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-venvlinuxmacos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方案1: venv（内置，推荐Linux/macOS）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-conda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方案2: conda（跨平台通用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PyTorch安装（各平台）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PyTorch安装（各平台）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windowscuda-121" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows（CUDA 12.1）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linuxcuda-121" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux（CUDA 12.1）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macosapple-silicon-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS（Apple Silicon GPU加速）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macosintel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS（Intel芯片）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#espeakespeak-ngphonemizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        espeak/espeak-ng配置（phonemizer依赖）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="espeak/espeak-ng配置（phonemizer依赖）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        路径处理（跨平台兼容）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker部署（跨平台通用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        各平台性能调优
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="各平台性能调优">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux性能优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS性能优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows性能优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        各平台常见问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="各平台常见问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux常见问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS常见问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows常见问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cicdgithub-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        跨平台CI/CD（GitHub Actions）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        性能优化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="性能优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. GPU内存优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 推理速度优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 多GPU推理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. I/O优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 性能基准测试
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        高级故障排查
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="高级故障排查">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 模型加载问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 推理质量问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 性能问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 多语言问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 音频质量问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自定义与扩展
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="自定义与扩展">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 自定义风格编码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 自定义扩散调度器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 自定义后处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 数据集准备
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-diffrhythm2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 微调DiffRhythm2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API参考
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API参考">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diffrhythm2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DiffRhythm2类
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DiffRhythm2类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        前向传播
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        生成方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mulan_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MuLan类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bigvgan_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BigVGAN类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        工具函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最佳实践
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="最佳实践">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 生产环境部署
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 监控和日志
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 测试和验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 安全最佳实践
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 版本管理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附录
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="附录">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-configjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. 模型配置文件 (config.json)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. 质量评估指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C. 常见错误码
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="diffrhythm2">DiffRhythm2 学习手册及代码解析</h1>
+<h2 id="_1">目录</h2>
+<ol>
+<li><a href="#架构概览">架构概览</a></li>
+<li><a href="#核心组件">核心组件</a></li>
+<li><a href="#技术原理">技术原理</a></li>
+<li><a href="#跨平台部署">跨平台部署</a></li>
+<li><a href="#配置参数详解">配置参数详解</a></li>
+<li><a href="#性能优化">性能优化</a></li>
+<li><a href="#高级故障排查">高级故障排查</a></li>
+<li><a href="#自定义与扩展">自定义与扩展</a></li>
+<li><a href="#api参考">API参考</a></li>
+</ol>
+<hr />
+<h2 id="_2">架构概览</h2>
+<h3 id="_3">系统架构</h3>
+<div align=center>
+<img width="1000" src="images/12.png"/>
+</div>
+<div align=center></div>
+
+<h3 id="_4">模型规格</h3>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>架构</th>
+<th>参数数量</th>
+<th>模型大小</th>
+<th>输入</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DiffRhythm2</td>
+<td>UNet</td>
+<td>1.136B</td>
+<td>4.23 GB</td>
+<td>加噪音频特征</td>
+<td>去噪音频特征</td>
+</tr>
+<tr>
+<td>MuLan</td>
+<td>XLM-RoBERTa</td>
+<td>-</td>
+<td>~800 MB</td>
+<td>文本/音频</td>
+<td>1024-dim 风格向量</td>
+</tr>
+<tr>
+<td>BigVGAN</td>
+<td>HiFi-GAN</td>
+<td>-</td>
+<td>~300 MB</td>
+<td>梅尔频谱</td>
+<td>44.1kHz 音频</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_5">核心组件</h2>
+<h3 id="1-tokenization-g2p">1. 歌词处理与tokenization (g2p/)</h3>
+<h4 id="_6">关键模块</h4>
+<p><strong><code>g2p_generation.py</code></strong> - 主要入口</p>
+<ul>
+<li><code>chn_eng_g2p(text)</code>: 中英文混合文本处理</li>
+<li><code>g2p(sentence, text, language)</code>: 按语言分发处理</li>
+</ul>
+<p><strong><code>g2p/g2p/__init__.py</code></strong> - Tokenizer实现</p>
+<ul>
+<li><code>class PhonemeBpeTokenizer</code>: BPE分词器</li>
+<li>支持语言: 中文 (zh)、英文 (en)、日文 (ja)、韩文 (ko)、法文 (fr)、德文 (de)</li>
+<li>需要tsv格式的词汇表 (vocab_numbert.txt)</li>
+</ul>
+<p><strong><code>g2p/g2p/cleaners.py</code></strong> - 文本清洗</p>
+<ul>
+<li><code>cjekfd_cleaners(text, sentence, language, cleaners)</code>: 主清洁函数</li>
+<li>语言过滤器: <code>zh_cleaners</code>, <code>en_cleaners</code>, <code>ja_cleaners</code>, etc.</li>
+<li>中文使用pypinyin, 英文使用phonemizer/espeak</li>
+</ul>
+<p><strong><code>g2p/g2p/chinese_model_g2p.py</code></strong> - 中文G2P模型</p>
+<ul>
+<li>基于BERT的字符级别G2P</li>
+<li>ONNX runtime推理 (poly_bert_model.onnx)</li>
+<li>处理多音字和上下文相关发音</li>
+</ul>
+<h4 id="_7">配置要点</h4>
+<pre><code class="language-python"># g2p/g2p/__init__.py
+def __init__(self, ..., language: str = &quot;cje&quot;):
+    # language: 支持的语言组合
+    # &quot;cje&quot; = Chinese, Japanese, English
+    # &quot;cjekfd&quot; = CJK + French, German
+</code></pre>
+<pre><code class="language-python"># g2p/utils/g2p.py
+# 语言配置
+self.languages = {
+    &quot;zh&quot;: {
+        &quot;encoder&quot;: &quot;g2p/chinese_model_g2p.py&quot;,
+        &quot;cleaner&quot;: &quot;cje_cleaners&quot;,
+        &quot;tokenizers&quot;: {&quot;g2p&quot;}
+    }
+}
+</code></pre>
+<h3 id="2-mulan">2. 风格编码器 (MuLan)</h3>
+<pre><code class="language-python"># inference.py lines 46-53
+self.mulan = AutoModel.from_pretrained(
+    model_dir,
+    subfolder=&quot;mulan&quot;,
+    torch_dtype=dtype,
+    device_map=self.device,
+)
+</code></pre>
+<p><strong>技术细节</strong></p>
+<ul>
+<li>基于XLM-RoBERTa的多模态模型</li>
+<li>双塔结构: Text tower + Audio tower</li>
+<li>输出: 1024维风格嵌入向量</li>
+<li>支持文本描述和音频参考两种输入方式</li>
+</ul>
+<h3 id="3-diffrhythm2">3. 扩散模型 (DiffRhythm2)</h3>
+<pre><code class="language-python"># inference.py lines 55-78
+self.diff = BFMDiffRhythm2.from_pretrained(
+    model_dir,
+    torch_dtype=dtype,
+    device_map=self.device,
+)
+</code></pre>
+<p><strong>架构参数</strong></p>
+<pre><code class="language-python">config = {
+    &quot;model_type&quot;: &quot;bfm&quot;,  # Block Flow Matching
+    &quot;latent_dim&quot;: 64,
+    &quot;num_heads&quot;: 16,
+    &quot;depths&quot;: [2, 2, 6, 2],
+    &quot;channels&quot;: 128,
+    &quot;block_size&quot;: 10,  # 时序块大小
+}
+</code></pre>
+<p><strong>输入条件</strong></p>
+<ul>
+<li>lyrics_token: 歌词token序列</li>
+<li>style_embed: MuLan风格向量 (1024-dim)</li>
+<li>duration: 目标时长 (frames)</li>
+<li>mask: 填充掩码</li>
+</ul>
+<p><strong>推理流程</strong></p>
+<ol>
+<li>初始化随机噪声 (latent_dim × 时长)</li>
+<li>迭代去噪 (16或32步)</li>
+<li>使用CFG (Classifier-Free Guidance)</li>
+<li>输出去噪后的音频特征</li>
+</ol>
+<pre><code class="language-python"># 采样过程 (inference.py:198-217)
+latent = torch.randn(...)  # 初始噪声
+for i, t in enumerate(timesteps):
+    # 条件预测
+    noise_pred = self.diff(
+        latent, t,
+        encoder_hidden_states=lyrics_token,
+        style_embed=style_embed,
+        length=duration,
+    )
+    # 无分类器引导
+    if guidance_scale &gt; 1:
+        noise_pred_uncond = self.diff(..., style_embed=zero_embed)
+        noise_pred = noise_pred_uncond + guidance_scale * (noise_pred - noise_pred_uncond)
+    # 更新latent
+    latent = scheduler.step(noise_pred, t, latent).prev_sample
+</code></pre>
+<h3 id="4-bigvgan">4. 音频解码器 (BigVGAN)</h3>
+<pre><code class="language-python"># 隐式加载 (model_dir/bigvgan)
+self.vocoder = BigVGAN.from_pretrained(...)
+</code></pre>
+<p><strong>技术规格</strong></p>
+<ul>
+<li>输入: 梅尔频谱 (80 bins)</li>
+<li>输出: 44.1kHz PCM音频</li>
+<li>基于HiFi-GAN架构</li>
+<li>多分辨率谱图判别器</li>
+</ul>
+<hr />
+<h2 id="_8">技术原理</h2>
+<h3 id="block-flow-matching-bfm">Block Flow Matching (BFM)</h3>
+<p>标准扩散模型的替代方案，训练目标:</p>
+<pre><code>L = E[t, x0, x1][||v_t - v_θ(x_t, t)||²]
+
+其中:
+- x0: 真实数据
+- x1: 标准正态分布
+- x_t = t·x1 + (1-t)·x0: 线性插值
+- v_t = x1 - x0: 方向向量
+- v_θ: 模型预测的速度场
+</code></pre>
+<p>优势:</p>
+<ul>
+<li>训练更稳定</li>
+<li>采样更快 (减少采样步数)</li>
+<li>保持生成质量</li>
+</ul>
+<h3 id="classifier-free-guidance-cfg">Classifier-Free Guidance (CFG)</h3>
+<p>条件生成控制机制:</p>
+<pre><code class="language-python">ε_θ(x_t, c) = ε_θ(x_t, ∅) + w·(ε_θ(x_t, c) - ε_θ(x_t, ∅))
+
+参数:
+- w: guidance scale (通常 1.0-3.0)
+- ε_θ(x_t, c): 条件预测 (有歌词/风格)
+- ε_θ(x_t, ∅): 无条件预测
+</code></pre>
+<p>效果:</p>
+<ul>
+<li>w &lt; 1: 生成更多样化，但可能不遵循条件</li>
+<li>w = 1: 标准采样</li>
+<li>w &gt; 1: 更严格遵守条件，可能降低多样性</li>
+</ul>
+<p><strong>实现细节</strong></p>
+<pre><code class="language-python"># 使用空字符串和零向量作为无条件
+empty_lyrics = tokenizer(&quot;&quot;, ...)
+zero_style = torch.zeros_like(style_embed)
+
+# 条件预测
+conditional = model(x_t, t, lyrics_cond, style_cond)
+
+# 无条件预测
+unconditional = model(x_t, t, lyrics_uncond, style_uncond)
+
+# 组合
+output = unconditional + cfg_scale * (conditional - unconditional)
+</code></pre>
+<h3 id="mulan">MuLan 多模态理解</h3>
+<p><strong>架构</strong></p>
+<pre><code>Text Tower (XLM-RoBERTa-base)
+    ↓
+Projector (MLP)
+    ↓
+Shared Embedding Space ←→ Similarity Metric
+    ↓                        ↑
+Projector (MLP)            Audio Tower (CNN + Transformer)
+    ↓                        ↑
+Audio Features (log-mel spectrogram)
+</code></pre>
+<p><strong>训练目标</strong></p>
+<p>对比学习损失:</p>
+<pre><code>L = -log(exp(sim(t_i, a_i)/τ) / Σ_j exp(sim(t_i, a_j)/τ))
+
+其中:
+- t_i: 第i个文本嵌入
+- a_i: 对应音频嵌入
+- sim(): 余弦相似度
+- τ: 温度参数
+</code></pre>
+<p><strong>在DiffRhythm2中的应用</strong></p>
+<ol>
+<li>文本/音频 → 1024-dim 风格向量</li>
+<li>作为扩散模型的条件输入</li>
+<li>指导生成符合风格的音频</li>
+</ol>
+<h3 id="bigvgan">BigVGAN 声码器</h3>
+<p><strong>HiFi-GAN架构</strong></p>
+<pre><code>Generator:
+    输入: 梅尔频谱 (80, T)
+    ↓
+    Conv1d → upsampling blocks ×K
+    ↓
+    输出: 音频 (1, T·hop_length)
+
+Discriminators:
+    - Multi-Period Discriminator (MPD)
+    - Multi-Scale Discriminator (MSD)
+</code></pre>
+<p><strong>关键创新</strong></p>
+<ol>
+<li><strong>周期性激活</strong>: 更好地建模周期性信号</li>
+<li><strong>多分辨率判别</strong>: 不同尺度的谱图判别</li>
+<li><strong>特征匹配损失</strong>: 中间层特征对齐</li>
+</ol>
+<hr />
+<h2 id="_9">配置参数详解</h2>
+<h3 id="inferencepy">inference.py 参数</h3>
+<pre><code class="language-python">parser.add_argument(
+    &quot;--repo-id&quot;,
+    default=&quot;ASLP-lab/DiffRhythm2&quot;,
+    help=&quot;HuggingFace模型仓库ID&quot;
+)
+
+parser.add_argument(
+    &quot;--output-dir&quot;,
+    default=&quot;./results&quot;,
+    help=&quot;输出目录&quot;
+)
+
+parser.add_argument(
+    &quot;--input-jsonl&quot;,
+    required=True,
+    help=&quot;JSONL格式的输入文件&quot;
+)
+
+parser.add_argument(
+    &quot;--cfg-strength&quot;,
+    type=float,
+    default=2.0,
+    help=&quot;Classifier-free guidance强度 (1.0-3.0)&quot;
+)
+
+parser.add_argument(
+    &quot;--sample-steps&quot;,
+    type=int,
+    default=16,
+    choices=[8, 16, 32, 50, 100],
+    help=&quot;采样步数，影响生成质量和速度&quot;
+)
+
+parser.add_argument(
+    &quot;--max-secs&quot;,
+    type=float,
+    default=210.0,
+    help=&quot;最大时长(秒)，默认3.5分钟&quot;
+)
+
+parser.add_argument(
+    &quot;--device&quot;,
+    default=&quot;cuda&quot;,
+    choices=[&quot;cuda&quot;, &quot;cpu&quot;],
+    help=&quot;推理设备&quot;
+)
+
+parser.add_argument(
+    &quot;--batch-size&quot;,
+    type=int,
+    default=1,
+    help=&quot;批量大小&quot;
+)
+</code></pre>
+<h3 id="jsonl">JSONL输入格式</h3>
+<pre><code class="language-json">{
+    &quot;song_name&quot;: &quot;track_name&quot;,
+    &quot;style_prompt&quot;: &quot;音乐风格描述，可以是文本或音频文件路径&quot;,
+    &quot;lyrics&quot;: &quot;歌词文件路径 (.lrc)&quot;,
+    &quot;cfg_strength&quot;: 2.0,
+    &quot;sample_steps&quot;: 16,
+    &quot;max_secs&quot;: 210.0
+}
+</code></pre>
+<p><strong>字段说明</strong></p>
+<ul>
+<li><code>song_name</code>: 输出文件名（不含扩展名）</li>
+<li><code>style_prompt</code>: 风格提示</li>
+<li>文本: "Pop, Happy, Piano, Drums"</li>
+<li>音频: "./reference.wav" (自动提取风格)</li>
+<li><code>lyrics</code>: LRC格式歌词文件路径</li>
+<li><code>cfg_strength</code>: 每首歌可单独设置CFG强度</li>
+<li><code>sample_steps</code>: 每首歌可单独设置采样步数</li>
+<li><code>max_secs</code>: 最大时长限制（秒）</li>
+</ul>
+<h3 id="lrc">LRC歌词格式</h3>
+<pre><code>[start]
+[intro]
+[verse]
+Lyrics line 1
+Lyrics line 2
+[chorus]
+Chorus line 1
+[outro]
+</code></pre>
+<p><strong>结构标签 (可选)</strong></p>
+<ul>
+<li><code>[start]</code>: 开始标记</li>
+<li><code>[intro]</code>: 前奏</li>
+<li><code>[verse]</code>: 主歌</li>
+<li><code>[pre-chorus]</code>: 导歌</li>
+<li><code>[chorus]</code>: 副歌</li>
+<li><code>[bridge]</code>: 桥段</li>
+<li><code>[outro]</code>: 尾奏</li>
+</ul>
+<p><strong>重要规则</strong></p>
+<ol>
+<li>每行歌词 ≈ 5秒</li>
+<li>结构标签也会占用时间</li>
+<li>空行可能导致"Unknown language"错误</li>
+<li>支持中英文混输</li>
+</ol>
+<h3 id="_10">配置参数影响分析</h3>
+<h4 id="cfg-strength-10-30">CFG Strength (1.0 - 3.0)</h4>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>效果</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0-1.5</td>
+<td>生成多样化，可能偏离条件</td>
+<td>创意探索</td>
+</tr>
+<tr>
+<td>1.5-2.0</td>
+<td>平衡质量和多样性</td>
+<td>通用生成</td>
+</tr>
+<tr>
+<td>2.0-2.5</td>
+<td>严格遵守条件，质量高</td>
+<td>默认推荐</td>
+</tr>
+<tr>
+<td>2.5-3.0</td>
+<td>过度遵循，可能降低自然度</td>
+<td>精确控制</td>
+</tr>
+</tbody>
+</table>
+<h4 id="sample-steps-8-16-32-50-100">Sample Steps (8, 16, 32, 50, 100)</h4>
+<table>
+<thead>
+<tr>
+<th>步数</th>
+<th>生成时间</th>
+<th>质量</th>
+<th>适用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>~60秒</td>
+<td>较低</td>
+<td>快速测试</td>
+</tr>
+<tr>
+<td>16</td>
+<td>~120秒</td>
+<td>良好</td>
+<td>默认推荐</td>
+</tr>
+<tr>
+<td>32</td>
+<td>~240秒</td>
+<td>优秀</td>
+<td>高质量需求</td>
+</tr>
+<tr>
+<td>50+</td>
+<td>~400秒+</td>
+<td>边际提升</td>
+<td>研究用途</td>
+</tr>
+</tbody>
+</table>
+<p><strong>质量-时间权衡曲线</strong></p>
+<pre><code>Quality ↑
+          │
+          │      ╱
+          │     ╱
+          │    ╱
+          │   ╱
+          │  ╱
+          └───────────→ Steps
+           8    16   32
+</code></pre>
+<hr />
+<h2 id="_11">跨平台部署</h2>
+<h3 id="_12">系统要求对比</h3>
+<table>
+<thead>
+<tr>
+<th>操作系统</th>
+<th>最低版本</th>
+<th>Python版本</th>
+<th>GPU支持</th>
+<th>推荐配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Windows</strong></td>
+<td>Windows 10/11</td>
+<td>3.10+</td>
+<td>NVIDIA CUDA 11.8+ / AMD ROCm</td>
+<td>16GB RAM, RTX 3060+</td>
+</tr>
+<tr>
+<td><strong>macOS</strong></td>
+<td>macOS 12 (Monterey)</td>
+<td>3.10+</td>
+<td>Apple Silicon M1/M2/M3  / Intel AMD</td>
+<td>16GB RAM, M1 Pro+</td>
+</tr>
+<tr>
+<td><strong>Linux</strong></td>
+<td>Ubuntu 20.04+ / CentOS 8+</td>
+<td>3.10+</td>
+<td>NVIDIA CUDA 11.8+ / AMD ROCm</td>
+<td>16GB RAM, RTX 3060+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="python">Python环境管理（跨平台）</h3>
+<h4 id="1-venvlinuxmacos">方案1: venv（内置，推荐Linux/macOS）</h4>
+<pre><code class="language-bash"># ========== Linux / macOS ==========
+# 创建虚拟环境
+python3 -m venv diffrhythm_env
+
+# 激活
+source diffrhythm_env/bin/activate
+
+# 退出
+deactivate
+
+# ========== Windows ==========
+# 创建虚拟环境
+python -m venv diffrhythm_env
+
+# 激活
+diffrhythm_env\Scripts\activate
+
+# 退出
+deactivate
+</code></pre>
+<h4 id="2-conda">方案2: conda（跨平台通用）</h4>
+<pre><code class="language-bash"># 创建环境（Windows/Linux/macOS相同）
+conda create -n diffrhythm python=3.10
+
+# 激活
+conda activate diffrhythm
+
+# 退出
+conda deactivate
+
+# 安装PyTorch（自动选择平台）
+conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+</code></pre>
+<h3 id="pytorch">PyTorch安装（各平台）</h3>
+<h4 id="windowscuda-121">Windows（CUDA 12.1）</h4>
+<pre><code class="language-bash"># CUDA 12.1版本（推荐）
+pip install torch==2.3.1+cu121 torchaudio==2.3.1+cu121 --index-url https://download.pytorch.org/whl/cu121
+
+# 验证
+cd diffrhythm2
+python -c &quot;import torch; print(f'PyTorch: {torch.__version__}'); print(f'CUDA可用: {torch.cuda.is_available()}'); print(f'GPU: {torch.cuda.get_device_name(0)}')&quot;
+</code></pre>
+<h4 id="linuxcuda-121">Linux（CUDA 12.1）</h4>
+<pre><code class="language-bash"># Ubuntu/Debian
+pip3 install torch==2.3.1+cu121 torchaudio==2.3.1+cu121 --index-url https://download.pytorch.org/whl/cu121
+
+# CentOS/RHEL
+torchrun --nproc_per_node=1 -c &quot;import torch; print(f'PyTorch: {torch.__version__}')&quot;
+
+# 验证
+python3 -c &quot;import torch; print(f'PyTorch: {torch.__version__}'); print(f'CUDA可用: {torch.cuda.is_available()}')&quot;
+</code></pre>
+<h4 id="macosapple-silicon-gpu">macOS（Apple Silicon GPU加速）</h4>
+<pre><code class="language-bash"># M1/M2/M3芯片（使用Metal Performance Shaders，无需CUDA）
+pip install torch torchvision torchaudio
+
+# 验证MPS可用
+python -c &quot;
+import torch
+print(f'PyTorch: {torch.__version__}')
+print(f'MPS可用: {torch.backends.mps.is_available()}')
+if torch.backends.mps.is_available():
+    print('✓ Apple Silicon GPU加速已启用')
+else:
+    print('⚠ 将使用CPU（速度较慢）')
+&quot;
+</code></pre>
+<p><strong>注意</strong>: macOS使用MPS（Metal Performance Shaders），不支持CUDA。</p>
+<h4 id="macosintel">macOS（Intel芯片）</h4>
+<pre><code class="language-bash"># Intel Mac（仅CPU，或使用AMD显卡）
+pip install torch torchvision torchaudio
+
+# 验证（仅有CPU支持）
+python -c &quot;import torch; print(f'CPU设备: {torch.device(\&quot;cpu\&quot;)}')&quot;
+</code></pre>
+<h3 id="espeakespeak-ngphonemizer">espeak/espeak-ng配置（phonemizer依赖）</h3>
+<p>phonemizer库需要espeak或espeak-ng作为后端，各平台配置不同：</p>
+<h4 id="linux">Linux</h4>
+<pre><code class="language-bash"># Ubuntu/Debian
+sudo apt-get update
+sudo apt-get install espeak espeak-data libespeak1 libespeak-dev
+
+# 验证安装
+espeak --version  # 应该显示版本信息
+
+# 如果使用conda环境，phonemizer会自动找到espeak
+python -c &quot;from phonemizer.backend import EspeakBackend; print('✓ espeak配置成功')&quot;
+</code></pre>
+<p><strong>常见问题</strong></p>
+<pre><code class="language-python"># 如果报错&quot;espeak not found&quot;
+# 1. 检查路径
+which espeak  # 应该显示/usr/bin/espeak
+
+# 2. 手动设置路径（如果安装在非标准位置）
+import os
+os.environ['PHONEMIZER_ESPEAK_LIBRARY'] = '/usr/lib/libespeak.so'
+
+# 3. 验证语音列表
+from phonemizer.backend import EspeakBackend
+backend = EspeakBackend('en-us')
+print(backend.voices())  # 应该显示可用的语音列表
+</code></pre>
+<h4 id="macos">macOS</h4>
+<pre><code class="language-bash"># 使用Homebrew安装espeak（推荐）
+brew install espeak
+
+# 验证
+espeak --version
+
+# 下载中文语音数据（可选）
+cd /usr/local/share/espeak-data  # Homebrew安装路径
+cd /opt/homebrew/share/espeak-data  # Apple Silicon路径
+
+# 测试中文
+python -c &quot;
+from phonemizer import phonemize
+print(phonemize('你好世界', language='zh'))
+&quot;
+</code></pre>
+<p><strong>Apple Silicon注意事项</strong></p>
+<pre><code class="language-bash"># 如果使用M1/M2/M3芯片，确保使用ARM64版本
+type espeak  # 应该显示/opt/homebrew/bin/espeak（不是/usr/local）
+
+# 在Python中验证
+import platform
+print(f&quot;架构: {platform.machine()}&quot;)  # 应该显示arm64
+</code></pre>
+<h4 id="windows">Windows</h4>
+<pre><code class="language-bash"># 1. 下载espeak-ng
+# 访问: https://github.com/espeak-ng/espeak-ng/releases
+# 下载: espeak-ng-X64-setup-1.51.msi
+
+# 2. 安装（默认路径: C:\Program Files\eSpeak NG）
+# 运行安装程序
+
+# 3. 配置环境变量
+# 控制面板 → 系统 → 高级系统设置 → 环境变量
+# 在&quot;系统变量&quot;中添加:
+#   PHONEMIZER_ESPEAK_LIBRARY=C:\Program Files\eSpeak NG\libespeak-ng.dll
+
+# 4. 验证
+python -c &quot;
+import os
+print('PHONEMIZER_ESPEAK_LIBRARY:', os.environ.get('PHONEMIZER_ESPEAK_LIBRARY'))
+&quot;
+
+# 5. 测试
+python -c &quot;
+from phonemizer.backend import EspeakBackend
+backend = EspeakBackend('en-us', preserve_punctuation=True)
+print('✓ espeak-ng配置成功')
+&quot;
+</code></pre>
+<h3 id="_13">路径处理（跨平台兼容）</h3>
+<p><strong>问题</strong>: Windows使用 <code>\</code>，Linux/macOS使用 <code>/</code></p>
+<p><strong>解决方案</strong>: 使用 <code>pathlib</code>（Python 3.4+）</p>
+<pre><code class="language-python"># ❌ 不推荐 - 平台相关
+# Windows: &quot;ckpt\\models\\diff.pth&quot;
+# Linux:   &quot;ckpt/models/diff.pth&quot;
+
+# ✅ 推荐 - 使用pathlib（自动处理）
+from pathlib import Path
+
+# 创建路径
+checkpoint_dir = Path(&quot;ckpt&quot;) / &quot;models&quot;
+model_path = checkpoint_dir / &quot;diff.pth&quot;
+
+# 等价于:
+# Windows: &quot;ckpt\\models\\diff.pth&quot;
+# Linux:   &quot;ckpt/models/diff.pth&quot;
+# macOS:   &quot;ckpt/models/diff.pth&quot;
+
+print(f&quot;模型路径: {model_path}&quot;)
+print(f&quot;是否存在: {model_path.exists()}&quot;)
+
+# 转换为字符串（跨平台）
+model_path_str = str(model_path)
+</code></pre>
+<p><strong>inference.py中的路径修复示例</strong></p>
+<pre><code class="language-python"># 修改前（仅Windows）
+# ckpt_dir = &quot;P:\\diffrhythm2\\diffrhythm2\\ckpt&quot;
+
+# 修改后（跨平台）
+import os
+from pathlib import Path
+
+def get_ckpt_dir():
+    &quot;&quot;&quot;获取跨平台的检查点目录&quot;&quot;&quot;
+    # 方法1: 使用当前文件位置
+    current_dir = Path(__file__).parent
+    ckpt_dir = current_dir / &quot;ckpt&quot;
+
+    # 方法2: 使用环境变量
+    if &quot;DIFFRHYTHM_HOME&quot; in os.environ:
+        ckpt_dir = Path(os.environ[&quot;DIFFRHYTHM_HOME&quot;]) / &quot;ckpt&quot;
+
+    # 确保目录存在
+    ckpt_dir.mkdir(parents=True, exist_ok=True)
+
+    return ckpt_dir
+
+# 使用
+ckpt_dir = get_ckpt_dir()
+model_path = ckpt_dir / &quot;DiffRhythm2&quot; / &quot;model.safetensors&quot;
+</code></pre>
+<h3 id="docker">Docker部署（跨平台通用）</h3>
+<p>Docker提供一致的运行环境，避免平台差异。</p>
+<p><strong>Dockerfile（适用于Windows/Linux/macOS）</strong></p>
+<pre><code class="language-dockerfile">FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
+
+# 设置工作目录
+WORKDIR /app
+
+# 安装系统依赖（Linux）
+RUN apt-get update &amp;&amp; apt-get install -y \
+    espeak \
+    espeak-data \
+    espeak-ng \
+    libsndfile1 \
+    ffmpeg \
+    git \
+    &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+# 复制依赖文件
+COPY requirements.txt .
+
+# 安装Python依赖（自动处理平台差异）
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 复制代码
+COPY . .
+
+# 设置模型缓存目录
+ENV HF_HOME=/app/cache
+RUN mkdir -p /app/cache
+
+# 创建非root用户（安全最佳实践）
+RUN useradd --create-home --shell /bin/bash diffusr
+USER diffusr
+
+# 设置环境变量
+ENV PHONEMIZER_ESPEAK_LIBRARY=/usr/lib/libespeak.so
+
+# 设置卷（持久化模型和输出）
+VOLUME [&quot;/app/ckpt&quot;, &quot;/app/results&quot;]
+
+# 暴露API端口
+EXPOSE 8000
+
+# 运行
+CMD [&quot;python&quot;, &quot;inference.py&quot;, &quot;--help&quot;]
+</code></pre>
+<p><strong>构建和运行（跨平台命令相同）</strong></p>
+<pre><code class="language-bash"># 构建镜像（所有平台一样）
+docker build -t diffrhythm2 .
+
+# 运行容器
+# Linux/macOS/Windows (WSL2)
+docker run -it --rm \
+  --gpus all \  # GPU支持
+  -v $(pwd)/ckpt:/app/ckpt \
+  -v $(pwd)/results:/app/results \
+  -p 8000:8000 \
+  diffrhythm2 \
+  python inference.py \
+    --repo-id ASLP-lab/DiffRhythm2 \
+    --output-dir /app/results \
+    --input-jsonl /app/test.jsonl
+
+# Windows (PowerShell)
+docker run -it --rm `
+  --gpus all `
+  -v ${PWD}/ckpt:/app/ckpt `
+  -v ${PWD}/results:/app/results `
+  -p 8000:8000 `
+  diffrhythm2 `
+  python inference.py `
+    --repo-id ASLP-lab/DiffRhythm2 `
+    --output-dir /app/results `
+    --input-jsonl /app/test.jsonl
+</code></pre>
+<p><strong>Docker Compose（更简便）</strong></p>
+<pre><code class="language-yaml"># docker-compose.yml
+version: '3.8'
+
+services:
+  diffrhythm2:
+    build: .
+    image: diffrhythm2:latest
+    container_name: diffrhythm2
+
+    # GPU支持
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+    # 卷映射
+    volumes:
+      - ./ckpt:/app/ckpt
+      - ./results:/app/results
+      - ./cache:/app/cache
+
+    # 端口映射
+    ports:
+      - &quot;8000:8000&quot;
+
+    # 环境变量
+    environment:
+      - HF_HOME=/app/cache
+      - PHONEMIZER_ESPEAK_LIBRARY=/usr/lib/libespeak.so
+
+    # 自动运行
+    command: |
+      python inference.py
+        --repo-id ASLP-lab/DiffRhythm2
+        --output-dir /app/results
+        --input-jsonl /app/test.jsonl
+</code></pre>
+<pre><code class="language-bash"># 启动（所有平台相同）
+docker-compose up -d
+
+# 查看日志
+docker-compose logs -f
+
+# 停止
+docker-compose down
+</code></pre>
+<h3 id="_14">各平台性能调优</h3>
+<h4 id="linux_1">Linux性能优化</h4>
+<pre><code class="language-bash">#!/bin/bash
+# Linux性能调优脚本
+
+# 1. 设置GPU为性能模式
+sudo nvidia-smi -pm 1
+sudo nvidia-smi -acp 0
+
+# 2. 增加文件描述符限制
+echo &quot;* soft nofile 65536&quot; | sudo tee -a /etc/security/limits.conf
+echo &quot;* hard nofile 65536&quot; | sudo tee -a /etc/security/limits.conf
+
+# 3. 禁用swap（提高性能，但有风险）
+sudo swapoff -a
+
+# 4. CPU性能模式
+echo &quot;performance&quot; | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+</code></pre>
+<h4 id="macos_1">macOS性能优化</h4>
+<pre><code class="language-python"># macOS MPS优化
+import torch
+
+# 1. 确保使用MPS
+if torch.backends.mps.is_available():
+    device = torch.device(&quot;mps&quot;)
+else:
+    device = torch.device(&quot;cpu&quot;)
+
+# 2. MPS内存管理（避免碎片化）
+# 在inference.py中添加
+if device.type == &quot;mps&quot;:
+    # 预分配内存
+    torch.mps.set_per_process_memory_fraction(1.0)
+
+    # 清理缓存
+    torch.mps.empty_cache()
+</code></pre>
+<h4 id="windows_1">Windows性能优化</h4>
+<pre><code class="language-powershell"># PowerShell脚本
+# Windows性能调优
+
+# 1. 设置高性能电源模式
+powercfg /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
+
+# 2. 禁用GPU超时检测（避免TDR）
+New-ItemProperty -Path &quot;HKLM:\SYSTEM\CurrentControlSet\Control\GraphicsDrivers&quot; -Name &quot;TdrLevel&quot; -Value 0 -PropertyType DWORD -Force
+New-ItemProperty -Path &quot;HKLM:\SYSTEM\CurrentControlSet\Control\GraphicsDrivers&quot; -Name &quot;TdrDelay&quot; -Value 60 -PropertyType DWORD -Force
+
+# 3. 增加虚拟内存（如果内存不足）
+wmic computersystem set AutomaticManagedPagefile=False
+wmic pagefileset create name=&quot;C:\pagefile.sys&quot; InitialSize=32768 MaximumSize=32768
+</code></pre>
+<h3 id="_15">各平台常见问题</h3>
+<h4 id="linux_2">Linux常见问题</h4>
+<p><strong>问题1: libespeak.so.1: cannot open shared object file</strong></p>
+<pre><code class="language-bash"># 检查安装
+dpkg -l | grep espeak
+
+# 重新安装
+sudo apt-get install --reinstall libespeak1
+
+# 创建符号链接（如果路径不匹配）
+sudo ln -s /usr/lib/x86_64-linux-gnu/libespeak.so.1 /usr/lib/libespeak.so
+</code></pre>
+<p><strong>问题2: Permission denied (模型目录)</strong></p>
+<pre><code class="language-bash"># 修改权限
+sudo chmod -R 755 ckpt/
+sudo chmod -R 755 results/
+
+# 改为用户所有
+sudo chown -R $USER:$USER ckpt/
+sudo chown -R $USER:$USER results/
+</code></pre>
+<h4 id="macos_2">macOS常见问题</h4>
+<p><strong>问题1: espeak安装但phonemizer找不到</strong></p>
+<pre><code class="language-bash"># 检查espeak路径
+which espeak  # /opt/homebrew/bin/espeak (Apple Silicon)
+which espeak  # /usr/local/bin/espeak (Intel)
+
+# 检查库文件是否存在
+ls /opt/homebrew/lib/libespeak.dylib  # Apple Silicon
+ls /usr/local/lib/libespeak.dylib     # Intel
+
+# 设置环境变量（添加到~/.zshrc或~/.bash_profile）
+echo 'export PHONEMIZER_ESPEAK_LIBRARY=/opt/homebrew/lib/libespeak.dylib' &gt;&gt; ~/.zshrc
+source ~/.zshrc
+</code></pre>
+<p><strong>问题2: MPS内存不足</strong></p>
+<pre><code class="language-python"># 修复: 减少批量大小和内存使用
+def optimize_for_mps(model):
+    &quot;&quot;&quot;为MPS设备优化模型&quot;&quot;&quot;
+    # 启用内存高效模式
+    if hasattr(torch.mps, 'set_per_process_memory_fraction'):
+        torch.mps.set_per_process_memory_fraction(0.8)  # 只使用80%内存
+
+    # 使用梯度检查点（即使推理时）
+    if hasattr(model, 'gradient_checkpointing_enable'):
+        model.gradient_checkpointing_enable()
+
+    return model
+</code></pre>
+<h4 id="windows_2">Windows常见问题</h4>
+<p><strong>问题1: 路径过长错误（Path too long）</strong></p>
+<pre><code class="language-powershell"># 启用长路径支持
+New-ItemProperty -Path &quot;HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem&quot; -Name &quot;LongPathsEnabled&quot; -Value 1 -PropertyType DWORD -Force
+
+# 或者使用subst创建虚拟驱动器
+subst Z: &quot;C:\Users\YourName\Documents\My Long Path\Projects\DiffRhythm2&quot;
+# 然后使用Z:\作为工作目录
+</code></pre>
+<p><strong>问题2: 杀毒软件干扰</strong></p>
+<pre><code class="language-powershell"># 将工作目录添加到Windows Defender排除列表
+Add-MpPreference -ExclusionPath &quot;C:\path\to\diffrhythm2&quot;
+Add-MpPreference -ExclusionPath &quot;C:\path\to\diffrhythm2\ckpt&quot;
+Add-MpPreference -ExclusionPath &quot;C:\path\to\diffrhythm2\results&quot;
+</code></pre>
+<h3 id="cicdgithub-actions">跨平台CI/CD（GitHub Actions）</h3>
+<pre><code class="language-yaml"># .github/workflows/test.yml
+name: DiffRhythm2 Cross-Platform Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: [3.10.x, 3.11.x]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install system dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y espeak espeak-data libsndfile1
+
+    - name: Install system dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        brew install espeak
+
+    - name: Install system dependencies (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        choco install espeak-ng
+
+    - name: Install Python dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        python -m pytest tests/
+
+    - name: Test generation (minimal)
+      run: |
+        python minimal_demo.py
+      env:
+        DIFFRHYTHM_TEST_MODE: &quot;1&quot;
+</code></pre>
+<hr />
+<h2 id="_16">性能优化</h2>
+<h3 id="1-gpu">1. GPU内存优化</h3>
+<p><strong>模型量化</strong></p>
+<pre><code class="language-python"># FP16推理 (默认)
+torch_dtype = torch.float16
+
+# BF16 (Ampere及以上GPU)
+torch_dtype = torch.bfloat16
+
+# 8-bit量化 (需要bitsandbytes)
+# 节省50%内存，轻微影响质量
+pip install bitsandbytes
+</code></pre>
+<p><strong>梯度检查点</strong></p>
+<pre><code class="language-python"># 在模型定义中启用
+def forward(self, x, ...):
+    if self.training and self.gradient_checkpointing:
+        return torch.utils.checkpoint.checkpoint(
+            self._forward, x, ...
+        )
+    return self._forward(x, ...)
+</code></pre>
+<p><strong>批量处理</strong></p>
+<pre><code class="language-python"># 批量生成减少重复计算
+batch_size = 4  # 根据GPU内存调整
+
+# 结果: 4首歌总时间 ≈ 2.5倍单首歌时间 (而非4倍)
+</code></pre>
+<h3 id="2">2. 推理速度优化</h3>
+<p><strong>减少采样步数</strong></p>
+<pre><code class="language-bash"># 测试模式
+python inference.py ... --sample-steps 8
+
+# 生产模式 (平衡)
+python inference.py ... --sample-steps 16
+
+# 高质量模式
+python inference.py ... --sample-steps 32
+</code></pre>
+<p><strong>Torch编译 (PyTorch 2.0+)</strong></p>
+<pre><code class="language-python"># 编译扩散模型
+diff_compiled = torch.compile(self.diff, mode=&quot;reduce-overhead&quot;)
+
+# 预期加速: 10-20%
+</code></pre>
+<p><strong>CUDA Graphs</strong></p>
+<pre><code class="language-python"># 捕获静态计算图
+static_input = torch.randn(..., device=&quot;cuda&quot;)
+s = torch.cuda.Stream()
+s.wait_stream(torch.cuda.current_stream())
+
+with torch.cuda.stream(s):
+    for _ in range(3):
+        diff_model(static_input, ...)
+
+torch.cuda.current_stream().wait_stream(s)
+
+# 捕获
+g = torch.cuda.CUDAGraph()
+with torch.cuda.graph(g):
+    static_output = diff_model(static_input, ...)
+</code></pre>
+<h3 id="3-gpu">3. 多GPU推理</h3>
+<p><strong>模型并行</strong></p>
+<pre><code class="language-python"># 自动设备映射 (device_map=&quot;auto&quot;)
+model = BFMDiffRhythm2.from_pretrained(
+    model_dir,
+    device_map=&quot;auto&quot;,  # 自动分配到多个GPU
+    torch_dtype=torch.float16
+)
+
+# 手动设备映射
+device_map = {
+    &quot;embeddings&quot;: 0,
+    &quot;encoder.layer_0-15&quot;: 0,
+    &quot;encoder.layer_16-31&quot;: 1,
+    &quot;decoder&quot;: 1,
+}
+</code></pre>
+<p><strong>数据并行</strong></p>
+<pre><code class="language-python"># 使用accelerate库
+from accelerate import Accelerator
+
+accelerator = Accelerator()
+model = accelerator.prepare(model)
+
+# 每个GPU处理不同的歌曲
+</code></pre>
+<h3 id="4-io">4. I/O优化</h3>
+<p><strong>异步加载</strong></p>
+<pre><code class="language-python">import asyncio
+import aiofiles
+
+async def load_lyrics(filepath):
+    async with aiofiles.open(filepath, 'r', encoding='utf-8') as f:
+        return await f.read()
+
+# 并发加载所有歌词
+lyrics = await asyncio.gather(*[load_lyrics(f) for f in files])
+</code></pre>
+<p><strong>模型缓存</strong></p>
+<pre><code class="language-python"># 预加载常用模型
+import functools
+
+@functools.lru_cache(maxsize=4)
+def get_model(repo_id):
+    return BFMDiffRhythm2.from_pretrained(repo_id)
+
+# 同一模型只会加载一次
+</code></pre>
+<h3 id="5">5. 性能基准测试</h3>
+<p><strong>单首歌生成时间 (A100 GPU)</strong></p>
+<table>
+<thead>
+<tr>
+<th>步数</th>
+<th>FP32</th>
+<th>FP16</th>
+<th>内存占用</th>
+<th>质量 (MOS)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>45s</td>
+<td>30s</td>
+<td>6 GB</td>
+<td>3.8</td>
+</tr>
+<tr>
+<td>16</td>
+<td>85s</td>
+<td>60s</td>
+<td>6 GB</td>
+<td>4.2</td>
+</tr>
+<tr>
+<td>32</td>
+<td>160s</td>
+<td>110s</td>
+<td>6 GB</td>
+<td>4.5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>批量生成效率</strong></p>
+<pre><code>批量大小  | 总时间 | 每首歌平均  | 加速比
+---------|--------|------------|--------
+1        | 60s    | 60s        | 1.0x
+2        | 100s   | 50s        | 1.2x
+4        | 180s   | 45s        | 1.33x
+8        | 340s   | 42.5s      | 1.41x
+</code></pre>
+<hr />
+<h2 id="_17">高级故障排查</h2>
+<h3 id="1">1. 模型加载问题</h3>
+<p><strong>问题: OOM (Out of Memory)</strong></p>
+<pre><code>症状: CUDA out of memory
+原因: GPU内存不足
+</code></pre>
+<p>解决方案:</p>
+<pre><code class="language-python"># 1. 使用FP16
+torch_dtype = torch.float16
+
+# 2. 清理缓存
+torch.cuda.empty_cache()
+
+# 3. 减少批量大小
+batch_size = 1
+
+# 4. 启用CPU卸载 (需要accelerate)
+model = BFMDiffRhythm2.from_pretrained(
+    model_dir,
+    device_map=&quot;auto&quot;,
+    offload_folder=&quot;offload&quot;
+)
+</code></pre>
+<p><strong>问题: 模型下载失败</strong></p>
+<pre><code class="language-python"># 使用镜像加速
+import os
+os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
+
+# 或手动下载
+from huggingface_hub import snapshot_download
+
+snapshot_download(
+    repo_id=&quot;ASLP-lab/DiffRhythm2&quot;,
+    local_dir=&quot;./ckpt&quot;,
+    resume_download=True,  # 断点续传
+)
+</code></pre>
+<h3 id="2_1">2. 推理质量问题</h3>
+<p><strong>问题: 生成音频质量差</strong></p>
+<p>可能原因和解决方案:</p>
+<ol>
+<li><strong>CFG强度过低</strong></li>
+</ol>
+<p><code>bash
+   # 增加cfg_strength
+   --cfg-strength 2.5</code></p>
+<ol>
+<li><strong>采样步数不足</strong></li>
+</ol>
+<p><code>bash
+   # 增加采样步数
+   --sample-steps 32</code></p>
+<ol>
+<li><strong>风格提示不明确</strong></li>
+</ol>
+<p><code>python
+   # 使用更具体的描述
+   style_prompt = "Pop, Major key, 120 BPM, Piano, Clear vocals"</code></p>
+<ol>
+<li><strong>歌词格式问题</strong></li>
+</ol>
+<p><code>python
+   # 检查空行和格式
+   # 确保没有非法字符
+   import re
+   text = re.sub(r'[^\w\s\[\]]', '', text)  # 只保留字母数字和[]</code></p>
+<p><strong>问题: 风格不符合预期</strong></p>
+<p>调试步骤:</p>
+<ol>
+<li><strong>可视化风格向量</strong></li>
+</ol>
+<p><code>python
+   # 检查MuLan输出
+   style_embed = mulan(style_text).last_hidden_state.mean(dim=1)
+   print(f"Style vector norm: {style_embed.norm().item()}")
+   print(f"Style vector mean: {style_embed.mean().item()}")</code></p>
+<ol>
+<li><strong>使用音频参考</strong></li>
+</ol>
+<p><code>python
+   # 音频风格通常比文本更准确
+   style_prompt = "./reference_style.wav"</code></p>
+<ol>
+<li><strong>调整CFG强度</strong></li>
+</ol>
+<p><code>python
+   # 高CFG: 严格遵循风格
+   # 低CFG: 保留生成多样性
+   cfg_strength_range = [1.5, 2.0, 2.5, 3.0]</code></p>
+<h3 id="3">3. 性能问题</h3>
+<p><strong>问题: 推理速度慢</strong></p>
+<p>诊断步骤:</p>
+<pre><code class="language-python">import torch
+import time
+
+# 1. 检查CUDA是否启用
+print(f&quot;CUDA可用: {torch.cuda.is_available()}&quot;)
+print(f&quot;设备: {torch.cuda.get_device_name(0)}&quot;)
+
+# 2. 基准测试
+start = time.time()
+# ... 推理代码 ...
+elapsed = time.time() - start
+print(f&quot;生成时间: {elapsed:.2f}s&quot;)
+
+# 3. 分析瓶颈
+from torch.profiler import profile
+
+with profile() as prof:
+    # ... 推理代码 ...
+    pass
+
+prof.export_chrome_trace(&quot;trace.json&quot;)  # 在Chrome trace中查看
+</code></pre>
+<p>优化方案:</p>
+<pre><code class="language-python"># 使用TensorRT (Jetson或Tesla GPU)
+import torch_tensorrt
+
+traced_model = torch.jit.trace(model, example_input)
+traced_model = torch_tensorrt.compile(
+    traced_model,
+    inputs=[example_input],
+    enabled_precisions={torch.half},
+    workspace_size=1 &lt;&lt; 30,
+)
+# 预期加速: 2-3x
+</code></pre>
+<h3 id="4">4. 多语言问题</h3>
+<p><strong>问题: 中文生成效果差</strong></p>
+<p>检查清单:</p>
+<pre><code class="language-python"># 1. 检查espeak安装
+import phonemizer
+print(phonemizer.backend.EspeakBackend().espeak_version())
+
+# 2. 验证中文G2P模型
+from g2p.g2p.chinese_model_g2p import ChineseG2PModel
+g2p = ChineseG2PModel()
+phonemes = g2p(&quot;你好世界&quot;)
+print(phonemes)  # 应该输出拼音
+
+# 3. 检查jieba分词
+import jieba
+words = jieba.cut(&quot;你好世界&quot;, HMM=False)
+print(list(words))  # ['你好', '世界']
+</code></pre>
+<p><strong>解决方案</strong></p>
+<pre><code class="language-python"># 确保使用正确的语言代码
+language = &quot;zh&quot;  # 不是 &quot;ch&quot; 或 &quot;cn&quot;
+
+# 强制中文模式
+def force_chinese_mode(text):
+    &quot;&quot;&quot;强制使用中文处理&quot;&quot;&quot;
+    # 检测中文字符比例
+    zh_chars = sum(1 for c in text if '\u4e00' &lt;= c &lt;= '\u9fff')
+    if zh_chars &gt; len(text) * 0.3:
+        return &quot;zh&quot;, text
+    return &quot;unknown&quot;, text
+</code></pre>
+<h3 id="5_1">5. 音频质量问题</h3>
+<p><strong>问题: 音频有 artifacts</strong></p>
+<p>可能原因:</p>
+<ol>
+<li><strong>声码器问题</strong></li>
+</ol>
+<p><code>python
+   # 检查BigVGAN输入
+   mel_spectrogram = ...  # 来自扩散模型
+   print(f"Min: {mel_spectrogram.min()}")
+   print(f"Max: {mel_spectrogram.max()}")
+   print(f"Mean: {mel_spectrogram.mean()}")</code></p>
+<ol>
+<li><strong>扩散模型输出异常</strong></li>
+</ol>
+<p>```python
+   # 检查latent分布
+   latent = ...  # 扩散模型输出
+   print(f"Latent std: {latent.std().item()}")</p>
+<p># 正常范围: std ≈ 0.5-2.0
+   # 如果std过大或过小，可能有问题
+   ```</p>
+<ol>
+<li><strong>立体声转换问题</strong></li>
+</ol>
+<p><code>python
+   # make_fake_stereo可能引入artifacts
+   # 尝试禁用
+   audio = audio.cpu().numpy()  # 保持单声道
+   # audio = make_fake_stereo(audio)  # 注释掉</code></p>
+<p><strong>调试工具</strong></p>
+<pre><code class="language-python">import librosa
+import matplotlib.pyplot as plt
+
+# 可视化生成音频
+def visualize_audio(audio, sr=44100):
+    # 波形
+    plt.figure(figsize=(12, 8))
+
+    plt.subplot(3, 1, 1)
+    plt.plot(audio)
+    plt.title(&quot;Waveform&quot;)
+    plt.xlabel(&quot;Sample&quot;)
+    plt.ylabel(&quot;Amplitude&quot;)
+
+    # 频谱
+    plt.subplot(3, 1, 2)
+    D = librosa.amplitude_to_db(
+        np.abs(librosa.stft(audio)), ref=np.max
+    )
+    librosa.display.specshow(D, sr=sr)
+    plt.title(&quot;Spectrogram&quot;)
+
+    # 梅尔频谱
+    plt.subplot(3, 1, 3)
+    mel = librosa.feature.melspectrogram(y=audio, sr=sr)
+    mel_db = librosa.power_to_db(mel, ref=np.max)
+    librosa.display.specshow(mel_db, sr=sr)
+    plt.title(&quot;Mel Spectrogram&quot;)
+
+    plt.tight_layout()
+    plt.savefig(&quot;audio_analysis.png&quot;)
+    plt.close()
+</code></pre>
+<hr />
+<h2 id="_18">自定义与扩展</h2>
+<h3 id="1_1">1. 自定义风格编码</h3>
+<p><strong>添加新风格</strong></p>
+<pre><code class="language-python">def create_custom_style(audio_path, text_description):
+    &quot;&quot;&quot;
+    从音频和文本创建风格embedding
+
+    返回:
+        style_embed: torch.Tensor (1, 1024)
+    &quot;&quot;&quot;
+    # 加载音频
+    audio, sr = torchaudio.load(audio_path)
+
+    # 提取MuLan音频特征
+    audio_features = mulan.get_audio_features(audio, sr)
+    audio_embed = mulan.audio_tower(audio_features)
+
+    # 提取文本特征
+    text_embed = mulan.text_tower(text_description)
+
+    # 平均得到最终风格
+    style_embed = (audio_embed + text_embed) / 2
+
+    return style_embed
+
+# 使用自定义风格
+custom_style = create_custom_style(
+    &quot;my_style.wav&quot;,
+    &quot;My custom music style&quot;
+)
+
+# 在生成时使用
+output = diff.generate(
+    ...,
+    style_embed=custom_style,
+)
+</code></pre>
+<h3 id="2_2">2. 自定义扩散调度器</h3>
+<p><strong>实现新的采样调度</strong></p>
+<pre><code class="language-python">from diffusers import SchedulerMixin
+
+class CustomScheduler(SchedulerMixin):
+    def __init__(self, num_train_timesteps=1000, beta_start=0.0001, beta_end=0.02):
+        self.num_train_timesteps = num_train_timesteps
+        self.betas = torch.linspace(beta_start, beta_end, num_train_timesteps)
+        self.alphas = 1.0 - self.betas
+        self.alphas_cumprod = torch.cumprod(self.alphas, dim=0)
+
+    def set_timesteps(self, num_inference_steps):
+        self.timesteps = torch.linspace(
+            self.num_train_timesteps - 1, 0,
+            num_inference_steps, dtype=torch.long
+        )
+        return self.timesteps
+
+    def step(self, model_output, timestep, sample):
+        # 自定义采样步骤
+        prev_timestep = timestep - self.num_train_timesteps // len(self.timesteps)
+
+        alpha_prod_t = self.alphas_cumprod[timestep]
+        alpha_prod_t_prev = self.alphas_cumprod[prev_timestep] if prev_timestep &gt;= 0 else torch.tensor(1.0)
+
+        beta_prod_t = 1 - alpha_prod_t
+
+        # 计算预测的原样本
+        pred_original_sample = (sample - beta_prod_t ** 0.5 * model_output) / alpha_prod_t ** 0.5
+
+        # 计算方向
+        pred_sample_direction = (1 - alpha_prod_t_prev) ** 0.5 * model_output
+
+        # 计算前一步样本
+        prev_sample = alpha_prod_t_prev ** 0.5 * pred_original_sample + pred_sample_direction
+
+        return prev_sample
+
+# 使用自定义调度器
+from diffusers import BFMDPOScheduler
+
+scheduler = CustomScheduler()
+scheduler.set_timesteps(20)
+
+# 在推理中使用
+for t in scheduler.timesteps:
+    noise_pred = diff(latent, t, ...)
+    latent = scheduler.step(noise_pred, t, latent)
+</code></pre>
+<h3 id="3_1">3. 自定义后处理</h3>
+<p><strong>音频后处理pipeline</strong></p>
+<pre><code class="language-python">import pedalboard as pb
+
+def audio_post_processing(audio, sr=44100):
+    &quot;&quot;&quot;
+    音频后处理增强
+
+    Returns:
+        processed_audio: numpy.ndarray
+    &quot;&quot;&quot;
+    # 创建效果链
+    board = pb.Pedalboard([
+        pb.Compressor(threshold_db=-16, ratio=4),  # 压缩
+        pb.Reverb(room_size=0.4, wet_level=0.2),    # 混响
+        pb.LowpassFilter(cutoff_frequency_hz=18000), # 低通滤波
+        pb.Gain(gain_db=2),                         # 增益
+    ])
+
+    # 应用效果
+    processed = board(audio, sr)
+
+    # 音量标准化
+    processed = processed / np.max(np.abs(processed)) * 0.95
+
+    return processed
+
+# 集成到inference.py
+def save_audio_and_return_path(audio_path, stereo_audio, sr=44100):
+    # 应用后处理
+    processed_audio = audio_post_processing(stereo_audio, sr)
+
+    # 保存
+    sf.write(
+        audio_path,
+        processed_audio,
+        samplerate=sr,
+        format='mp3',
+        subtype='MPEG_LAYER_III'
+    )
+</code></pre>
+<h3 id="4_1">4. 数据集准备</h3>
+<p><strong>训练数据格式</strong></p>
+<pre><code class="language-json">{
+    &quot;track_id&quot;: &quot;unique_id&quot;,
+    &quot;audio_path&quot;: &quot;path/to/audio.wav&quot;,
+    &quot;lyrics_path&quot;: &quot;path/to/lyrics.lrc&quot;,
+    &quot;style_tags&quot;: [&quot;pop&quot;, &quot;happy&quot;, &quot;electronic&quot;],
+    &quot;duration&quot;: 180.5
+}
+</code></pre>
+<p><strong>数据预处理脚本</strong></p>
+<pre><code class="language-python">import os
+import json
+import librosa
+import soundfile as sf
+from pathlib import Path
+
+def prepare_training_data(raw_dir, output_dir):
+    &quot;&quot;&quot;
+    准备DiffRhythm2训练数据
+
+    Args:
+        raw_dir: 原始音频目录
+        output_dir: 输出目录
+    &quot;&quot;&quot;
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    metadata = []
+
+    for audio_path in Path(raw_dir).rglob(&quot;*.wav&quot;):
+        try:
+            # 加载音频
+            audio, sr = librosa.load(audio_path, sr=44100)
+
+            # 检查质量
+            if len(audio) &lt; sr * 30:  # 少于30秒跳过
+                continue
+
+            # 标准化
+            audio = audio / np.max(np.abs(audio)) * 0.95
+
+            # 保存处理后的音频
+            output_audio_path = output_dir / &quot;audio&quot; / f&quot;{audio_path.stem}.wav&quot;
+            output_audio_path.parent.mkdir(exist_ok=True)
+            sf.write(output_audio_path, audio, sr)
+
+            # 提取歌词 (需要手动提供或使用工具生成)
+            lyrics_path = output_dir / &quot;lyrics&quot; / f&quot;{audio_path.stem}.lrc&quot;
+            lyrics_path.parent.mkdir(exist_ok=True)
+
+            # 添加到metadata
+            metadata.append({
+                &quot;track_id&quot;: audio_path.stem,
+                &quot;audio_path&quot;: str(output_audio_path.relative_to(output_dir)),
+                &quot;lyrics_path&quot;: str(lyrics_path.relative_to(output_dir)),
+                &quot;duration&quot;: len(audio) / sr
+            })
+
+        except Exception as e:
+            print(f&quot;Error processing {audio_path}: {e}&quot;)
+
+    # 保存metadata
+    with open(output_dir / &quot;metadata.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+        json.dump(metadata, f, indent=2, ensure_ascii=False)
+
+    print(f&quot;Processed {len(metadata)} tracks&quot;)
+    return metadata
+</code></pre>
+<h3 id="5-diffrhythm2">5. 微调DiffRhythm2</h3>
+<p><strong>LoRA微调</strong></p>
+<pre><code class="language-python">from peft import LoraConfig, get_peft_model
+
+def setup_lora(model, rank=16):
+    &quot;&quot;&quot;
+    配置LoRA微调
+
+    Args:
+        model: DiffRhythm2模型
+        rank: LoRA秩
+
+    Returns:
+        model: 包装后的模型
+    &quot;&quot;&quot;
+    lora_config = LoraConfig(
+        r=rank,  # LoRA秩
+        lora_alpha=rank * 2,  # 缩放系数
+        target_modules=[&quot;q_proj&quot;, &quot;v_proj&quot;],  # 目标模块
+        lora_dropout=0.1,  # dropout
+        bias=&quot;none&quot;,  # 不训练bias
+        task_type=&quot;CAUSAL_LM&quot;
+    )
+
+    model = get_peft_model(model, lora_config)
+    model.print_trainable_parameters()
+
+    return model
+
+# 使用示例
+model = BFMDiffRhythm2.from_pretrained(&quot;ASLP-lab/DiffRhythm2&quot;)
+model = setup_lora(model, rank=16)
+
+# 只训练LoRA参数 (约0.1%的总参数)
+optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4)
+</code></pre>
+<p><strong>训练循环</strong></p>
+<pre><code class="language-python">def train_step(batch, model, optimizer, scheduler):
+    &quot;&quot;&quot;
+    单步训练
+
+    Args:
+        batch: 数据批次
+        model: 模型
+        optimizer: 优化器
+        scheduler: 学习率调度器
+
+    Returns:
+        loss: 平均损失
+    &quot;&quot;&quot;
+    model.train()
+
+    # 前向传播
+    loss = model(
+        input_ids=batch[&quot;input_ids&quot;],
+        attention_mask=batch[&quot;attention_mask&quot;],
+        style_embed=batch[&quot;style_embed&quot;],
+        audio_features=batch[&quot;audio_features&quot;],
+    ).loss
+
+    # 反向传播
+    loss.backward()
+
+    # 梯度裁剪
+    torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+
+    # 更新参数
+    optimizer.step()
+    scheduler.step()
+    optimizer.zero_grad()
+
+    return loss.item()
+
+# 训练监控
+from tqdm import tqdm
+
+for epoch in range(num_epochs):
+    total_loss = 0
+    pbar = tqdm(train_dataloader, desc=f&quot;Epoch {epoch}&quot;)
+
+    for batch in pbar:
+        loss = train_step(batch, model, optimizer, scheduler)
+        total_loss += loss
+
+        pbar.set_postfix({&quot;loss&quot;: loss})
+</code></pre>
+<hr />
+<h2 id="api">API参考</h2>
+<h3 id="diffrhythm2_1">DiffRhythm2类</h3>
+<h4 id="_19">初始化</h4>
+<pre><code class="language-python">class BFMDiffRhythm2(nn.Module):
+    def __init__(
+        self,
+        model_type: str = &quot;bfm&quot;,
+        latent_dim: int = 64,
+        num_heads: int = 16,
+        depths: List[int] = [2, 2, 6, 2],
+        channels: List[int] = [128, 256, 512, 1024],
+        block_size: int = 10,
+        sample_rate: int = 44100,
+        hop_length: int = 512,
+    )
+</code></pre>
+<p>参数:</p>
+<ul>
+<li><code>model_type</code>: 模型类型 ("bfm")</li>
+<li><code>latent_dim</code>: 潜在空间维度 (默认64)</li>
+<li><code>num_heads</code>: Transformer头数 (默认16)</li>
+<li><code>depths</code>: 每个阶段的层数 (默认[2, 2, 6, 2])</li>
+<li><code>channels</code>: 每个阶段的通道数 (默认[128, 256, 512, 1024])</li>
+<li><code>block_size</code>: 时间块大小 (默认10)</li>
+<li><code>sample_rate</code>: 采样率 (默认44.1kHz)</li>
+<li><code>hop_length</code>: STFT跳长 (默认512)</li>
+</ul>
+<h4 id="_20">前向传播</h4>
+<pre><code class="language-python">def forward(
+    self,
+    input_ids: torch.Tensor,
+    attention_mask: Optional[torch.Tensor] = None,
+    style_embed: torch.Tensor,
+    audio_features: Optional[torch.Tensor] = None,
+    length: Optional[int] = None,
+    return_dict: Optional[bool] = None,
+) -&gt; Union[Tuple, BaseModelOutput]
+</code></pre>
+<p>参数:</p>
+<ul>
+<li><code>input_ids</code>: 歌词token ID (batch_size, seq_len)</li>
+<li><code>attention_mask</code>: 注意力掩码 (batch_size, seq_len)</li>
+<li><code>style_embed</code>: 风格嵌入 (batch_size, 1024)</li>
+<li><code>audio_features</code>: 音频特征 (可选，用于训练)</li>
+<li><code>length</code>: 目标时长 (frames)</li>
+<li><code>return_dict</code>: 是否返回字典格式</li>
+</ul>
+<p>返回值:</p>
+<ul>
+<li><code>last_hidden_state</code>: 最后一层隐藏状态</li>
+<li><code>loss</code>: 训练损失 (如果提供了audio_features)</li>
+</ul>
+<h4 id="_21">生成方法</h4>
+<pre><code class="language-python">def generate(
+    self,
+    input_ids: torch.Tensor,
+    style_embed: torch.Tensor,
+    length: int,
+    num_inference_steps: int = 16,
+    guidance_scale: float = 2.0,
+    generator: Optional[torch.Generator] = None,
+    output_type: Optional[str] = &quot;np&quot;,
+    return_dict: bool = True,
+    **kwargs
+) -&gt; Union[AudioOutput, Tuple]
+</code></pre>
+<p>参数:</p>
+<ul>
+<li><code>input_ids</code>: 歌词token ID</li>
+<li><code>style_embed</code>: 风格嵌入</li>
+<li><code>length</code>: 生成时长 (frames)</li>
+<li><code>num_inference_steps</code>: 推理步数 (默认16)</li>
+<li><code>guidance_scale</code>: CFG强度 (默认2.0)</li>
+<li><code>generator</code>: 随机数生成器 (用于复现)</li>
+<li><code>output_type</code>: 输出类型 ("np", "pt", "latent")</li>
+<li><code>return_dict</code>: 返回字典格式</li>
+</ul>
+<p>返回值:</p>
+<ul>
+<li><code>audios</code>: 生成的音频 (numpy数组或PyTorch张量)</li>
+<li><code>latents</code>: 潜在表示 (如果output_type="latent")</li>
+</ul>
+<h3 id="mulan_1">MuLan类</h3>
+<pre><code class="language-python">class AutoModel:
+    @classmethod
+    def from_pretrained(cls, pretrained_model_name_or_path, **kwargs)
+</code></pre>
+<p>方法:</p>
+<p><strong>文本编码</strong></p>
+<pre><code class="language-python">def encode_text(
+    self,
+    text: Union[str, List[str]],
+    return_tensors: str = &quot;pt&quot;
+) -&gt; torch.Tensor
+</code></pre>
+<p><strong>音频编码</strong></p>
+<pre><code class="language-python">def encode_audio(
+    self,
+    audio: torch.Tensor,
+    sample_rate: int = 44100
+) -&gt; torch.Tensor
+</code></pre>
+<p><strong>计算相似度</strong></p>
+<pre><code class="language-python">def compute_similarity(
+    self,
+    text_embeds: torch.Tensor,
+    audio_embeds: torch.Tensor
+) -&gt; torch.Tensor
+</code></pre>
+<h3 id="bigvgan_1">BigVGAN类</h3>
+<pre><code class="language-python">class BigVGAN:
+    def __init__(
+        self,
+        hidden_dim: int = 512,
+        upsample_rates: List[int] = [8, 8, 4, 4],
+        upsample_kernel_sizes: List[int] = [16, 16, 8, 8],
+        resblock_kernel_sizes: List[int] = [3, 7, 11],
+        resblock_dilation_sizes: List[List[int]] = [[1, 3, 5], [1, 3, 5], [1, 3, 5]],
+    )
+</code></pre>
+<p>方法:</p>
+<pre><code class="language-python">def forward(self, mel spectrogram: torch.Tensor) -&gt; torch.Tensor
+</code></pre>
+<p>参数:</p>
+<ul>
+<li><code>mel_spectrogram</code>: 梅尔频谱 (batch, 80, time_steps)</li>
+</ul>
+<p>返回值:</p>
+<ul>
+<li><code>audio</code>: 音频波形 (batch, 1, time_steps * hop_length)</li>
+</ul>
+<h3 id="_22">工具函数</h3>
+<p><strong>音频处理</strong></p>
+<pre><code class="language-python">def load_audio(
+    filepath: str,
+    sr: int = 44100,
+    offset: float = 0.0,
+    duration: float = None
+) -&gt; Tuple[np.ndarray, int]
+</code></pre>
+<pre><code class="language-python">def save_audio(
+    filepath: str,
+    audio: np.ndarray,
+    sr: int = 44100,
+    format: str = &quot;mp3&quot;,
+    subtype: str = &quot;MPEG_LAYER_III&quot;
+) -&gt; None
+</code></pre>
+<pre><code class="language-python">def make_fake_stereo(
+    mono_audio: np.ndarray,
+    sr: int = 44100
+) -&gt; np.ndarray
+</code></pre>
+<p><strong>歌词处理</strong></p>
+<pre><code class="language-python">def parse_lyrics(
+    lyrics: str,
+    tokenizer: PhonemeBpeTokenizer
+) -&gt; torch.Tensor
+</code></pre>
+<pre><code class="language-python">def load_lyrics_file(
+    filepath: str,
+    encoding: str = &quot;utf-8&quot;
+) -&gt; str
+</code></pre>
+<p><strong>风格处理</strong></p>
+<pre><code class="language-python">def encode_style(
+    style_prompt: Union[str, List[str], np.ndarray],
+    mulan_model: AutoModel,
+    audio_loader: callable = None
+) -&gt; torch.Tensor
+</code></pre>
+<hr />
+<h2 id="_23">最佳实践</h2>
+<h3 id="1_2">1. 生产环境部署</h3>
+<p><strong>使用FastAPI创建服务</strong></p>
+<pre><code class="language-python">from fastapi import FastAPI, File, UploadFile
+from pydantic import BaseModel
+import torch
+import tempfile
+import os
+
+app = FastAPI()
+
+# 全局模型 (单例)
+model = None
+
+def load_model():
+    &quot;&quot;&quot;加载模型&quot;&quot;&quot;
+    global model
+    if model is None:
+        from inference import Inference
+        model = Inference()
+    return model
+
+class GenerateRequest(BaseModel):
+    lyrics: str
+    style_prompt: str
+    cfg_strength: float = 2.0
+    sample_steps: int = 16
+    max_secs: float = 210.0
+
+@app.post(&quot;/generate&quot;)
+async def generate_music(request: GenerateRequest):
+    &quot;&quot;&quot;生成音乐API&quot;&quot;&quot;
+    inference = load_model()
+
+    # 创建临时文件
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.lrc', delete=False) as f:
+        f.write(request.lyrics)
+        lyrics_path = f.name
+
+    try:
+        # 生成
+        audio_path = inference.generate(
+            lyrics_path=lyrics_path,
+            style_prompt=request.style_prompt,
+            cfg_strength=request.cfg_strength,
+            sample_steps=request.sample_steps,
+            max_secs=request.max_secs
+        )
+
+        # 读取音频文件
+        with open(audio_path, 'rb') as f:
+            audio_data = f.read()
+
+        # 清理临时文件
+        os.unlink(lyrics_path)
+        os.unlink(audio_path)
+
+        return {
+            &quot;audio&quot;: audio_data,
+            &quot;format&quot;: &quot;mp3&quot;
+        }
+
+    except Exception as e:
+        # 错误处理
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get(&quot;/health&quot;)
+async def health_check():
+    &quot;&quot;&quot;健康检查&quot;&quot;&quot;
+    try:
+        inference = load_model()
+        return {&quot;status&quot;: &quot;healthy&quot;, &quot;model_loaded&quot;: True}
+    except Exception as e:
+        return {&quot;status&quot;: &quot;unhealthy&quot;, &quot;error&quot;: str(e)}
+</code></pre>
+<p><strong>使用gunicorn部署</strong></p>
+<pre><code class="language-bash"># 多进程部署
+gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+
+# 带超时设置
+gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker \
+    --bind 0.0.0.0:8000 \
+    --timeout 300 \
+    --keep-alive 5
+</code></pre>
+<h3 id="2_3">2. 监控和日志</h3>
+<p><strong>Prometheus指标</strong></p>
+<pre><code class="language-python">from prometheus_client import Counter, Histogram, Gauge
+import time
+
+# 定义指标
+generate_requests_total = Counter(
+    'music_generation_requests_total',
+    'Total music generation requests',
+    ['status']
+)
+
+generate_duration_seconds = Histogram(
+    'music_generation_duration_seconds',
+    'Music generation duration',
+    buckets=[30, 60, 120, 180, 300, 600]
+)
+
+gpu_memory_usage = Gauge(
+    'gpu_memory_usage_mb',
+    'GPU memory usage in MB'
+)
+
+# 在生成函数中使用
+def generate_with_metrics(...) -&gt; str:
+    start_time = time.time()
+
+    try:
+        # 更新GPU内存指标
+        if torch.cuda.is_available():
+            gpu_memory_usage.set(
+                torch.cuda.memory_allocated() / 1024 / 1024
+            )
+
+        # 生成
+        result = generate(...)
+
+        # 记录成功
+        generate_requests_total.labels(status=&quot;success&quot;).inc()
+
+        return result
+
+    except Exception as e:
+        # 记录失败
+        generate_requests_total.labels(status=&quot;failed&quot;).inc()
+        raise
+
+    finally:
+        # 记录耗时
+        duration = time.time() - start_time
+        generate_duration_seconds.observe(duration)
+</code></pre>
+<p><strong>结构化日志</strong></p>
+<pre><code class="language-python">import structlog
+import json
+
+# 配置structlog
+structlog.configure(
+    processors=[
+        structlog.stdlib.filter_by_level,
+        structlog.stdlib.add_logger_name,
+        structlog.stdlib.add_log_level,
+        structlog.stdlib.PositionalArgumentsFormatter(),
+        structlog.processors.TimeStamper(fmt=&quot;iso&quot;),
+        structlog.processors.StackInfoRenderer(),
+        structlog.processors.format_exc_info,
+        structlog.processors.UnicodeDecoder(),
+        structlog.processors.JSONRenderer()
+    ],
+    context_class=dict,
+    logger_factory=structlog.stdlib.LoggerFactory(),
+    wrapper_class=structlog.stdlib.BoundLogger,
+    cache_logger_on_first_use=True,
+)
+
+logger = structlog.get_logger()
+
+# 使用
+logger.info(
+    &quot;music_generation_started&quot;,
+    song_name=&quot;my_song&quot;,
+    style_prompt=&quot;pop&quot;,
+    cfg_strength=2.0,
+    sample_steps=16
+)
+</code></pre>
+<h3 id="3_2">3. 测试和验证</h3>
+<p><strong>单元测试</strong></p>
+<pre><code class="language-python">import pytest
+import torch
+import tempfile
+import os
+from inference import Inference
+
+@pytest.fixture
+def inference() -&gt; Inference:
+    &quot;&quot;&quot;模型fixture&quot;&quot;&quot;
+    return Inference()
+
+@pytest.fixture
+def sample_lyrics() -&gt; str:
+    &quot;&quot;&quot;示例歌词&quot;&quot;&quot;
+    return &quot;&quot;&quot;[start]
+[verse]
+Hello world
+This is a test
+[outro]&quot;&quot;&quot;
+
+def test_model_loading(inference: Inference):
+    &quot;&quot;&quot;测试模型加载&quot;&quot;&quot;
+    assert inference.diff is not None
+    assert inference.mulan is not None
+    assert inference.vocoder is not None
+
+def test_lyrics_parsing(inference: Inference, sample_lyrics: str):
+    &quot;&quot;&quot;测试歌词解析&quot;&quot;&quot;
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.lrc') as f:
+        f.write(sample_lyrics)
+        f.flush()
+
+        tokens = inference.parse_lyrics(f.name)
+        assert tokens is not None
+        assert tokens.shape[0] &gt; 0
+
+def test_music_generation(inference: Inference, sample_lyrics: str):
+    &quot;&quot;&quot;测试音乐生成&quot;&quot;&quot;
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.lrc') as lyrics_file,
+         tempfile.NamedTemporaryFile(mode='w', suffix='.mp3', delete=False) as output_file:
+
+        lyrics_file.write(sample_lyrics)
+        lyrics_file.flush()
+
+        audio_path = inference.generate(
+            lyrics_path=lyrics_file.name,
+            style_prompt=&quot;Pop, Happy&quot;,
+            output_path=output_file.name
+        )
+
+        # 验证文件存在
+        assert os.path.exists(audio_path)
+
+        # 验证文件大小
+        file_size = os.path.getsize(audio_path)
+        assert file_size &gt; 1024  # 至少1KB
+
+        # 清理
+        os.unlink(output_file.name)
+</code></pre>
+<p><strong>集成测试</strong></p>
+<pre><code class="language-python">def test_end_to_end_generation():
+    &quot;&quot;&quot;端到端测试&quot;&quot;&quot;
+    # 准备测试数据
+    test_data = {
+        &quot;song_name&quot;: &quot;test_song&quot;,
+        &quot;style_prompt&quot;: &quot;Electronic, Synthwave&quot;,
+        &quot;lyrics&quot;: &quot;[start]\n[verse]\nTest lyrics line\n[outro]&quot;
+    }
+
+    # 保存歌词
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.lrc') as lyrics_file,
+         tempfile.NamedTemporaryFile(mode='w', suffix='.mp3') as output_file:
+
+        lyrics_file.write(test_data[&quot;lyrics&quot;])
+        lyrics_file.flush()
+
+        # 生成
+        inference = Inference()
+        audio_path = inference.generate(
+            lyrics_path=lyrics_file.name,
+            style_prompt=test_data[&quot;style_prompt&quot;],
+            output_path=output_file.name
+        )
+
+        # 验证音频质量
+        audio, sr = librosa.load(audio_path, sr=None)
+
+        # 检查时长 (应该大于10秒)
+        duration = len(audio) / sr
+        assert duration &gt; 10.0
+
+        # 检查音量 (RMS应该大于0.01)
+        rms = np.sqrt(np.mean(audio ** 2))
+        assert rms &gt; 0.01
+
+        # 检查静音比例 (不应该有太多静音)
+        silence_threshold = 0.01
+        silence_ratio = np.mean(np.abs(audio) &lt; silence_threshold)
+        assert silence_ratio &lt; 0.2  # 少于20%静音
+</code></pre>
+<h3 id="4_2">4. 安全最佳实践</h3>
+<p><strong>输入验证</strong></p>
+<pre><code class="language-python">import re
+
+def validate_lyrics(lyrics: str) -&gt; bool:
+    &quot;&quot;&quot;
+    验证歌词格式
+
+    Returns:
+        bool: 是否有效
+    &quot;&quot;&quot;
+    # 检查长度
+    if len(lyrics) &gt; 10000:
+        return False
+
+    # 检查字符
+    if not all(ord(c) &lt; 128 or
+               '\u4e00' &lt;= c &lt;= '\u9fff' or  # 中文
+               c in '\n\r\t[] ' for c in lyrics):  # 允许的符号
+        return False
+
+    # 检查结构标签
+    valid_tags = ['start', 'intro', 'verse', 'pre-chorus', 'chorus', 'bridge', 'outro']
+    tag_pattern = r'\[(' + '|'.join(valid_tags) + ')\]'
+
+    # 允许没有标签
+    return True
+
+def sanitize_style_prompt(style_prompt: str) -&gt; str:
+    &quot;&quot;&quot;
+    清理风格提示
+
+    Returns:
+        清理后的提示
+    &quot;&quot;&quot;
+    # 移除HTML标签
+    style_prompt = re.sub(r'&lt;[^&gt;]+&gt;', '', style_prompt)
+
+    # 限制长度
+    if len(style_prompt) &gt; 500:
+        style_prompt = style_prompt[:500]
+
+    # 检查是否为文件路径
+    if os.path.exists(style_prompt):
+        # 验证文件类型
+        if not style_prompt.lower().endswith(('.wav', '.mp3', '.flac')):
+            raise ValueError(&quot;Unsupported audio format&quot;)
+
+    return style_prompt
+</code></pre>
+<p><strong>资源限制</strong></p>
+<pre><code class="language-python">import resource
+
+def set_resource_limits():
+    &quot;&quot;&quot;
+    设置资源限制
+    &quot;&quot;&quot;
+    # 最大内存 (8GB)
+    max_memory = 8 * 1024 * 1024 * 1024  # 8GB
+    resource.setrlimit(
+        resource.RLIMIT_AS,
+        (max_memory, max_memory)
+    )
+
+    # 最大CPU时间 (5分钟)
+    max_cpu_time = 5 * 60  # 5 minutes
+    resource.setrlimit(
+        resource.RLIMIT_CPU,
+        (max_cpu_time, max_cpu_time)
+    )
+</code></pre>
+<p><strong>沙箱环境 (Docker)</strong></p>
+<pre><code class="language-dockerfile">FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
+
+# 创建非特权用户
+RUN useradd --create-home --shell /bin/bash diffusr
+
+# 安装依赖
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 复制代码
+COPY --chown=diffusr:diffusr . /app
+WORKDIR /app
+
+# 切换到非特权用户
+USER diffusr
+
+# 设置资源限制
+RUN echo &quot;* soft nproc 20&quot; &gt;&gt; /etc/security/limits.conf
+RUN echo &quot;* hard nproc 50&quot; &gt;&gt; /etc/security/limits.conf
+RUN echo &quot;* soft nofile 100&quot; &gt;&gt; /etc/security/limits.conf
+RUN echo &quot;* hard nofile 200&quot; &gt;&gt; /etc/security/limits.conf
+
+# 运行
+CMD [&quot;python&quot;, &quot;inference.py&quot;]
+</code></pre>
+<h3 id="5_2">5. 版本管理</h3>
+<p><strong>依赖版本</strong></p>
+<pre><code class="language-txt"># requirements.txt with pinned versions
+torch==2.3.1+cu121
+torchaudio==2.3.1+cu121
+transformers==4.47.1
+accelerate==0.25.0
+diffusers==0.24.0
+safetensors==0.4.1
+phonemizer==3.2.1
+jieba==0.42.1
+cn2an==0.5.22
+pypinyin==0.50.0
+pedalboard==0.9.0
+soundfile==0.12.1
+librosa==0.10.1
+numpy==1.26.0
+scipy==1.11.4
+</code></pre>
+<p><strong>模型版本控制</strong></p>
+<pre><code class="language-python">from huggingface_hub import hf_hub_download, create_repo
+import hashlib
+
+def download_with_verification(repo_id, filename, revision=&quot;main&quot;):
+    &quot;&quot;&quot;
+    下载并验证模型完整性
+    &quot;&quot;&quot;
+    # 下载
+    file_path = hf_hub_download(
+        repo_id=repo_id,
+        filename=filename,
+        revision=revision
+    )
+
+    # 计算哈希
+    with open(file_path, &quot;rb&quot;) as f:
+        file_hash = hashlib.sha256(f.read()).hexdigest()
+
+    # 验证 (需要预先存储正确的哈希)
+    expected_hash = get_expected_hash(filename)
+    if file_hash != expected_hash:
+        raise ValueError(f&quot;Model file corrupted: {filename}&quot;)
+
+    return file_path
+
+def publish_model_version(
+    model_path,
+    repo_name,
+    version_tag,
+    commit_message=&quot;&quot;
+):
+    &quot;&quot;&quot;
+    发布模型版本
+    &quot;&quot;&quot;
+    create_repo(repo_name, private=False)
+
+    from huggingface_hub import Repository
+
+    repo = Repository(local_dir=model_path, clone_from=repo_name)
+    repo.git_add(pattern=&quot;.&quot;)
+    repo.git_commit(commit_message)
+    repo.git_push()
+
+    # 打标签
+    repo.git_tag(version_tag)
+    repo.git_push(&quot;origin&quot;, version_tag)
+</code></pre>
+<hr />
+<h2 id="_24">附录</h2>
+<h3 id="a-configjson">A. 模型配置文件 (config.json)</h3>
+<pre><code class="language-json">{
+  &quot;_class_name&quot;: &quot;BFMDiffRhythm2&quot;,
+  &quot;block_size&quot;: 10,
+  &quot;channels&quot;: [128, 256, 512, 1024],
+  &quot;depths&quot;: [2, 6, 6, 2],
+  &quot;diff_spe&quot;: true,
+  &quot;drop_rate&quot;: 0.1,
+  &quot;latent_dim&quot;: 64,
+  &quot;model_type&quot;: &quot;bfm&quot;,
+  &quot;norm_mode&quot;: &quot;rmsnorm&quot;,
+  &quot;num_heads&quot;: [8, 16, 16, 16],
+  &quot;num_train_timesteps&quot;: 1000,
+  &quot;sample_rate&quot;: 44100,
+  &quot;shift&quot;: true,
+  &quot;shift_mode&quot;: &quot;C&quot;,
+  &quot;use_diff_shortcut&quot;: true,
+  &quot;use_magnitude_transform&quot;: true
+}
+</code></pre>
+<h3 id="b">B. 质量评估指标</h3>
+<pre><code class="language-python">def evaluate_audio_quality(
+    generated_audio: np.ndarray,
+    reference_audio: np.ndarray,
+    sr: int = 44100
+) -&gt; dict:
+    &quot;&quot;&quot;
+    评估音频质量
+
+    Returns:
+        metrics: 包含多个指标的字典
+    &quot;&quot;&quot;
+    metrics = {}
+
+    # 1. 信噪比 (SNR)
+    noise = generated_audio - reference_audio
+    snr = 10 * np.log10(
+        np.mean(reference_audio  ** 2) /
+        (np.mean(noise  ** 2) + 1e-10)
+    )
+    metrics[&quot;snr&quot;] = snr
+
+    # 2. 总谐波失真 (THD)
+    # 实现略
+
+    # 3. 感知音频质量 (需要PESQ)
+    try:
+        from pesq import pesq
+        metrics[&quot;pesq&quot;] = pesq(sr, reference_audio, generated_audio, 'nb')
+    except ImportError:
+        metrics[&quot;pesq&quot;] = None
+
+    # 4. 频谱距离
+    gen_spec = np.abs(librosa.stft(generated_audio))
+    ref_spec = np.abs(librosa.stft(reference_audio))
+    metrics[&quot;spectral_distance&quot;] = np.mean((gen_spec - ref_spec) ** 2)
+
+    return metrics
+</code></pre>
+<h3 id="c">C. 常见错误码</h3>
+<table>
+<thead>
+<tr>
+<th>错误</th>
+<th>原因</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CUDA out of memory</td>
+<td>GPU内存不足</td>
+<td>减少batch size，使用FP16</td>
+</tr>
+<tr>
+<td>Unknown language</td>
+<td>语言检测失败</td>
+<td>检查歌词格式，移除空行</td>
+</tr>
+<tr>
+<td>Model file not found</td>
+<td>模型文件缺失</td>
+<td>检查ckpt目录，重新下载</td>
+</tr>
+<tr>
+<td>Audio generation timeout</td>
+<td>生成超时</td>
+<td>减少采样步数，检查GPU</td>
+</tr>
+<tr>
+<td>Style encoding failed</td>
+<td>风格编码失败</td>
+<td>检查风格提示格式</td>
+</tr>
+</tbody>
+</table>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

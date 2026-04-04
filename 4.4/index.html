@@ -1,0 +1,1578 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://datawhalechina.github.io/musiclm-universe/4.4/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>为什么需要 Music Language Model：从“数据翻译”到“音乐智能” - MusicLM Universe</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../overrides/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="grey" data-md-color-accent="deeporange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#music-language-model" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="MusicLM Universe" class="md-header__button md-logo" aria-label="MusicLM Universe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MusicLM Universe
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              为什么需要 Music Language Model：从“数据翻译”到“音乐智能”
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="MusicLM Universe" class="md-nav__button md-logo" aria-label="MusicLM Universe" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MusicLM Universe
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一部分：音乐生成模型完整实现流程 Notebook 演示
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第一部分：音乐生成模型完整实现流程 Notebook 演示
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Music_Representations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一章 Music Representations 音乐数据表示
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio Tokenizer.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二章 Audio Tokenizer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三章 Music Transformer
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第三章 Music Transformer
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Model Training.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Model Training 模型训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Music Generation.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.2 Music Generation 音乐生成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二部分：开源音乐生成模型部署实践与代码分析
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第二部分：开源音乐生成模型部署实践与代码分析
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四章 Transformer 架构模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第四章 Transformer 架构模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MusicGen_Setup_and_Usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 MusicGen 部署及使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MusicGen_Codebase_Analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.2 MusicGen 开源代码分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五章 Diffusion 架构模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第五章 Diffusion 架构模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DiffRhythm2_Setup_and_Usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Diffrhythm2 部署及使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DiffRhythm2_Codebase_Analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Diffrhythm2 开源代码分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第六章 混合架构模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第六章 混合架构模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ACE-Step_Setup_and_Usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 ACE-Step 部署及使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ACE-Step_Codebase_Analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.2 ACE-Step 1.5 开源代码分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../framework.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三部分：音乐生成优化框架构建 MusicGen（SFT）+ DPO + Reasoning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心困境：有了“语言”，为何还需要“大脑”？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mlm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        范式转变：MLM 带来的三大突破
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="范式转变：MLM 带来的三大突破">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔹 突破一：从“局部预测”到“全局叙事”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔹 突破二：从“信号处理”到“语义对齐”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔹 突破三：从“单一任务”到“通用智能”
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        为什么必须是“Language” Model？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="为什么必须是“Language” Model？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 音乐与语言的同构性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 离散化带来的“认知跃迁”
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#music-language-model_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Music Language Model 的核心价值
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Music Language Model 的核心价值">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-democratization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔹 1. 创作民主化 (Democratization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-contextual-intelligence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔹 2. 上下文智能 (Contextual Intelligence)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-multimodal-interaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔹 3. 多模态交互 (Multimodal Interaction)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mlm_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        挑战与反思：MLM 并非终点
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📌 本节核心收获
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        结语：在数据与智能之间，搭建音乐的桥梁
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="结语：在数据与智能之间，搭建音乐的桥梁">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本章知识地图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心思想的三重升华
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="核心思想的三重升华">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔹 第一重：技术是手段，表达是目的
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔹 第二重：没有银弹，只有权衡
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔹 第三重：人机协作，而非机器替代
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        给读者的三个建议
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="给读者的三个建议">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌱 建议一：保持好奇，但保持批判
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌱 建议二：动手实践，但不忘反思
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌱 建议三：尊重音乐，也尊重创作者
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        致未来的你
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最后的话
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="music-language-model">为什么需要 Music Language Model：从“数据翻译”到“音乐智能”</h1>
+<blockquote>
+<p><strong>本节导语</strong><br />
+<em>“如果 4.3 节我们学会了如何为音乐编写‘字典’（数据表示），那么本节我们将探讨如何教会 AI‘阅读’与‘写作’。<br />
+拥有了乐谱和录音并不等于拥有了作曲家——Music Language Model (MLM) 的出现，正是为了让机器从‘数据的搬运工’进化为‘音乐的创造者’。”</em></p>
+</blockquote>
+<h2 id="_1">核心困境：有了“语言”，为何还需要“大脑”？</h2>
+<p>在 4.3 节的尾声，我们掌握了将音乐转化为计算机可处理序列的多种“方言”：
+- <strong>MIDI</strong> 记录了严谨的结构，但它只是一串冰冷的数字事件；
+- <strong>EnCodec Token</strong> 保留了丰富的音色，但它只是一段压缩的声学指纹；
+- <strong>梅尔频谱</strong> 描绘了声音的色彩，但它只是一幅静态的像素画。</p>
+<p><strong>关键追问</strong>：<br />
+如果我们把这些数据直接喂给传统的统计模型（如早期的 N-gram 或简单的 RNN），会发生什么？
+- ❌ <strong>碎片化</strong>：模型只能预测“下一个音符”，却记不住“三分钟前的主题”，导致乐曲结构松散，缺乏起承转合。
+- ❌ <strong>语义盲区</strong>：你输入“悲伤的爵士”，模型可能生成一段欢快的波尔卡，因为它不懂“悲伤”与“小调/慢速”之间的语义关联。
+- ❌ <strong>模态隔离</strong>：文本描述、乐谱符号、音频波形各自为政，无法实现“所想即所得”的跨模态创作。</p>
+<p><strong>Music Language Model (MLM) 的使命</strong>：<br />
+它不再仅仅是处理数据的工具，而是<strong>理解音乐逻辑的智能体</strong>。它利用 Transformer 架构的<strong>全局注意力机制</strong>和<strong>大规模预训练范式</strong>，将离散的 Token 串联成有情感、有结构、有逻辑的音乐叙事。</p>
+<blockquote>
+<p>💡 <strong>核心隐喻</strong><br />
+<em>“数据表示是乐谱上的墨迹，而 Music Language Model 是那位能读懂墨迹背后情感、并能即兴发挥的演奏家。”</em></p>
+</blockquote>
+<h2 id="mlm">范式转变：MLM 带来的三大突破</h2>
+<p>Music Language Model 的出现，标志着音乐生成从“规则驱动”向“数据驱动 + 语义理解”的根本性转变。</p>
+<h4 id="_2">🔹 突破一：从“局部预测”到“全局叙事”</h4>
+<p><strong>传统局限</strong>：<br />
+早期的生成模型（如 Markov Chain, LSTM）受限于上下文窗口，往往只能关注最近几个音符。这导致生成的音乐像“拼贴画”——局部好听，整体混乱，缺乏长程的主题呼应。</p>
+<p><strong>MLM 的解决方案</strong>：<br />
+基于 <strong>Transformer 的自注意力机制 (Self-Attention)</strong>，MLM 能够同时“看见”整个序列。
+- <strong>长程依赖</strong>：在生成第 100 小节时，模型仍能“记得”第 1 小节的主题动机，并对其进行变奏或再现。
+- <strong>结构感知</strong>：模型能隐式学习曲式结构（如 AABA、主歌 - 副歌），确保乐曲有清晰的开端、高潮和结尾。</p>
+<pre><code>【注意力机制视角】
+
+传统模型： [音符n-2] [音符n-1] → 预测 [音符n]  (视野狭窄)
+             ↓
+MLM 模型：   [音符1] ... [音符50] ... [音符n-1] → 预测 [音符n]
+             ↑__________________↑
+             全局关联：模型能发现第 1 小节与第 50 小节的主题呼应
+</code></pre>
+<h4 id="_3">🔹 突破二：从“信号处理”到“语义对齐”</h4>
+<p><strong>传统局限</strong>：<br />
+传统音频模型难以理解抽象的人类指令。你无法对 WaveNet 说“给我一段像雨夜咖啡馆一样的音乐”，它只能处理具体的声学参数。</p>
+<p><strong>MLM 的解决方案</strong>：<br />
+通过<strong>多模态联合预训练</strong>，MLM 将文本语义空间与音乐表示空间映射到同一维度。
+- <strong>文本 - 音乐对齐</strong>：模型学习了“悲伤”≈“小调 + 慢速 + 大混响”，“激昂”≈“大调 + 快速 + 强力度”。
+- <strong>零样本泛化</strong>：即使训练数据中没有“赛博朋克风格的巴赫赋格”，模型也能组合已学的概念，生成符合描述的新作品。</p>
+<blockquote>
+<p>📌 <strong>技术本质</strong><br />
+这不是简单的关键词匹配，而是高维向量空间中的<strong>语义邻近性</strong>。在 MLM 的潜空间里，“下雨声”和“忧郁的小提琴”在向量距离上是接近的。</p>
+</blockquote>
+<h4 id="_4">🔹 突破三：从“单一任务”到“通用智能”</h4>
+<p><strong>传统局限</strong>：<br />
+过去，你需要一个模型做旋律生成，另一个模型做伴奏合成，再一个模型做音色转换。每个模型都是专用的“工匠”。</p>
+<p><strong>MLM 的解决方案</strong>：<br />
+得益于<strong>Next-Token Prediction</strong>的统一范式，一个 MLM 可以胜任多种任务：
+- <strong>续写</strong>：给定前奏，生成后续乐章。
+- <strong>补全</strong>：给定首尾，填充中间段落。
+- <strong>风格迁移</strong>：给定旋律，改变其风格（如“把这首儿歌变成重金属”）。
+- <strong>多轨编曲</strong>：同时生成钢琴、鼓、贝斯等多个声部，并保持和谐。</p>
+<h2 id="language-model">为什么必须是“Language” Model？</h2>
+<p>你可能会问：音乐是听觉艺术，为什么要借用处理文本的“语言”模型？</p>
+<p>答案在于<strong>序列建模的普适性</strong>与<strong>离散化的力量</strong>。</p>
+<h3 id="1">1. 音乐与语言的同构性</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">自然语言 (NLP)</th>
+<th style="text-align: left;">音乐 (Music)</th>
+<th style="text-align: left;">MLM 的对应能力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>基本单元</strong></td>
+<td style="text-align: left;">单词 (Word)</td>
+<td style="text-align: left;">音符 / Token (Note/Audio Token)</td>
+<td style="text-align: left;">词表嵌入 (Embedding)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>语法结构</strong></td>
+<td style="text-align: left;">句法 (Syntax)</td>
+<td style="text-align: left;">乐理 (Theory: 和声/节奏)</td>
+<td style="text-align: left;">位置编码 + 自注意力</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>语义含义</strong></td>
+<td style="text-align: left;">句子意义 (Semantics)</td>
+<td style="text-align: left;">情感 / 风格 (Emotion/Style)</td>
+<td style="text-align: left;">上下文理解</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>长程依赖</strong></td>
+<td style="text-align: left;">篇章结构 (Discourse)</td>
+<td style="text-align: left;">曲式结构 (Form)</td>
+<td style="text-align: left;">全局注意力机制</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>生成方式</strong></td>
+<td style="text-align: left;">下一个词预测</td>
+<td style="text-align: left;">下一个 Token 预测</td>
+<td style="text-align: left;">自回归生成 (Autoregressive)</td>
+</tr>
+</tbody>
+</table>
+<p>正如语言模型通过预测下一个词来学习语法和语义，Music Language Model 通过预测下一个音乐 Token 来学习乐理和风格。这种<strong>自监督学习</strong>范式，使得模型能从海量无标注数据中自动提取规律，无需人工编写复杂的乐理规则。</p>
+<h3 id="2">2. 离散化带来的“认知跃迁”</h3>
+<p>在 4.3.4 节中提到的<strong>神经音频 Token (如 EnCodec)</strong> 是关键桥梁。它将连续的声波离散化为有限的词汇表（例如 1024 个 Token）。
+- <strong>连续性难题</strong>：直接在连续波形空间（无限可能）进行建模极其困难，容易陷入局部最优，产生噪声。
+- <strong>离散化优势</strong>：一旦音乐被离散化为 Token，它就变成了“另一种语言”。我们可以直接复用 NLP 领域十年积累的成果（Transformer 架构、RLHF 对齐、Prompt Engineering）。</p>
+<blockquote>
+<p>💡 <strong>关键洞察</strong><br />
+<em>“将音频离散化为 Token，是音乐 AI 领域的‘ImageNet 时刻’。它让音乐生成从‘信号处理问题’转变为‘语言理解问题’。”</em></p>
+</blockquote>
+<h2 id="music-language-model_1">Music Language Model 的核心价值</h2>
+<h4 id="1-democratization">🔹 1. 创作民主化 (Democratization)</h4>
+<p>MLM 拆除了横亘在普通人与专业音乐创作之间的技巧高墙。
+- <strong>过去</strong>：创作一首完整的歌曲需要数年乐理学习、乐器练习和录音技术。
+- <strong>现在</strong>：任何人只需输入文字描述（Prompt），MLM 即可在数十秒内生成结构完整、音质专业的作品。
+- <strong>意义</strong>：音乐创作不再是精英的特权，而是每个人表达情感的工具。</p>
+<h4 id="2-contextual-intelligence">🔹 2. 上下文智能 (Contextual Intelligence)</h4>
+<p>MLM 具备了前所未有的结构掌控力。
+- <strong>长曲生成</strong>：能生成 5 分钟以上、具有明确主歌 - 副歌 - 桥段结构的完整曲目。
+- <strong>主题发展</strong>：能在乐曲中重复、变奏、发展核心动机，展现类似人类作曲家的叙事逻辑。
+- <strong>风格融合</strong>：能无缝融合多种风格（如“巴赫赋格 + 电子舞曲”），创造出全新的音乐形态。</p>
+<h4 id="3-multimodal-interaction">🔹 3. 多模态交互 (Multimodal Interaction)</h4>
+<p>MLM 打开了音乐与其他模态对话的大门。
+- <strong>文生音乐</strong>：最基础的应用，文本描述直接生成音频。
+- <strong>图生音乐</strong>：根据图像内容（如风景画、电影分镜）生成配乐。
+- <strong>视频配乐</strong>：根据视频节奏、情绪变化实时生成同步 BGM。
+- <strong>哼唱生成</strong>：用户哼一段旋律，AI 自动补全为完整编曲。</p>
+<h2 id="mlm_1">挑战与反思：MLM 并非终点</h2>
+<p>尽管 MLM 带来了革命性突破，但我们仍需清醒认识其局限，这也是未来研究的方向：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">挑战</th>
+<th style="text-align: left;">说明</th>
+<th style="text-align: left;">未来方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>幻觉问题</strong></td>
+<td style="text-align: left;">可能生成不和谐的和弦或结构断裂</td>
+<td style="text-align: left;">引入乐理约束、强化学习优化 (RLHF)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>版权争议</strong></td>
+<td style="text-align: left;">训练数据版权归属模糊，生成内容可能侵权</td>
+<td style="text-align: left;">建立版权过滤机制、可溯源生成技术</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>情感深度</strong></td>
+<td style="text-align: left;">虽能模仿情感表达，但缺乏真实生命体验</td>
+<td style="text-align: left;">人机协作、情感计算增强</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>精细控制</strong></td>
+<td style="text-align: left;">对特定小节、特定乐器的微调仍困难</td>
+<td style="text-align: left;">混合架构 (符号引导声学)、ControlNet</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>算力成本</strong></td>
+<td style="text-align: left;">大模型训练与推理需高昂算力</td>
+<td style="text-align: left;">模型蒸馏、边缘计算部署</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>哲学思考</strong><br />
+<em>“当 AI 能完美模仿贝多芬的悲伤，它真的‘理解’悲伤吗？<br />
+或许答案并不重要。重要的是，它让我们重新审视：人类的创造力究竟源于何处？<br />
+是技巧的堆砌，还是灵魂的独特震颤？MLM 不是要取代人类，而是要成为那面镜子，映照出我们内心未被听见的旋律。”</em></p>
+</blockquote>
+<h2 id="_5">📌 本节核心收获</h2>
+<ol>
+<li><strong>必要性</strong>：仅有数据表示不够，必须通过 MLM 实现从“数据记录”到“音乐理解”的跨越。</li>
+<li><strong>核心突破</strong>：全局叙事能力（长程依赖）、语义对齐能力（文本 - 音乐）、通用智能（多任务统一）。</li>
+<li><strong>技术本质</strong>：音乐与语言在序列建模上的同构性，以及离散化 Token 带来的范式红利。</li>
+<li><strong>价值维度</strong>：创作民主化、上下文智能、多模态交互。</li>
+<li><strong>理性看待</strong>：正视幻觉、版权、情感深度等挑战，未来是人机协作而非机器替代。</li>
+</ol>
+<blockquote>
+<p><strong>思考题</strong>：
+1. 如果让你设计一个 Prompt 来测试 MLM 的“长程结构能力”，你会怎么设计？
+2. “离散化”虽然让音乐变成了语言，但是否会丢失某些连续的微妙情感（如滑音的细腻变化）？如何平衡？
+3. 在“创作民主化”的背景下，人类音乐家的核心价值将转向哪里？</p>
+</blockquote>
+<h2 id="_6">结语：在数据与智能之间，搭建音乐的桥梁</h2>
+<blockquote>
+<p><strong>本章回望</strong><br />
+<em>"我们始于对历史的凝视，终于对智能的追问。<br />
+这一章的旅程，不仅是对技术的梳理，更是对'音乐创作本质'的持续探索。"</em></p>
+</blockquote>
+<h3 id="_7">本章知识地图</h3>
+<p>走过第一章的四个小节，我们共同完成了一次对音乐生成领域的系统性认知构建：</p>
+<table>
+<thead>
+<tr>
+<th>小节</th>
+<th>核心问题</th>
+<th>关键收获</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1.1 历史脉络</strong></td>
+<td>音乐生成从何而来？</td>
+<td>理解技术演进的必然性，站在巨人的肩膀上</td>
+</tr>
+<tr>
+<td><strong>1.2 四大范式</strong></td>
+<td>有哪些技术路线？</td>
+<td>掌握符号、音频、多模态、大模型的核心差异</td>
+</tr>
+<tr>
+<td><strong>1.3 数据表示</strong></td>
+<td>音乐如何被数字化？</td>
+<td>理解连续信号、符号表示、声学表示的权衡</td>
+</tr>
+<tr>
+<td><strong>1.4 MLM 必要性</strong></td>
+<td>为什么需要智能模型？</td>
+<td>认识从"数据记录"到"音乐理解"的范式跃迁</td>
+</tr>
+</tbody>
+</table>
+<pre><code>                    第一章：音乐生成基础
+
+    历史脉络 → 技术范式 → 数据表示 → 智能模型
+       ↓           ↓           ↓           ↓
+    &quot;从哪里来&quot;  &quot;有哪些路&quot;  &quot;如何记录&quot;  &quot;为何需要&quot;
+       │           │           │           │
+       └───────────┴───────────┴───────────┘
+                          ↓
+              &quot;为深入理解大模型架构奠基&quot;
+</code></pre>
+<hr />
+<h3 id="_8">核心思想的三重升华</h3>
+<h4 id="_9">🔹 第一重：技术是手段，表达是目的</h4>
+<p>从 Illiac Suite 到 MusicLM，七十余年的技术演进告诉我们：<strong>工具在变，但人类对音乐表达的渴望不变</strong>。无论是符号生成的结构严谨，还是音频生成的音色丰富，最终都服务于同一个目标——让内心的旋律被听见。</p>
+<blockquote>
+<p><em>"不要迷恋技术本身，而要追问它能帮你表达什么。"</em></p>
+</blockquote>
+<h4 id="_10">🔹 第二重：没有银弹，只有权衡</h4>
+<p>在数据表示的选择中，我们深刻体会到：<strong>任何技术决策都是取舍的艺术</strong>。符号表示的结构清晰与声学表示的音质保真不可兼得，编辑友好与生成质量往往成反比。真正的专业，不是寻找"最好"的方案，而是找到"最适合"当前创作目标的方案。</p>
+<blockquote>
+<p><em>"成熟的技术者，不是追求完美，而是懂得在约束中做出真诚的选择。"</em></p>
+</blockquote>
+<h4 id="_11">🔹 第三重：人机协作，而非机器替代</h4>
+<p>Music Language Model 的出现，不是要取代人类作曲家，而是要<strong>扩展人类的创作边界</strong>。AI 擅长处理重复性、计算性的工作（如和声填充、音色合成），而人类擅长提供创意、情感与审美判断。最好的未来，不是"AI 作曲"，而是"人与 AI 共作"。</p>
+<blockquote>
+<p><em>"AI 不是竞争对手，而是那面能映照出你内心旋律的镜子。"</em></p>
+</blockquote>
+<hr />
+<h3 id="_12">给读者的三个建议</h3>
+<p>在你进入下一章之前，我们希望留下三点心意：</p>
+<h4 id="_13">🌱 建议一：保持好奇，但保持批判</h4>
+<p>音乐生成领域发展迅猛，新模型、新论文层出不穷。保持对新技术的好奇心，但也要保持批判性思维——<strong>不是所有声称"突破"的工作都经得起推敲</strong>。用本章学到的框架（数据表示、范式分类、权衡意识）去评估每一项新技术。</p>
+<h4 id="_14">🌱 建议二：动手实践，但不忘反思</h4>
+<p>教程中的代码示例、思考题，请务必亲自动手尝试。但更重要的是，在实践后问自己：
+- <em>"这个模型为什么这样设计？"</em>
+- <em>"如果换一种数据表示，结果会如何？"</em>
+- <em>"这个技术的局限在哪里？"</em></p>
+<p><strong>真正的理解，始于你能用自己的话解释它。</strong></p>
+<h4 id="_15">🌱 建议三：尊重音乐，也尊重创作者</h4>
+<p>音乐是人类最古老的艺术形式之一，承载着无数创作者的心血。在使用 AI 生成音乐时，请始终记得：
+- 尊重原创，注意版权归属
+- 承认 AI 的局限，不夸大其能力
+- 保持对人类创造力的敬畏</p>
+<blockquote>
+<p><em>"技术可以复制声音，但无法复制灵魂。<br />
+而灵魂，才是音乐真正的核心。"</em></p>
+</blockquote>
+<hr />
+<h3 id="_16">致未来的你</h3>
+<p>当你读完这一章，或许会有这样的感受：
+- 有些概念 still 模糊（如 Transformer 的具体机制）
+- 有些问题 still 无解（如版权争议的最终走向）
+- 有些方向 still 迷茫（如自己该专注哪个细分领域）</p>
+<p><strong>这完全正常。</strong></p>
+<p>本章的使命，不是让你成为专家，而是为你绘制一张<strong>认知地图</strong>——让你知道这片领域有多大、有哪些地标、每条路通向哪里。真正的精通，需要在后续章节中逐步构建，更需要在实践中反复打磨。</p>
+<blockquote>
+<p><em>"不要急于求成。音乐生成是一场马拉松，而非短跑。<br />
+今天种下的理解，会在明天的实践中开花。"</em></p>
+</blockquote>
+<hr />
+<h3 id="_17">最后的话</h3>
+<p>感谢你陪伴我们走完这一章的旅程。<br />
+如果这一章能让你在面对音乐生成技术时，多一份理解、少一份迷茫；<br />
+多一份从容、少一份焦虑——那便是我们最大的欣慰。  </p>
+<p>音乐之路漫长，但每一步都算数。<br />
+第二章，再见。</p>
+<p>🎵 <strong>—— Chapter 4 End ——</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
