@@ -34,7 +34,14 @@
 
 git clone https://github.com/your-username/musiclm-universe.git
 cd musiclm-universe
+
+# 创建环境激活后
 pip install -r requirements.txt
+
+# 注册内核
+python -m ipykernel install --user --name musictransformer --display-name "Python (musictransformer)"
+
+# 可运行 Jupyter Notebook
 
 ```
 
