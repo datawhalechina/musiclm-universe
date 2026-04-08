@@ -25,7 +25,7 @@
     
     
       
-        <title>第一章 Music Representations 音乐数据表示 - MusicLM Universe</title>
+        <title>第一章 音乐数据表示 - MusicLM Universe</title>
       
     
     
@@ -75,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#music-representations" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -107,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              第一章 Music Representations 音乐数据表示
+              第一章 音乐数据表示
             
           </span>
         </div>
@@ -231,26 +236,22 @@
   
   
   
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
       
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
-        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
   
   
   <span class="md-ellipsis">
     
   
-    第一部分：音乐生成模型完整实现流程 Notebook 演示
+    第一章 音乐数据表示
   
 
     
@@ -258,33 +259,8 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    第一部分：音乐生成模型完整实现流程 Notebook 演示
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -293,7 +269,7 @@
   <span class="md-ellipsis">
     
   
-    第一章 Music Representations 音乐数据表示
+    第一章 音乐数据表示
   
 
     
@@ -303,13 +279,141 @@
 
       </a>
       
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一章 音乐表示
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-load-audio-waveform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Load Audio (Waveform)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-time-domain-waveform-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Time Domain Waveform View
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-frequency-domain-fft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Frequency Domain (FFT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-spectrogram-stft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Spectrogram (STFT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-mel-spectrogram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Mel Spectrogram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-mfcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. MFCC
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-midi-representation-symbolic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. MIDI Representation (Symbolic)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-midi-piano-roll" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MIDI Piano Roll
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-midi-playback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. MIDI Playback
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
@@ -322,7 +426,7 @@
   <span class="md-ellipsis">
     
   
-    第二章 Audio Tokenizer
+    第二章 音频 Tokenizer
   
 
     
@@ -334,10 +438,9 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
@@ -351,17 +454,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
-          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    第三章 Music Transformer
+    第三章 音乐 Transformer
   
 
     
@@ -372,12 +475,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_3">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
-    第三章 Music Transformer
+    第三章 音乐 Transformer
   
 
           </label>
@@ -445,14 +548,6 @@
     </li>
   
 
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
     
       
       
@@ -469,57 +564,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    第二部分：开源音乐生成模型部署实践与代码分析
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    第二部分：开源音乐生成模型部署实践与代码分析
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -537,8 +585,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_1">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -610,10 +658,9 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
@@ -627,10 +674,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -648,8 +695,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_2">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -721,10 +768,9 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
@@ -738,10 +784,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -759,8 +805,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_3">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -832,41 +878,6 @@
     </li>
   
 
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../framework.md" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    第三部分：音乐生成优化框架构建 MusicGen（SFT）+ DPO + Reasoning
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
     
   </ul>
 </nav>
@@ -885,6 +896,126 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一章 音乐表示
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-load-audio-waveform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Load Audio (Waveform)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-time-domain-waveform-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Time Domain Waveform View
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-frequency-domain-fft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Frequency Domain (FFT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-spectrogram-stft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Spectrogram (STFT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-mel-spectrogram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Mel Spectrogram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-mfcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. MFCC
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-midi-representation-symbolic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. MIDI Representation (Symbolic)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-midi-piano-roll" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MIDI Piano Roll
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-midi-playback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. MIDI Playback
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -901,9 +1032,249 @@
 
 
 
-  <h1>第一章 Music Representations 音乐数据表示</h1>
+<h1 id="music-representations"><strong>Music Representations</strong></h1>
+<h3 id="_1"><strong>第一章 音乐表示</strong></h3>
+<p><strong>Introduction：</strong></p>
+<ol>
+<li>Time Domain Waveform（时域波形）</li>
+<li>Frequency Domain（频域）</li>
+<li>Spectrogram（声谱图）</li>
+<li>Mel Spectrogram（Mel 频谱图）</li>
+<li>MFCC</li>
+<li>MIDI Representation (Symbolic)（MIDI 符号表示）</li>
+<li>MIDI Piano Roll</li>
+</ol>
+<hr />
+<p><strong>首先安装依赖</strong></p>
+<pre><code class="language-python">!pip install -q librosa soundfile matplotlib numpy scipy torch torchaudio pretty_midi 
+</code></pre>
+<h3 id="1-load-audio-waveform"><strong>1. Load Audio (Waveform)</strong></h3>
+<p><strong>1、读取音频 + 播放</strong>：音频来源 https://freesound.org/people/LilMati/sounds/657944/  </p>
+<p>公开.wav文件：10s 钢琴音色</p>
+<pre><code class="language-python">import librosa
+import numpy as np
+import matplotlib.pyplot as plt
+import IPython.display as ipd
 
+audio_path = &quot;657944__lilmati__skeleton-playing-piano-02.wav&quot;
 
+y, sr = librosa.load(audio_path, sr=24000)
+
+print(&quot;Sample Rate:&quot;, sr)
+print(&quot;Waveform shape:&quot;, y.shape)
+
+ipd.display(ipd.Audio(y, rate=sr))
+</code></pre>
+<p>输出：</p>
+<pre><code>Sample Rate: 24000
+Waveform shape: (240011,)
+</code></pre>
+<div>
+  <audio controls style="width: 60%;">
+    <source src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/notebook/dataset/657944__lilmati__skeleton-playing-piano-02.wav" type="audio/wav">
+  </audio>
+</div>
+
+<hr />
+<h3 id="2-time-domain-waveform-view"><strong>2. Time Domain Waveform View</strong></h3>
+<p><strong>2、时域波形</strong>：信号的振幅 随 时间 变化的图像。</p>
+<pre><code class="language-python">plt.figure(figsize=(12,4))
+plt.plot(y)
+plt.title(&quot;Waveform (Time Domain)&quot;)
+plt.xlabel(&quot;Samples&quot;)
+plt.ylabel(&quot;Amplitude&quot;)
+plt.show()
+</code></pre>
+<div align="center">
+  <img src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/docs/images/music_representation_1.png" width="100%">
+</div>
+
+<hr />
+<h3 id="3-frequency-domain-fft"><strong>3. Frequency Domain (FFT)</strong></h3>
+<p><strong>3、频域</strong></p>
+<p>Frequency Domain（频域）就是看“信号由哪些频率组成”</p>
+<ul>
+<li>在时域里我们看的是：信号随时间怎么变化</li>
+<li>在频域里我们看的是：信号里包含哪些频率？每个频率有多强？</li>
+</ul>
+<p><strong>FFT</strong> = Fast Fourier Transform（<strong>快速傅里叶变换</strong>）</p>
+<p>它是计算傅里叶变换的一种高效算法。所以，FFT 是用来<strong>把时域信号转换到频域</strong>的算法</p>
+<p>傅里叶变换的核心思想：</p>
+<ul>
+<li>任何复杂信号，都可以分解成很多不同频率的正弦波叠加。</li>
+<li>也就是：复杂波形（时域） = 一堆不同频率的波加在一起（频域）</li>
+</ul>
+<pre><code class="language-python">fft = np.fft.fft(y)
+magnitude = np.abs(fft)
+
+plt.figure(figsize=(12,4))
+plt.plot(magnitude[:len(magnitude)//2])
+plt.title(&quot;FFT Magnitude&quot;)
+plt.show()
+</code></pre>
+<div align="center">
+  <img src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/docs/images/music_representation_2.png" width="100%">
+</div>
+
+<hr />
+<h3 id="4-spectrogram-stft"><strong>4. Spectrogram (STFT)</strong></h3>
+<p>4、Spectrogram（<strong>声谱图</strong>）：“频率随时间变化”的图</p>
+<p>STFT（短时傅里叶变换）：计算声谱图的方法（不再“把整段音乐 FFT” 而是“分时间段FFT”）</p>
+<p>它解决了一个问题：</p>
+<ul>
+<li>普通 FFT 只能看到“整体有哪些频率”</li>
+<li>但现实信号（比如说话、音乐）频率是随时间变化的</li>
+</ul>
+<p>所以 <strong>STFT（Short-Time Fourier Transform）</strong>：</p>
+<ul>
+<li>一小段一小段地做 FFT（每一小段时间里有哪些频率？它们的强度？）</li>
+<li>然后把结果拼起来</li>
+</ul>
+<pre><code class="language-python">D = librosa.stft(y)
+S_db = librosa.amplitude_to_db(np.abs(D), ref=np.max)
+
+plt.figure(figsize=(12,4))
+librosa.display.specshow(S_db, sr=sr, x_axis='time', y_axis='log')
+plt.colorbar()
+plt.title(&quot;Spectrogram (STFT)&quot;)
+plt.show()
+</code></pre>
+<div align="center">
+  <img src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/docs/images/music_representation_3.png" width="100%">
+</div>
+
+<hr />
+<h3 id="5-mel-spectrogram"><strong>5. Mel Spectrogram</strong></h3>
+<p>5、Mel Spectrogram（<strong>Mel 频谱图</strong>）：用“人耳听觉刻度”表示的声谱图</p>
+<p>它是 Spectrogram（STFT 结果） 的升级版，更符合人耳对声音的感知方式。</p>
+<p>因为人耳听觉：</p>
+<ul>
+<li>低频：分辨率高（人耳敏感）</li>
+<li>高频：分辨率低（人耳不敏感）</li>
+</ul>
+<p>所以 <strong>Mel 刻度</strong>（是一种“听觉刻度”）与 <strong>普通 Spectrogram</strong> 的不同就是：</p>
+<ul>
+<li>低频部分更“拉伸”</li>
+<li>高频被压缩</li>
+<li>这样就会更符合人耳听感</li>
+</ul>
+<pre><code class="language-python">mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
+mel_db = librosa.power_to_db(mel, ref=np.max)
+
+plt.figure(figsize=(12,4))
+librosa.display.specshow(mel_db, sr=sr, x_axis='time', y_axis='mel')
+plt.colorbar()
+plt.title(&quot;Mel Spectrogram&quot;)
+plt.show()
+</code></pre>
+<div align="center">
+  <img src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/docs/images/music_representation_4.png" width="100%">
+</div>
+
+<p><strong>Mel Spectrogram</strong> 很重要：它几乎是所有语音 AI 的标准输入。</p>
+<p>用在：</p>
+<ul>
+<li>语音识别（ASR）</li>
+<li>语音合成（TTS）</li>
+<li>音乐分类</li>
+<li>说话人识别</li>
+<li>语音大模型</li>
+</ul>
+<p>因为：</p>
+<p><strong>神经网络更容易从 Mel 表示中学到有意义的特征</strong></p>
+<hr />
+<h3 id="6-mfcc"><strong>6. MFCC</strong></h3>
+<p>6、MFCC（<strong>Mel 频率倒谱系数</strong>）：从声音中提取“人耳感知特征”的一组数字特征。</p>
+<p>MFCC（Mel Frequency Cepstral Coefficients）是语音识别里最经典、最常用的特征之一。</p>
+<ul>
+<li>Mel → Mel 刻度：用人耳听觉刻度</li>
+<li>Frequency → 频率：来自频域分析</li>
+<li>Cepstral → 倒谱：对频谱再做一次变换</li>
+<li>Coefficients → 系数：最终输出的是一组数字</li>
+</ul>
+<p>MFCC 提取的是：<strong>声音的整体频谱形</strong>，而不是具体频率峰值。</p>
+<pre><code class="language-python">mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
+
+plt.figure(figsize=(12,4))
+librosa.display.specshow(mfcc, x_axis='time')
+plt.colorbar()
+plt.title(&quot;MFCC&quot;)
+plt.show()
+
+print(&quot;MFCC shape:&quot;, mfcc.shape)
+</code></pre>
+<div align="center">
+  <img src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/docs/images/music_representation_5.png" width="100%">
+</div>
+
+<hr />
+<h3 id="7-midi-representation-symbolic"><strong>7. MIDI Representation (Symbolic)</strong></h3>
+<p><strong>7、MIDI 符号表示</strong> (Musical Instrument Digital Interface)：一种音乐数据协议，用来描述“演奏动作”。</p>
+<p>“Symbolic” 的意思是：用符号规则表示音乐结构，而不是连续信号</p>
+<p>在 AI 里，Symbolic 音乐通常是：</p>
+<ul>
+<li>音高（pitch）</li>
+<li>起始时间（onset）</li>
+<li>时值（duration）</li>
+<li>力度（velocity）</li>
+</ul>
+<pre><code class="language-python">import pretty_midi
+
+midi = pretty_midi.PrettyMIDI(&quot;657944__lilmati__skeleton-playing-piano-02.mid&quot;)
+
+for note in midi.instruments[0].notes[:10]:
+    print(&quot;Pitch:&quot;, note.pitch,
+          &quot;Start:&quot;, note.start,
+          &quot;End:&quot;, note.end)
+</code></pre>
+<p>输出：</p>
+<pre><code>Pitch: 70 Start: 0.011363636363636364 End: 0.3704545454545454
+Pitch: 69 Start: 0.3840909090909091 End: 0.6272727272727272
+Pitch: 68 Start: 0.6272727272727272 End: 0.8818181818181817
+Pitch: 65 Start: 0.8704545454545454 End: 1.2545454545454544
+Pitch: 65 Start: 1.2545454545454544 End: 1.5681818181818181
+Pitch: 60 Start: 0.9977272727272727 End: 1.5909090909090908
+Pitch: 69 Start: 1.2545454545454544 End: 1.625
+Pitch: 70 Start: 1.625 End: 1.95
+Pitch: 72 Start: 1.7636363636363634 End: 2.2068181818181816
+Pitch: 70 Start: 2.068181818181818 End: 2.3
+</code></pre>
+<p>从输出中可以看到：</p>
+<p>比如第二行：</p>
+<ul>
+<li>在 0.384 秒时按下一个音高为 60 的音（对应的音 应该是 A4，中央A）</li>
+<li>在 0.627 秒时松开</li>
+<li>持续时间 ≈ 0.243 秒</li>
+</ul>
+<hr />
+<h3 id="8-midi-piano-roll"><strong>8. MIDI Piano Roll</strong></h3>
+<p>8、钢琴卷轴（转换图示）</p>
+<pre><code class="language-python">piano_roll = midi.get_piano_roll(fs=100)
+
+plt.figure(figsize=(12,4))
+plt.imshow(piano_roll, aspect='auto', origin='lower')
+plt.title(&quot;Transcribed Piano Roll&quot;)
+plt.xlabel(&quot;Time&quot;)
+plt.ylabel(&quot;MIDI Pitch&quot;)
+plt.show()
+</code></pre>
+<div align="center">
+  <img src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/docs/images/music_representation_6.png" width="100%">
+</div>
+
+<hr />
+<h3 id="9-midi-playback"><strong>9. MIDI Playback</strong></h3>
+<p>9、MIDI 回放（这里可以自行运行 Jupyter Notebook 文件去听转 MIDI 后的音频播放）</p>
+<pre><code class="language-python">audio = midi.synthesize()
+ipd.display(ipd.Audio(audio, rate=44100))
+</code></pre>
+<div>
+  <audio controls style="width: 60%;">
+    <source src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/notebook/dataset/657944__lilmati__skeleton-playing-piano-02.wav" type="audio/wav">
+  </audio>
+</div>
+
+<p>这是按照 MIDI 播放的音频。可以听到它的音调与最初的音频相同。</p>
 
 
 
