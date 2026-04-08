@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#8-ace-step" class="md-skip">
+        <a href="#6-ace-step" class="md-skip">
           Skip to content
         </a>
       
@@ -1002,7 +1002,7 @@
 
 
 
-<h1 id="8-ace-step">第 8 章 ACE-Step 部署使用教程</h1>
+<h1 id="6-ace-step"><strong>第 6 章 ACE-Step 部署使用教程</strong></h1>
 <p>在 AutoDL 云服务器环境下，完整安装 ACE-Step（解决依赖问题、成功运行 Gradio 音乐生成界面，并修复音频保存失败等问题）。</p>
 <p>ACE-Step: https://github.com/ace-step/ACE-Step</p>
 <h3 id="_1">一、环境配置</h3>
@@ -1028,7 +1028,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 pip<span class="w"> </span>install<span class="w"> </span>num2words-0.5.14.tar.gz
 </code></pre></div>
 <div align=center>
-<img width="900" src="images/1.png"/>
+<img width="900" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/ACE-Step/images/1.png"/>
 </div>
 <div align=center></div>
 
@@ -1043,7 +1043,7 @@ pip<span class="w"> </span>install<span class="w"> </span>num2words-0.5.14.tar.g
 密码：xxxxxx
 </code></pre></div>
 <div align=center>
-<img width="900" src="images/2.png"/>
+<img width="900" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/ACE-Step/images/2.png"/>
 </div>
 <div align=center></div>
 
@@ -1052,7 +1052,7 @@ pip<span class="w"> </span>install<span class="w"> </span>num2words-0.5.14.tar.g
 <div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>-CNg<span class="w"> </span>-L<span class="w"> </span><span class="m">7865</span>:127.0.0.1:7865<span class="w"> </span>root@connect.bjb1.seetacloud.com<span class="w"> </span>-p<span class="w"> </span>xxxxx
 </code></pre></div>
 <div align=center>
-<img width="900" src="images/3.png"/>
+<img width="900" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/ACE-Step/images/3.png"/>
 </div>
 <div align=center></div>
 
@@ -1066,20 +1066,20 @@ pip<span class="w"> </span>install<span class="w"> </span>num2words-0.5.14.tar.g
 </code></pre></div>
 <p>在本地浏览器访问：<code>http://127.0.0.1:7865</code></p>
 <div align=center>
-<img width="900" src="images/4.png"/>
+<img width="900" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/ACE-Step/images/4.png"/>
 </div>
 <div align=center></div>
 
 <p>成功打开 ACE-Step Gradio Web UI。可以调整参数和 prompt 等等，完成后点击 Generate。这时 ACE-Step Pipeline 就开始运行了。</p>
 <p>模型开始生成音乐，我们可以在终端看进度</p>
 <div align=center>
-<img width="900" src="images/5.png"/>
+<img width="900" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/ACE-Step/images/5.png"/>
 </div>
 <div align=center></div>
 
 <p>第一次运行时自动下载模型权重。</p>
 <div align=center>
-<img width="900" src="images/6.png"/>
+<img width="900" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/ACE-Step/images/6.png"/>
 </div>
 <div align=center></div>
 
@@ -1098,13 +1098,13 @@ pip<span class="w"> </span>install<span class="w"> </span>num2words-0.5.14.tar.g
 <div class="highlight"><pre><span></span><code>def save_wav_file(...)
 </code></pre></div>
 <div align=center>
-<img width="900" src="images/7.png"/>
+<img width="900" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/ACE-Step/images/7.png"/>
 </div>
 <div align=center></div>
 
 <p>将整个 <code>save_wav_file</code> 函数替换为：</p>
 <div align=center>
-<img width="900" src="images/8.png"/>
+<img width="900" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/ACE-Step/images/8.png"/>
 </div>
 <div align=center></div>
 
@@ -1146,19 +1146,19 @@ pip<span class="w"> </span>install<span class="w"> </span>num2words-0.5.14.tar.g
 <hr />
 <h3 id="_2">五、音乐生成完成</h3>
 <div align=center>
-<img width="900" src="images/9.png"/>
+<img width="900" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/ACE-Step/images/9.png"/>
 </div>
 <div align=center></div>
 
 <p>Gradio 页面可试听生成的音乐。</p>
 <div align=center>
-<img width="900" src="images/10.png"/>
+<img width="900" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/ACE-Step/images/10.png"/>
 </div>
 <div align=center></div>
 
 <p>生成的音频文件位于：<code>/ACE-Step/outputs/</code> 文件夹中。</p>
 <div align=center>
-<img width="900" src="images/11.png"/>
+<img width="900" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/ACE-Step/images/11.png"/>
 </div>
 <div align=center></div>
 
