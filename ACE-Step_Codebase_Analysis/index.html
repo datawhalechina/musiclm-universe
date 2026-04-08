@@ -260,7 +260,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Audio Tokenizer.md" class="md-nav__link">
+      <a href="../Audio_Tokenizer/" class="md-nav__link">
         
   
   
@@ -334,7 +334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Model Training.md" class="md-nav__link">
+      <a href="../Model_Training/" class="md-nav__link">
         
   
   
@@ -362,7 +362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Music Generation.md" class="md-nav__link">
+      <a href="../Music_Generation/" class="md-nav__link">
         
   
   
@@ -1448,14 +1448,14 @@
 
 <h1 id="ace-step-15">ACE-Step 1.5 开源代码分析</h1>
 <p>modeling_acestep_v15_base.py，这是 PyTorch 版本的完整模型结构定义文件。</p>
-<pre><code>AceStepConditionGenerationModel
+<div class="highlight"><pre><span></span><code>AceStepConditionGenerationModel
 ⬇
 AceStepDiTModel
 ⬇
 AceStepDiTLayer × N
 ⬇
 Qwen3 attention + MLP
-</code></pre>
+</code></pre></div>
 <p>这里它本质是 Qwen3 Transformer + Diffusion 外壳</p>
 <p>因为里面 import 了：
 - Qwen3MLP
@@ -1473,48 +1473,48 @@ Qwen3 attention + MLP
 <hr />
 <h2 id="class-acestepconditiongenerationmodel">class AceStepConditionGenerationModel</h2>
 <h3 id="def-init">一、定义 def <strong>init</strong>(</h3>
-<pre><code class="language-python">class AceStepConditionGenerationModel(AceStepPreTrainedModel):  
-    &quot;&quot;&quot;  
-    AceStep 核心条件生成模型  
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">AceStepConditionGenerationModel</span><span class="p">(</span><span class="n">AceStepPreTrainedModel</span><span class="p">):</span>  
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;  </span>
+<span class="sd">    AceStep 核心条件生成模型  </span>
 
-    基于文本、歌词和音色条件生成音频的端到端模型。  
-    整合了编码器（用于条件信息处理）、解码器（扩散模型）、分词器（用于离散化token编码）和解码器（用于音频重构）。  
-    支持流匹配（flow matching）训练，以及多种采样方法的推理过程。  
-    &quot;&quot;&quot;  
+<span class="sd">    基于文本、歌词和音色条件生成音频的端到端模型。  </span>
+<span class="sd">    整合了编码器（用于条件信息处理）、解码器（扩散模型）、分词器（用于离散化token编码）和解码器（用于音频重构）。  </span>
+<span class="sd">    支持流匹配（flow matching）训练，以及多种采样方法的推理过程。  </span>
+<span class="sd">    &quot;&quot;&quot;</span>  
 
-    def __init__(self, config: AceStepConfig):  
-        super().__init__(config)  
-        self.config = config   # 把 config 存到当前模型实例中。  
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">AceStepConfig</span><span class="p">):</span>  
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>   <span class="c1"># 把 config 存到当前模型实例中。  </span>
 
-        # Diffusion model components  
-        self.decoder = AceStepDiTModel(config)  # 3️⃣Main diffusion transformer（DIT模型）  
-        self.encoder = AceStepConditionEncoder(config)  # 1️⃣Condition encoder（文本输入处理）  
-        self.tokenizer = AceStepAudioTokenizer(config)  # 2️⃣Audio tokenizer（音频输入处理）  
-        self.detokenizer = AudioTokenDetokenizer(config)  # 最后 4️⃣Audio detokenizer（以音频形式输出）  
+        <span class="c1"># Diffusion model components  </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">AceStepDiTModel</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>  <span class="c1"># 3️⃣Main diffusion transformer（DIT模型）  </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">AceStepConditionEncoder</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>  <span class="c1"># 1️⃣Condition encoder（文本输入处理）  </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AceStepAudioTokenizer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>  <span class="c1"># 2️⃣Audio tokenizer（音频输入处理）  </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detokenizer</span> <span class="o">=</span> <span class="n">AudioTokenDetokenizer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>  <span class="c1"># 最后 4️⃣Audio detokenizer（以音频形式输出）  </span>
 
-        # Null condition embedding for classifier-free guidance  
-        self.null_condition_emb = nn.Parameter(torch.randn(1, 1, config.hidden_size))  
+        <span class="c1"># Null condition embedding for classifier-free guidance  </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">null_condition_emb</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">))</span>  
 
-        # Initialize weights and apply final processing  
-        self.post_init()  
-</code></pre>
+        <span class="c1"># Initialize weights and apply final processing  </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_init</span><span class="p">()</span>  
+</code></pre></div>
 <p>按这个顺一下 DiT 模型生成音乐 的大概流程：</p>
 <p>1️⃣ <strong>条件编码器</strong></p>
 <p>self.encoder = AceStepConditionEncoder(config)</p>
 <p>作用：把文本 / 歌词 / 音色条件编码成 embedding</p>
 <p>例如：</p>
-<pre><code>输入：
+<div class="highlight"><pre><span></span><code>输入：
 文本 token
 歌词 token
 speaker embedding
 
 输出：
 condition_embedding  (shape: [B, T, hidden_size])
-</code></pre>
+</code></pre></div>
 <p>这个 embedding 会送入 diffusion transformer （扩散DiT模型）。</p>
 <p>2️⃣ <strong>音频 tokenizer</strong></p>
-<pre><code>self.tokenizer = AceStepAudioTokenizer(config)
-</code></pre>
+<div class="highlight"><pre><span></span><code>self.tokenizer = AceStepAudioTokenizer(config)
+</code></pre></div>
 <p>作用：把连续音频波形 → 离散 token</p>
 <p>通常是：
 VQ-VAE
@@ -1524,12 +1524,12 @@ SoundStream</p>
 waveform → 编码器 → quantizer → discrete codes</p>
 <p>这个 embedding 也会送入 diffusion transformer （扩散DiT模型）。</p>
 <p>3️⃣ <strong>扩散 Transformer 模型（主要）</strong></p>
-<pre><code>self.decoder = AceStepDiTModel(config)
-</code></pre>
+<div class="highlight"><pre><span></span><code>self.decoder = AceStepDiTModel(config)
+</code></pre></div>
 <p>这是核心生成模块 DiT Model（Diffusion Transformer），它和GPT一样也是个Decoder-only哈。</p>
 <p>作用：一步步根据 条件 + 噪声（ 输入文本的embedding + 输入音频 (带噪声) ） 预测去噪结果</p>
 <p>扩散流程中它会：总是根据 带噪声的音频（就是压缩的音频）去预测  去噪向量</p>
-<pre><code>输入：
+<div class="highlight"><pre><span></span><code>输入：
 noisy_latent         1、带噪声的音频 / 压缩了的音频   --来源于2️⃣编码了的输入音频
 time_step            2、时间步                        --来源于2️⃣编码了的输入音频
 
@@ -1537,28 +1537,28 @@ condition_embedding  3、条件向量                      --来源于1️⃣条
 
 输出：
 预测噪声             预测去噪向量
-</code></pre>
+</code></pre></div>
 <p>4️⃣ <strong>音频 detokenizer</strong></p>
-<pre><code>self.detokenizer = AudioTokenDetokenizer(config)
-</code></pre>
+<div class="highlight"><pre><span></span><code>self.detokenizer = AudioTokenDetokenizer(config)
+</code></pre></div>
 <p>作用：把离散 token 还原为音频</p>
 <p>流程：</p>
-<pre><code>token → embedding → decoder → waveform
-</code></pre>
+<div class="highlight"><pre><span></span><code>token → embedding → decoder → waveform
+</code></pre></div>
 <p>输出音频就好了。</p>
 <p><strong>所以，这样整个流程就是：</strong></p>
-<pre><code>编码输入文本 + 编码输入音频
+<div class="highlight"><pre><span></span><code>编码输入文本 + 编码输入音频
 ↓
 一步步 diffusion → 生成 token
 ↓
 解码音频，输出
-</code></pre>
+</code></pre></div>
 <hr />
 <h4 id="classifier-free-guidance-cfgmusicgen">接下来，Classifier-Free Guidance 相关，就是 CFG，之前在MusicGen也有哈。</h4>
-<pre><code>self.null_condition_emb = nn.Parameter(
+<div class="highlight"><pre><span></span><code>self.null_condition_emb = nn.Parameter(
 torch.randn(1, 1, config.hidden_size)
 )
-</code></pre>
+</code></pre></div>
 <p>CFG，这是一个可训练参数，shape: (1, 1, hidden_size)</p>
 <h4 id="cfg">什么是 CFG？</h4>
 <p>训练时：
@@ -1568,121 +1568,119 @@ torch.randn(1, 1, config.hidden_size)
 - p(x | condition)
 - p(x | null)</p>
 <p>推理时可以做：</p>
-<pre><code>x = x_uncond + scale * (x_cond - x_uncond)
-</code></pre>
+<div class="highlight"><pre><span></span><code>x = x_uncond + scale * (x_cond - x_uncond)
+</code></pre></div>
 <p>增强条件控制能力。</p>
 <p>最后，权重初始化，self.post_init()。</p>
 <hr />
 <h3 id="forward">二、forward() 参数定义初始化</h3>
 <p>这段 forward() 是训练阶段的前向传播逻辑，核心思想是：
 使用 Flow Matching 训练扩散 Transformer，让它学会从任意时间点的插值样本预测“流场（velocity）”。</p>
-<pre><code class="language-python">def forward(  
-        self,  
-        # Diffusion inputs  
-        hidden_states: torch.FloatTensor,  
-        attention_mask: torch.Tensor,  
-        # Encoder inputs  
-        # Text  
-        text_hidden_states: Optional[torch.FloatTensor] = None,  
-        text_attention_mask: Optional[torch.Tensor] = None,  
-        # Lyric  
-        lyric_hidden_states: Optional[torch.LongTensor] = None,  
-        lyric_attention_mask: Optional[torch.Tensor] = None,  
-        # Reference audio for timbre  
-        refer_audio_acoustic_hidden_states_packed: Optional[torch.Tensor] = None,  
-        refer_audio_order_mask: Optional[torch.LongTensor] = None,  
-        src_latents: torch.FloatTensor = None,  
-        chunk_masks: torch.FloatTensor = None,  
-        is_covers: torch.Tensor = None,  
-        silence_latent: torch.FloatTensor = None,  
-        cfg_ratio: float = 0.15,  
-    ):  
-        &quot;&quot;&quot;  
-        Forward pass for training (computes training losses).  
-        &quot;&quot;&quot;  
-        # Prepare conditioning inputs (encoder states, context latents)  
-        encoder_hidden_states, encoder_attention_mask, context_latents = self.prepare_condition(  
-            text_hidden_states=text_hidden_states,  
-            ...  
-            ...  
-        )  
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span>  
+        <span class="bp">self</span><span class="p">,</span>  
+        <span class="c1"># Diffusion inputs  </span>
+        <span class="n">hidden_states</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">,</span>  
+        <span class="n">attention_mask</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>  
+        <span class="c1"># Encoder inputs  </span>
+        <span class="c1"># Text  </span>
+        <span class="n">text_hidden_states</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  
+        <span class="n">text_attention_mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  
+        <span class="c1"># Lyric  </span>
+        <span class="n">lyric_hidden_states</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  
+        <span class="n">lyric_attention_mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  
+        <span class="c1"># Reference audio for timbre  </span>
+        <span class="n">refer_audio_acoustic_hidden_states_packed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  
+        <span class="n">refer_audio_order_mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  
+        <span class="n">src_latents</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  
+        <span class="n">chunk_masks</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  
+        <span class="n">is_covers</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  
+        <span class="n">silence_latent</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  
+        <span class="n">cfg_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.15</span><span class="p">,</span>  
+    <span class="p">):</span>  
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;  </span>
+<span class="sd">        Forward pass for training (computes training losses).  </span>
+<span class="sd">        &quot;&quot;&quot;</span>  
+        <span class="c1"># Prepare conditioning inputs (encoder states, context latents)  </span>
+        <span class="n">encoder_hidden_states</span><span class="p">,</span> <span class="n">encoder_attention_mask</span><span class="p">,</span> <span class="n">context_latents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_condition</span><span class="p">(</span>  
+            <span class="n">text_hidden_states</span><span class="o">=</span><span class="n">text_hidden_states</span><span class="p">,</span>  
+            <span class="o">...</span>  
+            <span class="o">...</span>  
+        <span class="p">)</span>  
+</code></pre></div>
 <p>这是训练阶段使用的 forward（不是推理）。</p>
 <p>看看参数定义初始化都有啥：</p>
 <p><strong>1、条件输入 [ 分别是 编码向量 和 mask ]</strong></p>
-<p>支持三种条件：文本 歌词 参考音频（音色）</p>
-<pre><code>text_hidden_states
+<p>支持三种条件：文本 歌词 参考音频（音色）
+<div class="highlight"><pre><span></span><code>text_hidden_states
 text_attention_mask
-</code></pre>
-<p>这是已经编码好的文本 embedding。</p>
-<pre><code>lyric_hidden_states
+</code></pre></div>
+这是已经编码好的文本 embedding。
+<div class="highlight"><pre><span></span><code>lyric_hidden_states
 lyric_attention_mask
-</code></pre>
-<p>这是已经 歌词 token 或 embedding。</p>
-<pre><code>refer_audio_acoustic_hidden_states_packed
+</code></pre></div>
+这是已经 歌词 token 或 embedding。
+<div class="highlight"><pre><span></span><code>refer_audio_acoustic_hidden_states_packed
 refer_audio_order_mask
-</code></pre>
-<p>这是已经编码好的参考音频 embedding：用于 timbre cloning。</p>
-<p><strong>2、Diffusion 输入 [ 同样是 编码向量 和 mask ]</strong></p>
-<pre><code>hidden_states: torch.FloatTensor,
+</code></pre></div>
+这是已经编码好的参考音频 embedding：用于 timbre cloning。</p>
+<p><strong>2、Diffusion 输入 [ 同样是 编码向量 和 mask ]</strong>
+<div class="highlight"><pre><span></span><code>hidden_states: torch.FloatTensor,
 attention_mask: torch.Tensor,
-</code></pre>
-<ul>
-<li>hidden_states 真实音频的 latent 表示（x₀）shape: [B, T, D]</li>
-<li>attention_mask 控制哪些 token 有效（padding mask）</li>
-</ul>
-<p><strong>3、其他输入</strong></p>
-<pre><code>src_latents
+</code></pre></div>
+- hidden_states 真实音频的 latent 表示（x₀）shape: [B, T, D]
+- attention_mask 控制哪些 token 有效（padding mask）</p>
+<p><strong>3、其他输入</strong>
+<div class="highlight"><pre><span></span><code>src_latents
 chunk_masks
 is_covers
 silence_latent
-</code></pre>
-<p>这些通常用于：多段拼接、是否翻唱、静音控制、分块结构</p>
+</code></pre></div>
+这些通常用于：多段拼接、是否翻唱、静音控制、分块结构</p>
 <p><strong>4、CFG 比例</strong></p>
 <p>cfg_ratio: float = 0.15</p>
 <p>表示 有 15% 概率丢弃条件 用于 Classifier-Free Guidance 训练。</p>
 <hr />
 <h3 id="_1">三、融合条件输入</h3>
-<pre><code class="language-python">        &quot;&quot;&quot;  
-        Forward pass for training (computes training losses).  
-        &quot;&quot;&quot;  
-        # Prepare conditioning inputs (encoder states, context latents)  
-        encoder_hidden_states, encoder_attention_mask, context_latents = self.prepare_condition(  
-            text_hidden_states=text_hidden_states,  
-            ...  
-            ...  
-        )  
-</code></pre>
-<p>把所有条件：</p>
-<pre><code>文本
+<div class="highlight"><pre><span></span><code><span class="w">        </span><span class="sd">&quot;&quot;&quot;  </span>
+<span class="sd">        Forward pass for training (computes training losses).  </span>
+<span class="sd">        &quot;&quot;&quot;</span>  
+        <span class="c1"># Prepare conditioning inputs (encoder states, context latents)  </span>
+        <span class="n">encoder_hidden_states</span><span class="p">,</span> <span class="n">encoder_attention_mask</span><span class="p">,</span> <span class="n">context_latents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_condition</span><span class="p">(</span>  
+            <span class="n">text_hidden_states</span><span class="o">=</span><span class="n">text_hidden_states</span><span class="p">,</span>  
+            <span class="o">...</span>  
+            <span class="o">...</span>  
+        <span class="p">)</span>  
+</code></pre></div>
+<p>把所有条件：
+<div class="highlight"><pre><span></span><code>文本
 歌词
 参考音频
 chunk 信息
-</code></pre>
-<p>融合成：</p>
-<pre><code>encoder_hidden_states   → 主条件序列
+</code></pre></div></p>
+<p>融合成：
+<div class="highlight"><pre><span></span><code>encoder_hidden_states   → 主条件序列
 encoder_attention_mask  → 条件mask
 context_latents         → 额外上下文
-</code></pre>
-<p>此时已经完成：所有条件融合</p>
+</code></pre></div>
+此时已经完成：所有条件融合</p>
 <hr />
 <h3 id="classifier-free-guidance-dit">四、基于 Classifier-Free Guidance 训练 DiT 模型</h3>
 <p>这是非常关键的一部分。</p>
-<pre><code class="language-python">        # 无分类器引导（Classifier-free guidance）：以概率 cfg_ratio 随机丢弃条件信息  
-        # 该策略帮助模型学习在有/无条件信息的场景下均能有效工作  
-        full_cfg_condition_mask = torch.where(  
-            (torch.rand(size=(bsz,), device=device, dtype=dtype) &lt; cfg_ratio),  
-            torch.zeros(size=(bsz,), device=device, dtype=dtype),  
-            torch.ones(size=(bsz,), device=device, dtype=dtype)  
-        ).view(-1, 1, 1)  
+<div class="highlight"><pre><span></span><code>        <span class="c1"># 无分类器引导（Classifier-free guidance）：以概率 cfg_ratio 随机丢弃条件信息  </span>
+        <span class="c1"># 该策略帮助模型学习在有/无条件信息的场景下均能有效工作  </span>
+        <span class="n">full_cfg_condition_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>  
+            <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">bsz</span><span class="p">,),</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">cfg_ratio</span><span class="p">),</span>  
+            <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">bsz</span><span class="p">,),</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>  
+            <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">bsz</span><span class="p">,),</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>  
+        <span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  
 
-        # 将被丢弃的条件信息替换为空白条件嵌入（null condition embedding）  
-        encoder_hidden_states = torch.where(  
-            full_cfg_condition_mask &gt; 0,  
-            encoder_hidden_states,  
-            self.null_condition_emb.expand_as(encoder_hidden_states)  
-        )  
-</code></pre>
+        <span class="c1"># 将被丢弃的条件信息替换为空白条件嵌入（null condition embedding）  </span>
+        <span class="n">encoder_hidden_states</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>  
+            <span class="n">full_cfg_condition_mask</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>  
+            <span class="n">encoder_hidden_states</span><span class="p">,</span>  
+            <span class="bp">self</span><span class="o">.</span><span class="n">null_condition_emb</span><span class="o">.</span><span class="n">expand_as</span><span class="p">(</span><span class="n">encoder_hidden_states</span><span class="p">)</span>  
+        <span class="p">)</span>  
+</code></pre></div>
 <p>我们给每个样本抽个 “签”（0~1 的随机数）：</p>
 <ul>
 <li>抽到小于 0.15 的签（概率 15%）：标记为0 → 代表 “丢弃这个样本的文本条件”；</li>
@@ -1704,15 +1702,15 @@ context_latents         → 额外上下文
 <hr />
 <h3 id="flow-matching">五、Flow Matching 核心部分</h3>
 <p>这是本段代码最重要的思想。</p>
-<pre><code class="language-python">        # 流匹配（Flow Matching）的实现流程：采样噪声 x₁，并与数据 x₀ 进行插值运算。  
-        x1 = torch.randn_like(hidden_states)  # Noise  
-        x0 = hidden_states  # Data  
-        # Sample timesteps t and r for flow matching  
-        t, r = sample_t_r(bsz, device, dtype, self.config.data_proportion, self.config.timestep_mu, self.config.timestep_sigma, use_meanflow=False)  
-        t_ = t.unsqueeze(-1).unsqueeze(-1)  
-        # Interpolate: x_t = t * x1 + (1 - t) * x0  
-        xt = t_ * x1 + (1.0 - t_) * x0  
-</code></pre>
+<div class="highlight"><pre><span></span><code>        <span class="c1"># 流匹配（Flow Matching）的实现流程：采样噪声 x₁，并与数据 x₀ 进行插值运算。  </span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">hidden_states</span><span class="p">)</span>  <span class="c1"># Noise  </span>
+        <span class="n">x0</span> <span class="o">=</span> <span class="n">hidden_states</span>  <span class="c1"># Data  </span>
+        <span class="c1"># Sample timesteps t and r for flow matching  </span>
+        <span class="n">t</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">sample_t_r</span><span class="p">(</span><span class="n">bsz</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">data_proportion</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">timestep_mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">timestep_sigma</span><span class="p">,</span> <span class="n">use_meanflow</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  
+        <span class="n">t_</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  
+        <span class="c1"># Interpolate: x_t = t * x1 + (1 - t) * x0  </span>
+        <span class="n">xt</span> <span class="o">=</span> <span class="n">t_</span> <span class="o">*</span> <span class="n">x1</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">t_</span><span class="p">)</span> <span class="o">*</span> <span class="n">x0</span>  
+</code></pre></div>
 <p>这一段在 “纯噪声 x₁” 和 “真实数据 x₀” 之间，随机选一个时间点 t，构造一个中间状态 xₜ，让模型学会 “从这个位置往数据方向走” 。</p>
 <h4 id="1">1️⃣ 两个端点</h4>
 <ul>
@@ -1725,14 +1723,14 @@ context_latents         → 额外上下文
 <li>t 接近 1 → 更像噪声</li>
 </ul>
 <p>然后构造：</p>
-<pre><code>xt = t * x1 + (1 - t) * x0
-</code></pre>
+<div class="highlight"><pre><span></span><code>xt = t * x1 + (1 - t) * x0
+</code></pre></div>
 <p>这是在“噪声”和“数据”之间做线性插值。</p>
 <h4 id="_2">比如</h4>
-<pre><code>x0 = 真实钢琴音乐 latent
+<div class="highlight"><pre><span></span><code>x0 = 真实钢琴音乐 latent
 x1 = 完全随机噪声
 t = 0.3
-</code></pre>
+</code></pre></div>
 <p>那：xt = 0.3 * 噪声 + 0.7 * 真实数据</p>
 <p>这就是：“30% 噪声 + 70% 真实音乐”</p>
 <p>模型的任务就是给模型这个 “半噪声状态”，它要学会往正确方向走。</p>
@@ -1743,17 +1741,17 @@ t = 0.3
 </ul>
 <hr />
 <h3 id="xt-dit">六、把 xt 放进 DiT 模型，来预测“流”</h3>
-<pre><code class="language-python">        # Predict flow (velocity) from diffusion model
-        decoder_outputs = self.decoder(
-            hidden_states=xt,
-            timestep=t,
-            timestep_r=t,
-            attention_mask=attention_mask,
-            encoder_hidden_states=encoder_hidden_states,
-            encoder_attention_mask=encoder_attention_mask,
-            context_latents=context_latents,
-        )
-</code></pre>
+<div class="highlight"><pre><span></span><code>        <span class="c1"># Predict flow (velocity) from diffusion model</span>
+        <span class="n">decoder_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span>
+            <span class="n">hidden_states</span><span class="o">=</span><span class="n">xt</span><span class="p">,</span>
+            <span class="n">timestep</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+            <span class="n">timestep_r</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+            <span class="n">attention_mask</span><span class="o">=</span><span class="n">attention_mask</span><span class="p">,</span>
+            <span class="n">encoder_hidden_states</span><span class="o">=</span><span class="n">encoder_hidden_states</span><span class="p">,</span>
+            <span class="n">encoder_attention_mask</span><span class="o">=</span><span class="n">encoder_attention_mask</span><span class="p">,</span>
+            <span class="n">context_latents</span><span class="o">=</span><span class="n">context_latents</span><span class="p">,</span>
+        <span class="p">)</span>
+</code></pre></div>
 <p>这一部分把当前的中间状态 xt + 条件 + 时间步 t 输入 DiT，让它预测 “应该往哪里走”。</p>
 <p>输入包括：</p>
 <ul>
@@ -1763,35 +1761,35 @@ t = 0.3
 </ul>
 <p>模型需解决：“我现在在 30% 噪声状态，条件是‘悲伤的钢琴曲’，我应该往哪个方向走？”</p>
 <p>DiT 会输出一个向量：</p>
-<pre><code>v̂  （预测的 flow / velocity）
-</code></pre>
+<div class="highlight"><pre><span></span><code>v̂  （预测的 flow / velocity）
+</code></pre></div>
 <p>这个向量和 xt 形状一样：shape: [B, T, D]</p>
 <hr />
 <h3 id="flow-matching_1">七、Flow Matching 损失函数</h3>
-<pre><code class="language-python">        # Flow matching loss: predict the flow field v = x1 - x0
-        flow = x1 - x0
-        diffusion_loss = F.mse_loss(decoder_outputs[0], flow)
-        return {
-            &quot;diffusion_loss&quot;: diffusion_loss,
-        }
-</code></pre>
+<div class="highlight"><pre><span></span><code>        <span class="c1"># Flow matching loss: predict the flow field v = x1 - x0</span>
+        <span class="n">flow</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span>
+        <span class="n">diffusion_loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">decoder_outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">flow</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;diffusion_loss&quot;</span><span class="p">:</span> <span class="n">diffusion_loss</span><span class="p">,</span>
+        <span class="p">}</span>
+</code></pre></div>
 <p>这里是整个训练的核心监督信号。</p>
 <h4 id="x0-x1">真实“流”是是从数据点 x0 指向噪声点 x1 的向量</h4>
-<pre><code>flow = x1 - x0
-</code></pre>
+<div class="highlight"><pre><span></span><code>flow = x1 - x0
+</code></pre></div>
 <p>模型输出：</p>
-<pre><code>v̂ = decoder_outputs[0]
-</code></pre>
+<div class="highlight"><pre><span></span><code>v̂ = decoder_outputs[0]
+</code></pre></div>
 <p>我们希望 v̂ ≈ (x1 - x0)</p>
 <p>所以用 MSE(v̂, flow)</p>
 <p>训练目标：让模型学会在任何中间状态 xt，都知道“噪声方向在哪里”。</p>
 <hr />
 <h3 id="_3">八、输入输出举例</h3>
-<pre><code>Batch size = 2
+<div class="highlight"><pre><span></span><code>Batch size = 2
 
 hidden_states: [2, 1024, 768]     # 音频 latent
 text_hidden_states: [2, 128, 768] # 文本 embedding
-</code></pre>
+</code></pre></div>
 <p>文本示例：</p>
 <ul>
 <li>样本1："悲伤的钢琴曲"</li>
@@ -1805,18 +1803,18 @@ text_hidden_states: [2, 128, 768] # 文本 embedding
 <p>损失：diffusion_loss = MSE(v̂, flow)</p>
 <h4 id="_5">推理时会发生什么？</h4>
 <p>推理不再用真实 x0。而是：x = 随机噪声。然后不断用模型预测 flow，做数值积分：</p>
-<pre><code>x ← x - Δt * v̂
-</code></pre>
+<div class="highlight"><pre><span></span><code>x ← x - Δt * v̂
+</code></pre></div>
 <p>ACE-Step 1.5 的核心训练目标不是“预测噪声”，而是学习一个从数据到噪声的“连续流场”。它本质是 LLM Transformer 内核 + 连续时间扩散生成框架。</p>
-<pre><code>Qwen3 Transformer 结构
+<div class="highlight"><pre><span></span><code>Qwen3 Transformer 结构
 +
 Diffusion 外壳
 +
 Flow Matching 训练方式
-</code></pre>
+</code></pre></div>
 <hr />
 <h2 id="class-acestepditmodelacesteppretrainedmodel">接下来分析：class AceStepDiTModel(AceStepPreTrainedModel):</h2>
-<pre><code>class AceStepDiTModel(AceStepPreTrainedModel):
+<div class="highlight"><pre><span></span><code>class AceStepDiTModel(AceStepPreTrainedModel):
     &quot;&quot;&quot;
     用于 AceStep 的 DiT（扩散Transformer）模型。
 
@@ -1826,12 +1824,12 @@ Flow Matching 训练方式
     &quot;&quot;&quot;
     def __init__(self, config: AceStepConfig):
         super().__init__(config)
-</code></pre>
+</code></pre></div>
 <p>这个类是 <strong>主扩散模型</strong>，也就是整个系统真正负责“从噪声里生成音频 latent”的核心模块。它的任务不是生成 waveform，而是生成音频的隐变量表示（latent），最后再交给 detokenizer 解码成声音。</p>
 <p>它其实是把一个 <strong>Qwen3 Transformer 改造成 Diffusion Transformer（DiT）</strong></p>
 <hr />
 <h3 id="transformer">二、Transformer 主干结构</h3>
-<pre><code>        # Rotary position embeddings for transformer layers
+<div class="highlight"><pre><span></span><code>        # Rotary position embeddings for transformer layers
         self.rotary_emb = Qwen3RotaryEmbedding(config)
         # Stack of DiT transformer layers
         self.layers = nn.ModuleList(
@@ -1842,14 +1840,14 @@ Flow Matching 训练方式
         inner_dim = config.hidden_size
         patch_size = config.patch_size
         self.patch_size = patch_size
-</code></pre>
+</code></pre></div>
 <p>这里是旋转位置编码和多层 Transformer
 * <code>rotary_emb</code>：用 Qwen3 的 RoPE 做位置编码
 * <code>layers</code>：堆叠 N 层 <code>AceStepDiTLayer</code></p>
 <p>它本质上是一个 <strong>Decoder-only Transformer</strong>，和 GPT 很像，只不过训练目标不是预测 token，而是预测连续向量（flow）。</p>
 <h3 id="patch-embedding">三、Patch Embedding</h3>
 <p>一个很关键的部分：把长序列音频做 patch 化。</p>
-<pre><code>self.proj_in = nn.Sequential(
+<div class="highlight"><pre><span></span><code>self.proj_in = nn.Sequential(
     Lambda(lambda x: x.transpose(1, 2)),
     nn.Conv1d(
         in_channels=in_channels,
@@ -1860,7 +1858,7 @@ Flow Matching 训练方式
     ),
     Lambda(lambda x: x.transpose(1, 2)),
 )
-</code></pre>
+</code></pre></div>
 <p>这里
 1. 把输入从 <code>[B, T, C]</code> 转成 <code>[B, C, T]</code>
 2. 用 <code>Conv1d</code> 做 patch 切分（kernel_size = stride = patch_size）
@@ -1874,9 +1872,9 @@ Flow Matching 训练方式
 <p>比如原来 T=1024，patch_size=4，经过 patch 后变成 256 个 token，计算效率提升很多。</p>
 <h3 id="diffusion">四、时间步嵌入（Diffusion 条件）</h3>
 <p>扩散模型必须知道 “当前噪声程度”，所以需要时间步 embedding：</p>
-<pre><code>self.time_embed = TimestepEmbedding(in_channels=256, time_embed_dim=inner_dim)
+<div class="highlight"><pre><span></span><code>self.time_embed = TimestepEmbedding(in_channels=256, time_embed_dim=inner_dim)
 self.time_embed_r = TimestepEmbedding(in_channels=256, time_embed_dim=inner_dim)
-</code></pre>
+</code></pre></div>
 <p>这里有两个时间嵌入：</p>
 <ul>
 <li>一个是 t</li>
@@ -1885,18 +1883,18 @@ self.time_embed_r = TimestepEmbedding(in_channels=256, time_embed_dim=inner_dim)
 <p>它们都会被映射成和 hidden_dim 一样的向量，然后注入到 Transformer 里，告诉模型“现在在第几步扩散”。</p>
 <p>这一步是 GPT 没有的，是 Diffusion 的结构。</p>
 <h3 id="_6">五、条件投影</h3>
-<pre><code>self.condition_embedder = nn.Linear(inner_dim, inner_dim, bias=True)
-</code></pre>
+<div class="highlight"><pre><span></span><code>self.condition_embedder = nn.Linear(inner_dim, inner_dim, bias=True)
+</code></pre></div>
 <p>这个线性层的作用很简单：</p>
 <p>把 encoder 输出的条件 embedding（文本、歌词、音色融合后的结果）投影到当前模型的 hidden_size 维度，方便后续做 cross-attention。</p>
 <hr />
 <h3 id="patch">六、输出部分（去 Patch + 自适应归一化）</h3>
 <p>输出部分分两块：归一化 + 反卷积恢复时间长度。</p>
-<pre><code>self.norm_out = Qwen3RMSNorm(inner_dim, eps=config.rms_norm_eps)
-</code></pre>
+<div class="highlight"><pre><span></span><code>self.norm_out = Qwen3RMSNorm(inner_dim, eps=config.rms_norm_eps)
+</code></pre></div>
 <p>这是 RMSNorm，和 Qwen3 保持一致。</p>
 <p>接下来反 patch 操作：</p>
-<pre><code>self.proj_out = nn.Sequential(
+<div class="highlight"><pre><span></span><code>self.proj_out = nn.Sequential(
     Lambda(lambda x: x.transpose(1, 2)),
     nn.ConvTranspose1d(
         in_channels=inner_dim,
@@ -1907,12 +1905,12 @@ self.time_embed_r = TimestepEmbedding(in_channels=256, time_embed_dim=inner_dim)
     ),
     Lambda(lambda x: x.transpose(1, 2)),
 )
-</code></pre>
+</code></pre></div>
 <p>这里用的是 <code>ConvTranspose1d</code>，也就是反卷积，把 [B, T//patch, hidden_dim] 恢复成：[B, T, audio_hidden_dim]，相当于把 patch token 再还原回原始时间长度。</p>
 <hr />
 <h3 id="scale-shiftdit">七、自适应 scale-shift（DiT 才有）</h3>
-<pre><code>self.scale_shift_table = nn.Parameter(torch.randn(1, 2, inner_dim) / inner_dim**0.5)
-</code></pre>
+<div class="highlight"><pre><span></span><code>self.scale_shift_table = nn.Parameter(torch.randn(1, 2, inner_dim) / inner_dim**0.5)
+</code></pre></div>
 <p>这是一个可学习参数，用来做 <strong>scale-shift modulation</strong>，也就是：</p>
 <ul>
 <li>scale（缩放）</li>
@@ -1948,11 +1946,11 @@ self.time_embed_r = TimestepEmbedding(in_channels=256, time_embed_dim=inner_dim)
 - dit_generate.py
 - dit_model.py</p>
 <p>补充：mlx 是 Apple MLX 推理版本</p>
-<pre><code>mlx/
+<div class="highlight"><pre><span></span><code>mlx/
 dit_model.py
 dit_generate.py
 vae_model.py
-</code></pre>
+</code></pre></div>
 <p>MLX 是 Apple 的：Metal 加速的 ML 框架</p>
 <ul>
 <li>base/ ：训练用的 PyTorch</li>

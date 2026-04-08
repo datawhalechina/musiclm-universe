@@ -262,7 +262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Audio Tokenizer.md" class="md-nav__link">
+      <a href="../Audio_Tokenizer/" class="md-nav__link">
         
   
   
@@ -336,7 +336,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Model Training.md" class="md-nav__link">
+      <a href="../Model_Training/" class="md-nav__link">
         
   
   
@@ -364,7 +364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Music Generation.md" class="md-nav__link">
+      <a href="../Music_Generation/" class="md-nav__link">
         
   
   
@@ -1006,42 +1006,42 @@
 <p>在 AutoDL 云服务器环境下，完整安装 ACE-Step（解决依赖问题、成功运行 Gradio 音乐生成界面，并修复音频保存失败等问题）。</p>
 <p>ACE-Step: https://github.com/ace-step/ACE-Step</p>
 <h3 id="_1">一、环境配置</h3>
-<pre><code class="language-bash">git clone https://github.com/ace-step/ACE-Step.git
-cd ACE-Step
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ace-step/ACE-Step.git
+<span class="nb">cd</span><span class="w"> </span>ACE-Step
 
-python -m venv ace_step
-source ace_step/bin/activate
+python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>ace_step
+<span class="nb">source</span><span class="w"> </span>ace_step/bin/activate
 
-pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
-pip install -e .
-</code></pre>
+pip3<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>torchvision<span class="w"> </span>torchaudio<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cu126
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</code></pre></div>
 <p>如果这里报错 <strong>num2words 找不到可装版本</strong>（由于 setup.py 限制 + 无法访问 PyPI）。</p>
 <p>我们可以离线安装本地包。从 pypi 官网下载 num2words 上传到 AutoDL：<code>num2words-0.5.14.tar.gz</code></p>
 <p>新建目录：</p>
-<pre><code class="language-bash">mkdir -p /root/ACE-Step/packages
-# 接下来把 num2words 压缩包手动上传到这个目录下
-</code></pre>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>/root/ACE-Step/packages
+<span class="c1"># 接下来把 num2words 压缩包手动上传到这个目录下</span>
+</code></pre></div>
 <p>切换到虚拟环境并安装 num2words：</p>
-<pre><code class="language-bash">source ace_step/bin/activate
-cd /root/ACE-Step/packages
+<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>ace_step/bin/activate
+<span class="nb">cd</span><span class="w"> </span>/root/ACE-Step/packages
 
-pip install num2words-0.5.14.tar.gz
-</code></pre>
+pip<span class="w"> </span>install<span class="w"> </span>num2words-0.5.14.tar.gz
+</code></pre></div>
 <div align=center>
 <img width="900" src="images/1.png"/>
 </div>
 <div align=center></div>
 
 <p>安装成功后，再重新执行：</p>
-<pre><code class="language-bash">pip install -e .
-</code></pre>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</code></pre></div>
 <h3 id="powershell-ssh">二、PowerShell 设置 SSH 端口转发</h3>
 <p>使用 AutoDL 我们无法通过公网访问 Gradio Web UI。</p>
 <h4 id="1-ssh">1. 获取 SSH 登录信息</h4>
 <p>找到 AutoDL 提供的信息：</p>
-<pre><code>ssh -p xxxxx root@connect.bjb1.seetacloud.com
+<div class="highlight"><pre><span></span><code>ssh -p xxxxx root@connect.bjb1.seetacloud.com
 密码：xxxxxx
-</code></pre>
+</code></pre></div>
 <div align=center>
 <img width="900" src="images/2.png"/>
 </div>
@@ -1049,8 +1049,8 @@ pip install num2words-0.5.14.tar.gz
 
 <h4 id="2-ssh-powershell">2. 开启 SSH 本地端口转发（PowerShell）</h4>
 <p>在 Windows PowerShell 输入：</p>
-<pre><code class="language-bash">ssh -CNg -L 7865:127.0.0.1:7865 root@connect.bjb1.seetacloud.com -p xxxxx
-</code></pre>
+<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>-CNg<span class="w"> </span>-L<span class="w"> </span><span class="m">7865</span>:127.0.0.1:7865<span class="w"> </span>root@connect.bjb1.seetacloud.com<span class="w"> </span>-p<span class="w"> </span>xxxxx
+</code></pre></div>
 <div align=center>
 <img width="900" src="images/3.png"/>
 </div>
@@ -1059,11 +1059,11 @@ pip install num2words-0.5.14.tar.gz
 <p>输入密码 → 转发成功（无输出）。</p>
 <h3 id="demogradio">三、运行 Demo（Gradio）</h3>
 <p>ACE-Step 默认需要从 Huggingface 下载模型，因此我们需要先设置国内镜像。</p>
-<pre><code class="language-bash">export HF_ENDPOINT=https://hf-mirror.com
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">HF_ENDPOINT</span><span class="o">=</span>https://hf-mirror.com
+</code></pre></div>
 <p>运行 Gradio：</p>
-<pre><code class="language-bash">acestep --port 7865
-</code></pre>
+<div class="highlight"><pre><span></span><code>acestep<span class="w"> </span>--port<span class="w"> </span><span class="m">7865</span>
+</code></pre></div>
 <p>在本地浏览器访问：<code>http://127.0.0.1:7865</code></p>
 <div align=center>
 <img width="900" src="images/4.png"/>
@@ -1092,11 +1092,11 @@ pip install num2words-0.5.14.tar.gz
 <p><strong>解决方法：强制绕过 torchcodec，使用 soundfile 保存</strong></p>
 <p>由于 torchaudio 新版本已经移除 <code>set_audio_backend()</code> 方法，因此需要改为直接使用 <code>soundfile</code>。</p>
 <p>编辑文件：</p>
-<pre><code>/root/ACE-Step/acestep/pipeline_ace_step.py
-</code></pre>
+<div class="highlight"><pre><span></span><code>/root/ACE-Step/acestep/pipeline_ace_step.py
+</code></pre></div>
 <p>找到：</p>
-<pre><code>def save_wav_file(...)
-</code></pre>
+<div class="highlight"><pre><span></span><code>def save_wav_file(...)
+</code></pre></div>
 <div align=center>
 <img width="900" src="images/7.png"/>
 </div>
@@ -1108,40 +1108,40 @@ pip install num2words-0.5.14.tar.gz
 </div>
 <div align=center></div>
 
-<pre><code class="language-python">import soundfile as sf
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">soundfile</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sf</span>
 
-def save_wav_file(
-        self, target_wav, idx, save_path=None, sample_rate=48000, format=&quot;wav&quot;
-    ):
-        import soundfile as sf
+<span class="k">def</span><span class="w"> </span><span class="nf">save_wav_file</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">target_wav</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="mi">48000</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span>
+    <span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">soundfile</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sf</span>
 
-        if save_path is None:
-            logger.warning(&quot;save_path is None, using default path ./outputs/&quot;)
-            base_path = &quot;./outputs&quot;
-            ensure_directory_exists(base_path)
-            output_path_wav = f&quot;{base_path}/output_{time.strftime('%Y%m%d%H%M%S')}_{idx}.{format}&quot;
-        else:
-            ensure_directory_exists(os.path.dirname(save_path))
-            if os.path.isdir(save_path):
-                logger.info(
-                    f&quot;Provided save_path '{save_path}' is a directory. Appending timestamped filename.&quot;
-                )
-                output_path_wav = os.path.join(
-                    save_path, f&quot;output_{time.strftime('%Y%m%d%H%M%S')}_{idx}.{format}&quot;
-                )
-            else:
-                output_path_wav = save_path
+        <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;save_path is None, using default path ./outputs/&quot;</span><span class="p">)</span>
+            <span class="n">base_path</span> <span class="o">=</span> <span class="s2">&quot;./outputs&quot;</span>
+            <span class="n">ensure_directory_exists</span><span class="p">(</span><span class="n">base_path</span><span class="p">)</span>
+            <span class="n">output_path_wav</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">/output_</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">%H%M%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">format</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ensure_directory_exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">save_path</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">save_path</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Provided save_path &#39;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">&#39; is a directory. Appending timestamped filename.&quot;</span>
+                <span class="p">)</span>
+                <span class="n">output_path_wav</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="n">save_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;output_</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">%H%M%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">format</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">output_path_wav</span> <span class="o">=</span> <span class="n">save_path</span>
 
-        if hasattr(target_wav, &quot;cpu&quot;):
-            target_wav = target_wav.cpu().numpy()
-        if target_wav.ndim == 2 and target_wav.shape[0] &lt; target_wav.shape[1]:
-            target_wav = target_wav.T
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">target_wav</span><span class="p">,</span> <span class="s2">&quot;cpu&quot;</span><span class="p">):</span>
+            <span class="n">target_wav</span> <span class="o">=</span> <span class="n">target_wav</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">target_wav</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">target_wav</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">target_wav</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">target_wav</span> <span class="o">=</span> <span class="n">target_wav</span><span class="o">.</span><span class="n">T</span>
 
-        logger.info(f&quot;Saving audio to {output_path_wav} using soundfile backend&quot;)
-        sf.write(output_path_wav, target_wav, samplerate=sample_rate)
-        logger.info(f&quot;Audio saved successfully at {output_path_wav}&quot;)
-        return output_path_wav
-</code></pre>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving audio to </span><span class="si">{</span><span class="n">output_path_wav</span><span class="si">}</span><span class="s2"> using soundfile backend&quot;</span><span class="p">)</span>
+        <span class="n">sf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output_path_wav</span><span class="p">,</span> <span class="n">target_wav</span><span class="p">,</span> <span class="n">samplerate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Audio saved successfully at </span><span class="si">{</span><span class="n">output_path_wav</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output_path_wav</span>
+</code></pre></div>
 <p>这样就完全绕过 torchcodec，音频可以正常保存。</p>
 <hr />
 <h3 id="_2">五、音乐生成完成</h3>
@@ -1164,8 +1164,8 @@ def save_wav_file(
 
 <h3 id="demo">六、Demo 生成音乐代码分析</h3>
 <p>主要 Pipeline：保存音频、扩散推理、模型调用等逻辑均集中在：</p>
-<pre><code>acestep/pipeline_ace_step.py
-</code></pre>
+<div class="highlight"><pre><span></span><code>acestep/pipeline_ace_step.py
+</code></pre></div>
 <p>重点函数：</p>
 <ul>
 <li><code>generate_music()</code> — 主生成流程</li>

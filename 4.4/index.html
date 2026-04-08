@@ -258,7 +258,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Audio Tokenizer.md" class="md-nav__link">
+      <a href="../Audio_Tokenizer/" class="md-nav__link">
         
   
   
@@ -332,7 +332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Model Training.md" class="md-nav__link">
+      <a href="../Model_Training/" class="md-nav__link">
         
   
   
@@ -360,7 +360,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Music Generation.md" class="md-nav__link">
+      <a href="../Music_Generation/" class="md-nav__link">
         
   
   
@@ -1114,14 +1114,14 @@
 基于 <strong>Transformer 的自注意力机制 (Self-Attention)</strong>，MLM 能够同时“看见”整个序列。
 - <strong>长程依赖</strong>：在生成第 100 小节时，模型仍能“记得”第 1 小节的主题动机，并对其进行变奏或再现。
 - <strong>结构感知</strong>：模型能隐式学习曲式结构（如 AABA、主歌 - 副歌），确保乐曲有清晰的开端、高潮和结尾。</p>
-<pre><code>【注意力机制视角】
+<div class="highlight"><pre><span></span><code>【注意力机制视角】
 
 传统模型： [音符n-2] [音符n-1] → 预测 [音符n]  (视野狭窄)
              ↓
 MLM 模型：   [音符1] ... [音符50] ... [音符n-1] → 预测 [音符n]
              ↑__________________↑
              全局关联：模型能发现第 1 小节与第 50 小节的主题呼应
-</code></pre>
+</code></pre></div>
 <h4 id="_3">🔹 突破二：从“信号处理”到“语义对齐”</h4>
 <p><strong>传统局限</strong>：<br />
 传统音频模型难以理解抽象的人类指令。你无法对 WaveNet 说“给我一段像雨夜咖啡馆一样的音乐”，它只能处理具体的声学参数。</p>
@@ -1311,7 +1311,7 @@ MLM 模型：   [音符1] ... [音符50] ... [音符n-1] → 预测 [音符n]
 </tr>
 </tbody>
 </table>
-<pre><code>                    第一章：音乐生成基础
+<div class="highlight"><pre><span></span><code>                    第一章：音乐生成基础
 
     历史脉络 → 技术范式 → 数据表示 → 智能模型
        ↓           ↓           ↓           ↓
@@ -1320,7 +1320,7 @@ MLM 模型：   [音符1] ... [音符50] ... [音符n-1] → 预测 [音符n]
        └───────────┴───────────┴───────────┘
                           ↓
               &quot;为深入理解大模型架构奠基&quot;
-</code></pre>
+</code></pre></div>
 <hr />
 <h3 id="_8">核心思想的三重升华</h3>
 <h4 id="_9">🔹 第一重：技术是手段，表达是目的</h4>

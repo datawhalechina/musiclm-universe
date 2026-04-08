@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://datawhalechina.github.io/musiclm-universe/MusicGen_Setup_and_Usage/">
       
       
-        <link rel="prev" href="../Music_Representations/">
+        <link rel="prev" href="../Music_Generation/">
       
       
         <link rel="next" href="../MusicGen_Codebase_Analysis/">
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#5-transformer" class="md-skip">
+        <a href="#transformer" class="md-skip">
           Skip to content
         </a>
       
@@ -262,7 +262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Audio Tokenizer.md" class="md-nav__link">
+      <a href="../Audio_Tokenizer/" class="md-nav__link">
         
   
   
@@ -336,7 +336,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Model Training.md" class="md-nav__link">
+      <a href="../Model_Training/" class="md-nav__link">
         
   
   
@@ -364,7 +364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Music Generation.md" class="md-nav__link">
+      <a href="../Music_Generation/" class="md-nav__link">
         
   
   
@@ -508,15 +508,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#51-musicgen" class="md-nav__link">
+  <a href="#41-musicgen" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5.1 MusicGen 部署及使用
+        4.1 MusicGen 部署及使用
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="5.1 MusicGen 部署及使用">
+    <nav class="md-nav" aria-label="4.1 MusicGen 部署及使用">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -876,15 +876,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#51-musicgen" class="md-nav__link">
+  <a href="#41-musicgen" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5.1 MusicGen 部署及使用
+        4.1 MusicGen 部署及使用
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="5.1 MusicGen 部署及使用">
+    <nav class="md-nav" aria-label="4.1 MusicGen 部署及使用">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -970,8 +970,8 @@
 
 
 
-<h1 id="5-transformer">第5章 Transformer 音乐大模型介绍与调用</h1>
-<h2 id="51-musicgen">5.1 MusicGen 部署及使用</h2>
+<h1 id="transformer"><strong>第四章 Transformer 音乐大模型介绍与调用</strong></h1>
+<h2 id="41-musicgen">4.1 MusicGen 部署及使用</h2>
 <p>MusicGen是Meta（原Facebook）于2023年发布的开源AI音乐创作工具。该项目采用单阶段自回归Transformer架构，能够根据<strong>文本描述</strong>或<strong>音频提示</strong>生成音乐。</p>
 <h3 id="1">1. 准备工作</h3>
 <p>在开始体验MusicGen模型之前，我们需要做好以下准备工作：
@@ -986,7 +986,7 @@
 * 右侧会出现两个免费实例，分别是CPU环境和GPU环境，可以选择预装的镜像，如果没有特别的要求，默认即可。
 * 点击启动，静候两分钟后点击“<strong>查看Notebook</strong>”进入虚拟环境（注：以上步骤可能需要验证，按指引操作即可，本次将以CPU环境为例）。</p>
 <div align=center>
-<img width="700" src="images/4_2_1.png"/>
+<img width="700" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/MusicGen/images/4_2_1.png"/>
 </div>
 <div align=center>图4.2.1 启动环境</div>
 
@@ -994,7 +994,7 @@
 <li>进入虚拟环境后，右侧是虚拟环境的文件列表，中间可以看到可使用的组件，本次需要用到的组件有Python 3与Terminal。</li>
 </ul>
 <div align=center>
-<img width="700" src="images/4_2_2.png"/>
+<img width="700" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/MusicGen/images/4_2_2.png"/>
 </div>
 <div align=center>图4.2.2 启动环境</div>
 
@@ -1005,59 +1005,59 @@
 <li>点击模型跳转到该模型的页面里，可以看到模型的简单介绍和使用方法，使用方法中附带了一些代码，可以直接点击代码块右上角的Notebook图标跳转至环境使用。</li>
 </ul>
 <div align=center>
-<img width="700" src="images/4_2_3.png"/>
+<img width="700" src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/tutorial/MusicGen/images/4_2_3.png"/>
 </div>
 <div align=center>图4.2.3 选择模型</div>
 
 <h4 id="c">C. 使用模型</h4>
 <p>现在，让我们回到刚刚创建好的虚拟环境
 * 首先点击Terminal，在Terminal中逐行运行下列代码。</p>
-<pre><code class="language-Terminal">pip install --upgrade pip
+<div class="highlight"><pre><span></span><code>pip install --upgrade pip
 pip install --upgrade transformers scipy
-</code></pre>
+</code></pre></div>
 <ul>
 <li>接下来安装torch，首先给出的是CPU环境的安装命令，如果使用的是魔搭提供的GPU环境，则只需要在启用环境时选择torch&gt;=2.6.0即可跳转到代码运行的步骤，甚至不需要切换核心。</li>
 </ul>
-<pre><code class="language-Terminal">pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+<div class="highlight"><pre><span></span><code>pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
 Looking in indexes: https://download.pytorch.org/whl/cpu
-</code></pre>
+</code></pre></div>
 <ul>
 <li>运行完毕后，关闭Terminal回到首页，点击Python 3，系统会自动为你创建一个ipynb文件。</li>
 <li>点击右上角的“<strong>Python 3 (ipykernel)</strong>”切换核心至“<strong>Extension Examples</strong>”</li>
 <li>运行下列代码，你可以修改prompt来生成你喜欢的音乐，修改tokens来控制生成音乐的长度，tokens的最大值为1500，这将会让你生成最长30s的音乐。</li>
 </ul>
-<pre><code class="language-python">from modelscope import AutoProcessor, MusicgenForConditionalGeneration
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">modelscope</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoProcessor</span><span class="p">,</span> <span class="n">MusicgenForConditionalGeneration</span>
 
-processor = AutoProcessor.from_pretrained(&quot;facebook/musicgen-large&quot;)
-model = MusicgenForConditionalGeneration.from_pretrained(&quot;facebook/musicgen-large&quot;)
-prompt = &quot;80s pop track with bassy drums and synth&quot;
-tokens = 256
+<span class="n">processor</span> <span class="o">=</span> <span class="n">AutoProcessor</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;facebook/musicgen-large&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">MusicgenForConditionalGeneration</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;facebook/musicgen-large&quot;</span><span class="p">)</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;80s pop track with bassy drums and synth&quot;</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="mi">256</span>
 
-inputs = processor(
-    text=prompt,
-    padding=True,
-    return_tensors=&quot;pt&quot;,
-)
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">processor</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
+    <span class="n">padding</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 
-audio_values = model.generate(**inputs, max_new_tokens=tokens)
-</code></pre>
+<span class="n">audio_values</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="o">**</span><span class="n">inputs</span><span class="p">,</span> <span class="n">max_new_tokens</span><span class="o">=</span><span class="n">tokens</span><span class="p">)</span>
+</code></pre></div>
 <ul>
 <li>随后你将会看到右上角的CPU占用率变高，静候几分钟等他生成完毕。</li>
 <li>运行结束后，按B或是上方的加号新建一个cell，运行以下代码，你就可以在这里听到刚刚生成的音乐了。</li>
 </ul>
-<pre><code class="language-python">from IPython.display import Audio
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Audio</span>
 
-sampling_rate = model.config.audio_encoder.sampling_rate
-Audio(audio_values[0], rate=sampling_rate)
-</code></pre>
+<span class="n">sampling_rate</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">audio_encoder</span><span class="o">.</span><span class="n">sampling_rate</span>
+<span class="n">Audio</span><span class="p">(</span><span class="n">audio_values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rate</span><span class="o">=</span><span class="n">sampling_rate</span><span class="p">)</span>
+</code></pre></div>
 <ul>
 <li>如果你想要保存，运行下列代码，它会在右侧的文件夹里生成一个name.wav文件，你可以右键点击它，随后点击下载来下载到你的电脑里</li>
 </ul>
-<pre><code class="language-python">from scipy.io import wavfile
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">wavfile</span>
 
-name = &quot;musicgen_out&quot;
-wavfile.write(&quot;musicgen_out.wav&quot;, rate=sampling_rate, data=audio_values.numpy())
-</code></pre>
+<span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;musicgen_out&quot;</span>
+<span class="n">wavfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;musicgen_out.wav&quot;</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">sampling_rate</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">audio_values</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</code></pre></div>
 <hr />
 
 

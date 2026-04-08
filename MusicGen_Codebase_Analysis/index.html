@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#musicgen" class="md-skip">
+        <a href="#42-musicgen" class="md-skip">
           Skip to content
         </a>
       
@@ -262,7 +262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Audio Tokenizer.md" class="md-nav__link">
+      <a href="../Audio_Tokenizer/" class="md-nav__link">
         
   
   
@@ -336,7 +336,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Model Training.md" class="md-nav__link">
+      <a href="../Model_Training/" class="md-nav__link">
         
   
   
@@ -364,7 +364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Music Generation.md" class="md-nav__link">
+      <a href="../Music_Generation/" class="md-nav__link">
         
   
   
@@ -540,6 +540,17 @@
     <span class="md-ellipsis">
       
         一、import
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#musicgen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、定义 MusicGen 的核心模型类
       
     </span>
   </a>
@@ -1058,6 +1069,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#musicgen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、定义 MusicGen 的核心模型类
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#get_pretrained" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1312,7 +1334,7 @@
 
 
 
-<h1 id="musicgen">MusicGen 开源代码分析</h1>
+<h1 id="42-musicgen"><strong>4.2 MusicGen 开源代码分析</strong></h1>
 <p>首先我们在 MusicGen GitHub 项目中找到 models/musicgen.py 源码。 </p>
 <p>它负责加载模型、设置生成参数、准备 conditioning、调用 LM、拼接分段生成、解码为音频。  </p>
 <p>而实现 attention、实现 transformer  、实现 loss  、实现 CFG 控制强度等等这些主要的底层计算，可以通过以下文件找到源码：</p>
@@ -1326,19 +1348,16 @@
 <hr />
 <h2 id="import">一、import</h2>
 <p>根据 musicgen.py 这个文件 最初的import部分，我们可以看到它导入了哪些方法和函数。</p>
-<pre><code class="language-python">from .encodec import CompressionModel
-from .genmodel import BaseGenModel
-from .lm import LMModel
-from .builders import get_debug_compression_model, get_debug_lm_model
-from .loaders import load_compression_model, load_lm_model
-from ..data.audio_utils import convert_audio
-from ..modules.conditioners import ConditioningAttributes, WavCondition, StyleConditioner
-````
-
-从而也可以知道它的源码结构大概是：
-
-</code></pre>
-<p>musicgen.py
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">.encodec</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompressionModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.genmodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseGenModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.lm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.builders</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_debug_compression_model</span><span class="p">,</span> <span class="n">get_debug_lm_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.loaders</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_compression_model</span><span class="p">,</span> <span class="n">load_lm_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..data.audio_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_audio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..modules.conditioners</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConditioningAttributes</span><span class="p">,</span> <span class="n">WavCondition</span><span class="p">,</span> <span class="n">StyleConditioner</span>
+</code></pre></div>
+<p>从而也可以知道它的源码结构大概是：</p>
+<div class="highlight"><pre><span></span><code>musicgen.py
    │
    ├── BaseGenModel 父类
    ├── LMModel 语言模型：自回归预测音频token。
@@ -1348,21 +1367,17 @@ from ..modules.conditioners import ConditioningAttributes, WavCondition, StyleCo
    ├── CompressionModel 压缩模型，其实就是编码音频token。
    │      └── encodec implementation 音频编码器
    │
-   └── Conditioners 调度器。看prompt是文字就处理文字给模型、看输入是旋律就处理旋律给模型。</p>
-<pre><code>
----
-
-## 二、定义 MusicGen 的核心模型类
-
-MusicGen 继承自 BaseGenModel 底层通用生成框架，MusicGen 是对它的具体实现 + 参数封装
-
-```python
-class MusicGen(BaseGenModel):
-    def __init__(self, name: str, compression_model: CompressionModel, lm: LMModel,
-                 max_duration: tp.Optional[float] = None):
-        super().__init__(name, compression_model, lm, max_duration)
-        self.set_generation_params(duration=15)  # default duration
-</code></pre>
+   └── Conditioners 调度器。看prompt是文字就处理文字给模型、看输入是旋律就处理旋律给模型。
+</code></pre></div>
+<hr />
+<h2 id="musicgen">二、定义 MusicGen 的核心模型类</h2>
+<p>MusicGen 继承自 BaseGenModel 底层通用生成框架，MusicGen 是对它的具体实现 + 参数封装</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MusicGen</span><span class="p">(</span><span class="n">BaseGenModel</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">compression_model</span><span class="p">:</span> <span class="n">CompressionModel</span><span class="p">,</span> <span class="n">lm</span><span class="p">:</span> <span class="n">LMModel</span><span class="p">,</span>
+                 <span class="n">max_duration</span><span class="p">:</span> <span class="n">tp</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">compression_model</span><span class="p">,</span> <span class="n">lm</span><span class="p">,</span> <span class="n">max_duration</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_generation_params</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>  <span class="c1"># default duration</span>
+</code></pre></div>
 <p>这段代码定义了 MusicGen 的核心模型类，并在初始化时设置了一个默认生成时长 15 秒。</p>
 <p>1、输入参数包括 模型名、压缩模型是哪一个、语言模型是哪一个、可选：生成音频时长</p>
 <p>2、super().<strong>init</strong> 调用父类构造函数：把所有核心组件交给 BaseGenModel 去初始化。</p>
@@ -1374,15 +1389,15 @@ class MusicGen(BaseGenModel):
 <li>设置最大生成长度</li>
 </ul>
 <p>我们后面如何使用这个函数？</p>
-<pre><code class="language-python">model = MusicGen(
-    name=&quot;musicgen-small&quot;,
-    compression_model=encodec_model,
-    lm=transformer_model
-)
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">MusicGen</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;musicgen-small&quot;</span><span class="p">,</span>
+    <span class="n">compression_model</span><span class="o">=</span><span class="n">encodec_model</span><span class="p">,</span>
+    <span class="n">lm</span><span class="o">=</span><span class="n">transformer_model</span>
+<span class="p">)</span>
+</code></pre></div>
 <p>像这样，实现了一个MusicGen类，命名为model。即可使用这个MusicGen类（就是这个model）来生成音乐：</p>
-<pre><code class="language-python">audio = model.generate([&quot;a happy piano melody&quot;])
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">audio</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="s2">&quot;a happy piano melody&quot;</span><span class="p">])</span>
+</code></pre></div>
 <p>当然它的内部流程是：（可以自己去找 BaseGenModel 类的定义源码，在 genmodel.py 里）</p>
 <ul>
 <li>duration = 15 秒（默认）</li>
@@ -1393,71 +1408,71 @@ class MusicGen(BaseGenModel):
 <hr />
 <h2 id="get_pretrained">三、get_pretrained 自动下载并加载对应的预训练模型（语言模型 + 音频压缩模型）</h2>
 <p>并返回一个可直接生成音乐的 MusicGen 实例。</p>
-<pre><code class="language-python">@staticmethod
-    def get_pretrained(name: str = 'facebook/musicgen-melody', device=None):
-        &quot;&quot;&quot;
-        Return pretrained model, we provide four models:
-        - facebook/musicgen-small (300M), text to music,
-          # see: https://huggingface.co/facebook/musicgen-small
-        - facebook/musicgen-medium (1.5B), text to music,
-          # see: https://huggingface.co/facebook/musicgen-medium
-        - facebook/musicgen-melody (1.5B) text to music and text+melody to music,
-          # see: https://huggingface.co/facebook/musicgen-melody
-        &quot;&quot;&quot;
-        # 中间代码略：选 GPU cuda
-        # 中间代码略：if name == 'debug'有一个 debug 模式（单元测试专用）
-        # 中间代码略：兼容旧模型名字
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_pretrained</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;facebook/musicgen-melody&#39;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return pretrained model, we provide four models:</span>
+<span class="sd">        - facebook/musicgen-small (300M), text to music,</span>
+<span class="sd">          # see: https://huggingface.co/facebook/musicgen-small</span>
+<span class="sd">        - facebook/musicgen-medium (1.5B), text to music,</span>
+<span class="sd">          # see: https://huggingface.co/facebook/musicgen-medium</span>
+<span class="sd">        - facebook/musicgen-melody (1.5B) text to music and text+melody to music,</span>
+<span class="sd">          # see: https://huggingface.co/facebook/musicgen-melody</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 中间代码略：选 GPU cuda</span>
+        <span class="c1"># 中间代码略：if name == &#39;debug&#39;有一个 debug 模式（单元测试专用）</span>
+        <span class="c1"># 中间代码略：兼容旧模型名字</span>
 
-        lm = load_lm_model(name, device=device) # 加载语言模型（LM）
+        <span class="n">lm</span> <span class="o">=</span> <span class="n">load_lm_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span> <span class="c1"># 加载语言模型（LM）</span>
 
-        compression_model = load_compression_model(name, device=device) # 加载压缩模型（音频解码器）
+        <span class="n">compression_model</span> <span class="o">=</span> <span class="n">load_compression_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span> <span class="c1"># 加载压缩模型（音频解码器）</span>
 
-        if 'self_wav' in lm.condition_provider.conditioners: # 对于 musicgen-melody 这类支持 melody 输入的模型
-            lm.condition_provider.conditioners['self_wav'].match_len_on_eval = True # 在推理阶段对齐长度
-            lm.condition_provider.conditioners['self_wav']._use_masking = False # 不使用训练时的 mask 机制
+        <span class="k">if</span> <span class="s1">&#39;self_wav&#39;</span> <span class="ow">in</span> <span class="n">lm</span><span class="o">.</span><span class="n">condition_provider</span><span class="o">.</span><span class="n">conditioners</span><span class="p">:</span> <span class="c1"># 对于 musicgen-melody 这类支持 melody 输入的模型</span>
+            <span class="n">lm</span><span class="o">.</span><span class="n">condition_provider</span><span class="o">.</span><span class="n">conditioners</span><span class="p">[</span><span class="s1">&#39;self_wav&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">match_len_on_eval</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># 在推理阶段对齐长度</span>
+            <span class="n">lm</span><span class="o">.</span><span class="n">condition_provider</span><span class="o">.</span><span class="n">conditioners</span><span class="p">[</span><span class="s1">&#39;self_wav&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_use_masking</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># 不使用训练时的 mask 机制</span>
 
-        return MusicGen(name, compression_model, lm) # 返回最终模型
-</code></pre>
+        <span class="k">return</span> <span class="n">MusicGen</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">compression_model</span><span class="p">,</span> <span class="n">lm</span><span class="p">)</span> <span class="c1"># 返回最终模型</span>
+</code></pre></div>
 <p>1、@staticmethod 这是一个 静态方法。</p>
 <p>因此我们可以直接调用 而不需要先实例化类 MusicGen：</p>
-<pre><code class="language-python">model = MusicGen.get_pretrained(&quot;facebook/musicgen-small&quot;)
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">MusicGen</span><span class="o">.</span><span class="n">get_pretrained</span><span class="p">(</span><span class="s2">&quot;facebook/musicgen-small&quot;</span><span class="p">)</span>
+</code></pre></div>
 <p>2、load_lm_model() 加载语言模型（LM）</p>
 <p>3、load_compression_model(  加载压缩模型（音频解码器）</p>
 <p>4、特殊处理 self_wav 条件器：（对于 musicgen-melody 这类支持 melody 输入的模型）</p>
 <p>在推理阶段对齐长度，不使用训练时的 mask 机制</p>
 <p>目的是：让 melody 条件输入在推理时更稳定。</p>
 <p>5、返回最终模型</p>
-<pre><code class="language-python">return MusicGen(name, compression_model, lm)
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">return</span> <span class="n">MusicGen</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">compression_model</span><span class="p">,</span> <span class="n">lm</span><span class="p">)</span>
+</code></pre></div>
 <p>现在我们就得到了一个：</p>
 <p>已加载权重、已准备好推理、已放到 GPU 的模型实例。</p>
 <hr />
 <h2 id="_1">四、设置 模型 在 生成音乐时的 采样策略和控制参数。</h2>
-<pre><code class="language-python">    def set_generation_params(self, use_sampling: bool = True, top_k: int = 250,
-                              top_p: float = 0.0, temperature: float = 1.0,
-                              duration: float = 30.0, cfg_coef: float = 3.0,
-                              cfg_coef_beta: tp.Optional[float] = None,
-                              two_step_cfg: bool = False, extend_stride: float = 18,):
-        &quot;&quot;&quot;
-        Set the generation parameters for MusicGen.
-        &quot;&quot;&quot;
-        # 略：assert extend_stride &lt; self.max_duration（滑动扩展时长 小于 一次最大生成时长）
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">set_generation_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_sampling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">top_k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">250</span><span class="p">,</span>
+                              <span class="n">top_p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+                              <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">30.0</span><span class="p">,</span> <span class="n">cfg_coef</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">,</span>
+                              <span class="n">cfg_coef_beta</span><span class="p">:</span> <span class="n">tp</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                              <span class="n">two_step_cfg</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">extend_stride</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">18</span><span class="p">,):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the generation parameters for MusicGen.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 略：assert extend_stride &lt; self.max_duration（滑动扩展时长 小于 一次最大生成时长）</span>
 
-        self.extend_stride = extend_stride    # 每次扩展 多少秒
-        self.duration = duration              # 总生成时长 多少秒
-        self.generation_params = {            # 保存参数（就是采样策略）这些参数会在 LM 采样时使用。
-            'use_sampling': use_sampling,  # 随机采样，而不是更稳定的 argmax（最大概率）
-            'temp': temperature,           # 温度 控制随机性
-            'top_k': top_k,                # 每一步只在概率最高的 250 个 token 里采样。
-            'top_p': top_p,                # 选前面概率累计达到 0.9（就是概率90%）的 token 集合。
+        <span class="bp">self</span><span class="o">.</span><span class="n">extend_stride</span> <span class="o">=</span> <span class="n">extend_stride</span>    <span class="c1"># 每次扩展 多少秒</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="n">duration</span>              <span class="c1"># 总生成时长 多少秒</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generation_params</span> <span class="o">=</span> <span class="p">{</span>            <span class="c1"># 保存参数（就是采样策略）这些参数会在 LM 采样时使用。</span>
+            <span class="s1">&#39;use_sampling&#39;</span><span class="p">:</span> <span class="n">use_sampling</span><span class="p">,</span>  <span class="c1"># 随机采样，而不是更稳定的 argmax（最大概率）</span>
+            <span class="s1">&#39;temp&#39;</span><span class="p">:</span> <span class="n">temperature</span><span class="p">,</span>           <span class="c1"># 温度 控制随机性</span>
+            <span class="s1">&#39;top_k&#39;</span><span class="p">:</span> <span class="n">top_k</span><span class="p">,</span>                <span class="c1"># 每一步只在概率最高的 250 个 token 里采样。</span>
+            <span class="s1">&#39;top_p&#39;</span><span class="p">:</span> <span class="n">top_p</span><span class="p">,</span>                <span class="c1"># 选前面概率累计达到 0.9（就是概率90%）的 token 集合。</span>
 
-            'cfg_coef': cfg_coef,            # 用于 text to music 的 MusicGen
-            'cfg_coef_beta': cfg_coef_beta,  # 用于 melody + text to music 的 MusicGen
+            <span class="s1">&#39;cfg_coef&#39;</span><span class="p">:</span> <span class="n">cfg_coef</span><span class="p">,</span>            <span class="c1"># 用于 text to music 的 MusicGen</span>
+            <span class="s1">&#39;cfg_coef_beta&#39;</span><span class="p">:</span> <span class="n">cfg_coef_beta</span><span class="p">,</span>  <span class="c1"># 用于 melody + text to music 的 MusicGen</span>
 
-            'two_step_cfg': two_step_cfg,  # 是否分两次 forward 做 cfg，更稳定些？
-        }
-</code></pre>
+            <span class="s1">&#39;two_step_cfg&#39;</span><span class="p">:</span> <span class="n">two_step_cfg</span><span class="p">,</span>  <span class="c1"># 是否分两次 forward 做 cfg，更稳定些？</span>
+        <span class="p">}</span>
+</code></pre></div>
 <p>1、滑动扩展时长 extend_stride 到底是什么？</p>
 <p>它会有用在“所需生成 超过 一次生成最大长度”时：</p>
 <p>MusicGen 一次最多能生成 self.max_duration 秒（例如 30 秒）。</p>
@@ -1466,36 +1481,36 @@ class MusicGen(BaseGenModel):
 <p>2、cfg：分类器自由引导系数</p>
 <p>cfg_coef=3.0  控制 文本对生成的“控制强度”</p>
 <p>公式是：</p>
-<pre><code>output = uncond + cfg * (cond - uncond)
+<div class="highlight"><pre><span></span><code>output = uncond + cfg * (cond - uncond)
 输出   = 无条件 + cfg * (条件 - 无条件)
-</code></pre>
+</code></pre></div>
 <p>cfg 越大，越贴近文本描述，但可能音质变差</p>
 <p>--</p>
 <p>cfg_coef_beta = None  控制 旋律+文本对生成的“控制强度”</p>
 <p>用于：melody 模型（melody + text to music 的 MusicGen）</p>
 <p>作用：同时平衡 text 条件 和 audio 条件，只有在 text+melody 模型里才用。</p>
 <h4 id="1">示例输入1：默认参数</h4>
-<pre><code class="language-python">model.set_generation_params()
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">model</span><span class="o">.</span><span class="n">set_generation_params</span><span class="p">()</span>
+</code></pre></div>
 <p>则实际上内部保存：</p>
-<pre><code>{
- 'use_sampling': True,
- 'temp': 1.0,
- 'top_k': 250,
- 'top_p': 0.0,
- 'cfg_coef': 3.0,
- 'two_step_cfg': False,
- 'cfg_coef_beta': None,
+<div class="highlight"><pre><span></span><code>{
+ &#39;use_sampling&#39;: True,
+ &#39;temp&#39;: 1.0,
+ &#39;top_k&#39;: 250,
+ &#39;top_p&#39;: 0.0,
+ &#39;cfg_coef&#39;: 3.0,
+ &#39;two_step_cfg&#39;: False,
+ &#39;cfg_coef_beta&#39;: None,
 }
-</code></pre>
+</code></pre></div>
 <p>按照 这些默认参数 配置模型，生成 30 秒音乐。</p>
 <h4 id="2">示例输入2：换换参数，生成更有创造性的音乐</h4>
-<pre><code class="language-python">model.set_generation_params(
-    temperature=1.5,
-    top_k=500,
-    duration=20
-)
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">model</span><span class="o">.</span><span class="n">set_generation_params</span><span class="p">(</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">top_k</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">duration</span><span class="o">=</span><span class="mi">20</span>
+<span class="p">)</span>
+</code></pre></div>
 <p>效果：更随机 更实验风格 生成 20 秒</p>
 <h4 id="cfg">这里再讲一下 CFG：</h4>
 <p>CFG 是用于 Diffusion 模型的。但是 MusicGen 作为一个完全使用 Transformer 自回归的模型，为什么用 CFG？</p>
@@ -1516,8 +1531,8 @@ class MusicGen(BaseGenModel):
 <p>输入带文本 → 得到 cond logits
 输入空文本 → 得到 uncond logits</p>
 <p>做：</p>
-<pre><code>logits = uncond + scale * (cond - uncond)
-</code></pre>
+<div class="highlight"><pre><span></span><code>logits = uncond + scale * (cond - uncond)
+</code></pre></div>
 <p>再去 softmax + sampling</p>
 <ul>
 <li>uncond = “自然生成”</li>
@@ -1527,145 +1542,145 @@ class MusicGen(BaseGenModel):
 <p>所以：这是在“放大文本的影响”</p>
 <p>这就叫 “CFG for 自回归模型”</p>
 <p>这个 CFG 的值比如说 3.0，那就是 指导强度（guidance strength）是 3.0，而 (cond - uncond) 是 指导方向。</p>
-<pre><code>logits = uncond + scale * (cond - uncond)
-</code></pre>
+<div class="highlight"><pre><span></span><code>logits = uncond + scale * (cond - uncond)
+</code></pre></div>
 <p>这就是：根据 CFG 的值是多大，来放大“文本带来的改变方向”。</p>
 <hr />
 <h2 id="_2">五、模型的输入预处理函数</h2>
-<pre><code class="language-python">@torch.no_grad()
-    def _prepare_tokens_and_attributes(
-            self,
-            descriptions: tp.Sequence[tp.Optional[str]],
-            prompt: tp.Optional[torch.Tensor],
-            melody_wavs: tp.Optional[MelodyList] = None,
-    ) -&gt; tp.Tuple[tp.List[ConditioningAttributes], tp.Optional[torch.Tensor]]:
-        &quot;&quot;&quot;
-        准备模型输入数据。
+<div class="highlight"><pre><span></span><code><span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_prepare_tokens_and_attributes</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">descriptions</span><span class="p">:</span> <span class="n">tp</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">tp</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+            <span class="n">prompt</span><span class="p">:</span> <span class="n">tp</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
+            <span class="n">melody_wavs</span><span class="p">:</span> <span class="n">tp</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">MelodyList</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tp</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">tp</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ConditioningAttributes</span><span class="p">],</span> <span class="n">tp</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        准备模型输入数据。</span>
 
-        参数:
-            descriptions (字符串列表): 用作文本条件控制的字符串列表。
-            prompt (torch.Tensor): 用于音频续接生成的一批波形数据。
-            melody_wavs (torch.Tensor, 可选): 用作旋律条件控制的一批波形数据
-                （默认值为 None）。
-        &quot;&quot;&quot;
-        attributes = [
-            ConditioningAttributes(text={'description': description})
-            for description in descriptions]
+<span class="sd">        参数:</span>
+<span class="sd">            descriptions (字符串列表): 用作文本条件控制的字符串列表。</span>
+<span class="sd">            prompt (torch.Tensor): 用于音频续接生成的一批波形数据。</span>
+<span class="sd">            melody_wavs (torch.Tensor, 可选): 用作旋律条件控制的一批波形数据</span>
+<span class="sd">                （默认值为 None）。</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">ConditioningAttributes</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">})</span>
+            <span class="k">for</span> <span class="n">description</span> <span class="ow">in</span> <span class="n">descriptions</span><span class="p">]</span>
 
-        if melody_wavs is None:
-            for attr in attributes:
-                attr.wav['self_wav'] = WavCondition(
-                    torch.zeros((1, 1, 1), device=self.device),
-                    torch.tensor([0], device=self.device),
-                    sample_rate=[self.sample_rate],
-                    path=[None])
-        else:
-            if 'self_wav' not in self.lm.condition_provider.conditioners:
-                raise RuntimeError(&quot;This model doesn't support melody conditioning. &quot;
-                                   &quot;Use the `melody` model.&quot;)
-            assert len(melody_wavs) == len(descriptions), \
-                f&quot;number of melody wavs must match number of descriptions! &quot; \
-                f&quot;got melody len={len(melody_wavs)}, and descriptions len={len(descriptions)}&quot;
-            for attr, melody in zip(attributes, melody_wavs):
-                if melody is None:
-                    attr.wav['self_wav'] = WavCondition(
-                        torch.zeros((1, 1, 1), device=self.device),
-                        torch.tensor([0], device=self.device),
-                        sample_rate=[self.sample_rate],
-                        path=[None])
-                else:
-                    attr.wav['self_wav'] = WavCondition(
-                        melody[None].to(device=self.device),
-                        torch.tensor([melody.shape[-1]], device=self.device),
-                        sample_rate=[self.sample_rate],
-                        path=[None],
-                    )
+        <span class="k">if</span> <span class="n">melody_wavs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
+                <span class="n">attr</span><span class="o">.</span><span class="n">wav</span><span class="p">[</span><span class="s1">&#39;self_wav&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">WavCondition</span><span class="p">(</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                    <span class="n">sample_rate</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">],</span>
+                    <span class="n">path</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;self_wav&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lm</span><span class="o">.</span><span class="n">condition_provider</span><span class="o">.</span><span class="n">conditioners</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;This model doesn&#39;t support melody conditioning. &quot;</span>
+                                   <span class="s2">&quot;Use the `melody` model.&quot;</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">melody_wavs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">descriptions</span><span class="p">),</span> \
+                <span class="sa">f</span><span class="s2">&quot;number of melody wavs must match number of descriptions! &quot;</span> \
+                <span class="sa">f</span><span class="s2">&quot;got melody len=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">melody_wavs</span><span class="p">)</span><span class="si">}</span><span class="s2">, and descriptions len=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">melody</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">melody_wavs</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">melody</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">attr</span><span class="o">.</span><span class="n">wav</span><span class="p">[</span><span class="s1">&#39;self_wav&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">WavCondition</span><span class="p">(</span>
+                        <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                        <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                        <span class="n">sample_rate</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">],</span>
+                        <span class="n">path</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">attr</span><span class="o">.</span><span class="n">wav</span><span class="p">[</span><span class="s1">&#39;self_wav&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">WavCondition</span><span class="p">(</span>
+                        <span class="n">melody</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                        <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">melody</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                        <span class="n">sample_rate</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">],</span>
+                        <span class="n">path</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">],</span>
+                    <span class="p">)</span>
 
-        if prompt is not None:
-            if descriptions is not None:
-                assert len(descriptions) == len(prompt), &quot;Prompt and nb. descriptions doesn't match&quot;
-            prompt = prompt.to(self.device)
-            prompt_tokens, scale = self.compression_model.encode(prompt)
-            assert scale is None
-        else:
-            prompt_tokens = None
-        return attributes, prompt_tokens
-</code></pre>
+        <span class="k">if</span> <span class="n">prompt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">descriptions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">prompt</span><span class="p">),</span> <span class="s2">&quot;Prompt and nb. descriptions doesn&#39;t match&quot;</span>
+            <span class="n">prompt</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="n">prompt_tokens</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compression_model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">scale</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">prompt_tokens</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">prompt_tokens</span>
+</code></pre></div>
 <p>1、descriptions 是文本描述（Text Prompt），比如：</p>
-<pre><code>descriptions = [
+<div class="highlight"><pre><span></span><code>descriptions = [
     &quot;A calm piano melody with soft strings&quot;,
     &quot;Upbeat electronic dance music with strong bass&quot;
 ]
-</code></pre>
+</code></pre></div>
 <p>第一段音乐：温柔钢琴 + 弦乐
 第二段音乐：电子舞曲 + 重低音</p>
 <p>会把description列表的这些文字转换成 text conditioning文本条件给到模型：</p>
-<pre><code>ConditioningAttributes(text={'description': description})
-</code></pre>
+<div class="highlight"><pre><span></span><code>ConditioningAttributes(text={&#39;description&#39;: description})
+</code></pre></div>
 <p>模型会用 description 作为“文本控制条件”。</p>
 <p>2、prompt 是音频续写的开头音频（Audio Prompt）</p>
 <p>给模型一段已有音频，让它接着往下生成</p>
 <p>假设我们有 5 秒音频：</p>
-<pre><code>prompt.shape = (2, 1, 160000)
-</code></pre>
+<div class="highlight"><pre><span></span><code>prompt.shape = (2, 1, 160000)
+</code></pre></div>
 <p>batch = 2 两段音频 ；单声道；160000 采样点（假设 32kHz ≈ 5秒），那么：</p>
 <p>第一段音频：钢琴开头
 第二段音频：鼓点开头
 模型会“继续写”</p>
 <p>如果没有开头音频？那就不续写。</p>
-<pre><code>prompt = None
-</code></pre>
+<div class="highlight"><pre><span></span><code>prompt = None
+</code></pre></div>
 <p>说明：从零开始生成</p>
 <p>3、melody_wavs 是 旋律条件（Melody Conditioning）</p>
 <p>本质是一个 waveform 列表</p>
 <p>它用于：提供旋律，让模型围绕这个旋律生成音乐</p>
 <p>注意：只有 melody 模型才支持它。</p>
 <p>比如：</p>
-<pre><code>melody_wavs = [
+<div class="highlight"><pre><span></span><code>melody_wavs = [
     torch.randn(32000),  # 第一段旋律 1 秒
     torch.randn(48000)   # 第二段旋律 1.5 秒
 ]
-</code></pre>
+</code></pre></div>
 <p>意思是：</p>
 <p>第一首歌围绕 melody_wavs[0] 的旋律创作
 第二首歌围绕 melody_wavs[1] 的旋律创作</p>
 <p>注意 这个旋律是完全按照给定音频来，这是MusicGen-Melody模型。</p>
 <p>至于MusicGen-Style模型，是参考给定音频的风格，生成相似风格的音乐，而不是完全按照给定音频的旋律来。</p>
 <h4 id="_3">举一个完整调用例子：</h4>
-<pre><code class="language-python"># 按 文本 和 参考旋律 生成的例子：有 text descriptions文本描述，有“旋律参考音频” 没有“需要续写的音频”
+<div class="highlight"><pre><span></span><code><span class="c1"># 按 文本 和 参考旋律 生成的例子：有 text descriptions文本描述，有“旋律参考音频” 没有“需要续写的音频”</span>
 
-descriptions = [
-    &quot;Epic orchestral trailer music&quot;
-]
+<span class="n">descriptions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Epic orchestral trailer music&quot;</span>
+<span class="p">]</span>
 
-prompt = None
+<span class="n">prompt</span> <span class="o">=</span> <span class="kc">None</span>
 
-melody_wavs = [
-    torch.randn(32000)
-]
-</code></pre>
+<span class="n">melody_wavs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">32000</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre></div>
 <p>意思是根据给定旋律，生成一段史诗管弦乐</p>
 <h4 id="_4">再举一个续写例子</h4>
-<pre><code class="language-python"># 续写：有 text descriptions，audio prompt，没有“旋律参考音频”
+<div class="highlight"><pre><span></span><code><span class="c1"># 续写：有 text descriptions，audio prompt，没有“旋律参考音频”</span>
 
-descriptions = [
-    &quot;Lo-fi hip hop beat&quot;
-]
+<span class="n">descriptions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Lo-fi hip hop beat&quot;</span>
+<span class="p">]</span>
 
-prompt = torch.randn(1, 1, 160000)  # 已有 5 秒音频
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">160000</span><span class="p">)</span>  <span class="c1"># 已有 5 秒音频</span>
 
-melody_wavs = None
-</code></pre>
+<span class="n">melody_wavs</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div>
 <p>意思是接着这 5 秒 lo-fi 音乐继续生成</p>
 <h4 id="_5">再举一个例子：如果三个都用？</h4>
-<pre><code>descriptions = [&quot;Jazz piano trio&quot;]
+<div class="highlight"><pre><span></span><code>descriptions = [&quot;Jazz piano trio&quot;]
 prompt = 已有钢琴片段
 melody_wavs = 给定旋律
-</code></pre>
+</code></pre></div>
 <p>模型会综合“文本风格、开头音频、指定旋律”一起生成。</p>
 <h4 id="audio-prompt-melody">输入输出示例（续写） ：只有文本 + audio prompt（无 melody）</h4>
 <p>输入</p>
-<pre><code>descriptions = [
+<div class="highlight"><pre><span></span><code>descriptions = [
     &quot;A happy pop song with guitar&quot;,
     &quot;Sad piano ballad&quot;
 ]
@@ -1673,16 +1688,16 @@ melody_wavs = 给定旋律
 prompt = torch.randn(2, 1, 32000)  # 2条音频，每条1秒(假设16kHz采样)
 
 melody_wavs = None
-</code></pre>
+</code></pre></div>
 <h4 id="_6">函数内部发生什么？</h4>
 <p>第一步：构造 attributes</p>
-<pre><code>attributes = [
-    ConditioningAttributes(text={'description': &quot;A happy pop song with guitar&quot;}),
-    ConditioningAttributes(text={'description': &quot;Sad piano ballad&quot;})
+<div class="highlight"><pre><span></span><code>attributes = [
+    ConditioningAttributes(text={&#39;description&#39;: &quot;A happy pop song with guitar&quot;}),
+    ConditioningAttributes(text={&#39;description&#39;: &quot;Sad piano ballad&quot;})
 ]
-</code></pre>
+</code></pre></div>
 <p>此时 attributes 结构大概是：</p>
-<pre><code>[
+<div class="highlight"><pre><span></span><code>[
   {
     text: {&quot;description&quot;: &quot;A happy pop song with guitar&quot;},
     wav: {}
@@ -1692,17 +1707,17 @@ melody_wavs = None
     wav: {}
   }
 ]
-</code></pre>
+</code></pre></div>
 <p>第二步：因为 melody_wavs=None，所以给每个样本加一个“空melody”：</p>
-<pre><code>attr.wav['self_wav'] = WavCondition(
+<div class="highlight"><pre><span></span><code>attr.wav[&#39;self_wav&#39;] = WavCondition(
     torch.zeros((1, 1, 1)),
     torch.tensor([0]),
     sample_rate=[16000],
     path=[None]
 )
-</code></pre>
+</code></pre></div>
 <p>所以现在 attributes 变成：</p>
-<pre><code>[
+<div class="highlight"><pre><span></span><code>[
   {
     text: {&quot;description&quot;: &quot;A happy pop song with guitar&quot;},
     wav: {
@@ -1726,18 +1741,18 @@ melody_wavs = None
     }
   }
 ]
-</code></pre>
+</code></pre></div>
 <p>第三步：处理 prompt</p>
-<pre><code>prompt = prompt.to(self.device)
+<div class="highlight"><pre><span></span><code>prompt = prompt.to(self.device)
 prompt_tokens, scale = self.compression_model.encode(prompt)
-</code></pre>
+</code></pre></div>
 <p>假设 encode 后：</p>
-<pre><code>prompt_tokens.shape = (2, 50)  # 每条音频被压缩成50个token
+<div class="highlight"><pre><span></span><code>prompt_tokens.shape = (2, 50)  # 每条音频被压缩成50个token
 scale = None
-</code></pre>
+</code></pre></div>
 <p>最终输出</p>
-<pre><code>attributes, prompt_tokens
-</code></pre>
+<div class="highlight"><pre><span></span><code>attributes, prompt_tokens
+</code></pre></div>
 <p>1、attributes：</p>
 <p>长度=2 的 ConditioningAttributes 列表，每个包含:</p>
 <p>text.description
@@ -1745,49 +1760,49 @@ wav.self_wav (空melody占位)</p>
 <p>2、prompt_tokens：音频张量 Tensor shape: (2, 50)</p>
 <hr />
 <h2 id="_7">六、支持长音频生成的“分段滑动生成策略”</h2>
-<pre><code class="language-python">def _generate_tokens(self, attributes: tp.List[ConditioningAttributes],
-                         prompt_tokens: tp.Optional[torch.Tensor], progress: bool = False) -&gt; torch.Tensor:
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_generate_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">:</span> <span class="n">tp</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ConditioningAttributes</span><span class="p">],</span>
+                         <span class="n">prompt_tokens</span><span class="p">:</span> <span class="n">tp</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
 
-        &quot;&quot;&quot;
-        基于音频提示信息和/或条件信息生成离散的音频令牌。
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        基于音频提示信息和/或条件信息生成离散的音频令牌。</span>
 
-        参数:
-            attributes (ConditioningAttributes 列表): 用于生成任务的条件信息（文本/旋律）。
-            prompt_tokens (torch.Tensor, 可选): 用于音频续接生成的音频提示令牌。
-            progress (bool, 可选): 用于显示生成过程进度的标识位，默认值为 False。
-        返回值:
-            torch.Tensor: 生成的音频数据，形状为 [B, C, T]，其中 T 由生成参数定义。
-        &quot;&quot;&quot;
+<span class="sd">        参数:</span>
+<span class="sd">            attributes (ConditioningAttributes 列表): 用于生成任务的条件信息（文本/旋律）。</span>
+<span class="sd">            prompt_tokens (torch.Tensor, 可选): 用于音频续接生成的音频提示令牌。</span>
+<span class="sd">            progress (bool, 可选): 用于显示生成过程进度的标识位，默认值为 False。</span>
+<span class="sd">        返回值:</span>
+<span class="sd">            torch.Tensor: 生成的音频数据，形状为 [B, C, T]，其中 T 由生成参数定义。</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-        total_gen_len = int(self.duration * self.frame_rate)
-        max_prompt_len = int(min(self.duration, self.max_duration) * self.frame_rate)
-        current_gen_offset: int = 0
+        <span class="n">total_gen_len</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_rate</span><span class="p">)</span>
+        <span class="n">max_prompt_len</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_duration</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_rate</span><span class="p">)</span>
+        <span class="n">current_gen_offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
-        def _progress_callback(generated_tokens: int, tokens_to_generate: int):
-            generated_tokens += current_gen_offset
-            if self._progress_callback is not None:
-                self._progress_callback(generated_tokens, tokens_to_generate)
-            else:
-                print(f'{generated_tokens: 6d} / {tokens_to_generate: 6d}', end='\r')
+        <span class="k">def</span><span class="w"> </span><span class="nf">_progress_callback</span><span class="p">(</span><span class="n">generated_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">tokens_to_generate</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">generated_tokens</span> <span class="o">+=</span> <span class="n">current_gen_offset</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_progress_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_progress_callback</span><span class="p">(</span><span class="n">generated_tokens</span><span class="p">,</span> <span class="n">tokens_to_generate</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">generated_tokens</span><span class="si">:</span><span class="s1"> 6d</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="n">tokens_to_generate</span><span class="si">:</span><span class="s1"> 6d</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">)</span>
 
-        if prompt_tokens is not None:
-            assert max_prompt_len &gt;= prompt_tokens.shape[-1], \
-                &quot;Prompt is longer than audio to generate&quot;
+        <span class="k">if</span> <span class="n">prompt_tokens</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">max_prompt_len</span> <span class="o">&gt;=</span> <span class="n">prompt_tokens</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> \
+                <span class="s2">&quot;Prompt is longer than audio to generate&quot;</span>
 
-        callback = None
-        if progress:
-            callback = _progress_callback
-</code></pre>
+        <span class="n">callback</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">_progress_callback</span>
+</code></pre></div>
 <h4 id="_8">情况一：总时长 小于等于 单次最大时长</h4>
 <p>直接调用 lm.generate</p>
 <h4 id="_9">情况二：总时长 大于 单次最大时长</h4>
 <p>分段生成、重叠、滑动窗口拼接</p>
 <p>比如举一个例子：</p>
-<pre><code>max_duration = 30 秒
+<div class="highlight"><pre><span></span><code>max_duration = 30 秒
 duration = 70 秒
 extend_stride = 10 秒
 frame_rate = 50 token/s
-</code></pre>
+</code></pre></div>
 <ul>
 <li>max_gen_len = 1500 tokens</li>
 <li>stride_tokens = 500 tokens</li>
@@ -1806,46 +1821,46 @@ frame_rate = 50 token/s
 <p>只要其中一个是固定的，就不能无限增长。</p>
 <hr />
 <h2 id="_10">七、最后一个步骤：文本 + 旋律条件生成音乐</h2>
-<pre><code class="language-python">   def generate_with_chroma(self, descriptions: tp.List[str], melody_wavs: MelodyType,
-                             melody_sample_rate: int, progress: bool = False,
-                             return_tokens: bool = False) -&gt; tp.Union[torch.Tensor,
-                                                                      tp.Tuple[torch.Tensor, torch.Tensor]]:
-        if isinstance(melody_wavs, torch.Tensor):
-            if melody_wavs.dim() == 2:
-                melody_wavs = melody_wavs[None]
-            if melody_wavs.dim() != 3:
-                raise ValueError(&quot;Melody wavs should have a shape [B, C, T].&quot;)
-            melody_wavs = list(melody_wavs)
-        else:
-            for melody in melody_wavs:
-                if melody is not None:
-                    assert melody.dim() == 2, &quot;One melody in the list has the wrong number of dims.&quot;
+<div class="highlight"><pre><span></span><code>   <span class="k">def</span><span class="w"> </span><span class="nf">generate_with_chroma</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">descriptions</span><span class="p">:</span> <span class="n">tp</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">melody_wavs</span><span class="p">:</span> <span class="n">MelodyType</span><span class="p">,</span>
+                             <span class="n">melody_sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                             <span class="n">return_tokens</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tp</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+                                                                      <span class="n">tp</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">melody_wavs</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">melody_wavs</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">melody_wavs</span> <span class="o">=</span> <span class="n">melody_wavs</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">melody_wavs</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Melody wavs should have a shape [B, C, T].&quot;</span><span class="p">)</span>
+            <span class="n">melody_wavs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">melody_wavs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">melody</span> <span class="ow">in</span> <span class="n">melody_wavs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">melody</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="n">melody</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;One melody in the list has the wrong number of dims.&quot;</span>
 
-        melody_wavs = [
-            convert_audio(wav, melody_sample_rate, self.sample_rate, self.audio_channels)
-            if wav is not None else None
-            for wav in melody_wavs]
-        attributes, prompt_tokens = self._prepare_tokens_and_attributes(descriptions=descriptions, prompt=None,
-                                                                        melody_wavs=melody_wavs)
-        assert prompt_tokens is None
-        tokens = self._generate_tokens(attributes, prompt_tokens, progress)
-        if return_tokens:
-            return self.generate_audio(tokens), tokens
-        return self.generate_audio(tokens)
-</code></pre>
+        <span class="n">melody_wavs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">convert_audio</span><span class="p">(</span><span class="n">wav</span><span class="p">,</span> <span class="n">melody_sample_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">audio_channels</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">wav</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">wav</span> <span class="ow">in</span> <span class="n">melody_wavs</span><span class="p">]</span>
+        <span class="n">attributes</span><span class="p">,</span> <span class="n">prompt_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_tokens_and_attributes</span><span class="p">(</span><span class="n">descriptions</span><span class="o">=</span><span class="n">descriptions</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                                        <span class="n">melody_wavs</span><span class="o">=</span><span class="n">melody_wavs</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">prompt_tokens</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_tokens</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">prompt_tokens</span><span class="p">,</span> <span class="n">progress</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_tokens</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_audio</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span> <span class="n">tokens</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_audio</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+</code></pre></div>
 <p>这一部分代码即为结合之前定义的各个函数，组成完整的生成流程。主要部分我们只需要看：</p>
-<pre><code class="language-python">        melody_wavs = [
-            convert_audio(wav, melody_sample_rate, self.sample_rate, self.audio_channels)
-            if wav is not None else None
-            for wav in melody_wavs]
-        attributes, prompt_tokens = self._prepare_tokens_and_attributes(descriptions=descriptions, prompt=None,
-                                                                        melody_wavs=melody_wavs)
-        assert prompt_tokens is None
-        tokens = self._generate_tokens(attributes, prompt_tokens, progress)
-        if return_tokens:
-            return self.generate_audio(tokens), tokens
-        return self.generate_audio(tokens)
-</code></pre>
+<div class="highlight"><pre><span></span><code>        <span class="n">melody_wavs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">convert_audio</span><span class="p">(</span><span class="n">wav</span><span class="p">,</span> <span class="n">melody_sample_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">audio_channels</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">wav</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">wav</span> <span class="ow">in</span> <span class="n">melody_wavs</span><span class="p">]</span>
+        <span class="n">attributes</span><span class="p">,</span> <span class="n">prompt_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_tokens_and_attributes</span><span class="p">(</span><span class="n">descriptions</span><span class="o">=</span><span class="n">descriptions</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                                        <span class="n">melody_wavs</span><span class="o">=</span><span class="n">melody_wavs</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">prompt_tokens</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_tokens</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">prompt_tokens</span><span class="p">,</span> <span class="n">progress</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_tokens</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_audio</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span> <span class="n">tokens</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_audio</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+</code></pre></div>
 <p><strong>首先：重采样 + 声道转换</strong></p>
 <p>假设用户输入音频：</p>
 <ul>

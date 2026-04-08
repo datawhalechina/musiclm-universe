@@ -14,7 +14,7 @@
         <link rel="prev" href="..">
       
       
-        <link rel="next" href="../MusicGen_Setup_and_Usage/">
+        <link rel="next" href="../Audio_Tokenizer/">
       
       
         
@@ -295,17 +295,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        第一章 音乐表示
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#1-load-audio-waveform" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -419,7 +408,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Audio Tokenizer.md" class="md-nav__link">
+      <a href="../Audio_Tokenizer/" class="md-nav__link">
         
   
   
@@ -493,7 +482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Model Training.md" class="md-nav__link">
+      <a href="../Model_Training/" class="md-nav__link">
         
   
   
@@ -521,7 +510,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Music Generation.md" class="md-nav__link">
+      <a href="../Music_Generation/" class="md-nav__link">
         
   
   
@@ -906,17 +895,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        第一章 音乐表示
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#1-load-audio-waveform" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1032,8 +1010,7 @@
 
 
 
-<h1 id="music-representations"><strong>Music Representations</strong></h1>
-<h3 id="_1"><strong>第一章 音乐表示</strong></h3>
+<h1 id="music-representations"><strong>第一章 Music Representations 音乐数据表示</strong></h1>
 <p><strong>Introduction：</strong></p>
 <ol>
 <li>Time Domain Waveform（时域波形）</li>
@@ -1046,29 +1023,29 @@
 </ol>
 <hr />
 <p><strong>首先安装依赖</strong></p>
-<pre><code class="language-python">!pip install -q librosa soundfile matplotlib numpy scipy torch torchaudio pretty_midi 
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">q</span> <span class="n">librosa</span> <span class="n">soundfile</span> <span class="n">matplotlib</span> <span class="n">numpy</span> <span class="n">scipy</span> <span class="n">torch</span> <span class="n">torchaudio</span> <span class="n">pretty_midi</span> 
+</code></pre></div>
 <h3 id="1-load-audio-waveform"><strong>1. Load Audio (Waveform)</strong></h3>
 <p><strong>1、读取音频 + 播放</strong>：音频来源 https://freesound.org/people/LilMati/sounds/657944/  </p>
 <p>公开.wav文件：10s 钢琴音色</p>
-<pre><code class="language-python">import librosa
-import numpy as np
-import matplotlib.pyplot as plt
-import IPython.display as ipd
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ipd</span>
 
-audio_path = &quot;657944__lilmati__skeleton-playing-piano-02.wav&quot;
+<span class="n">audio_path</span> <span class="o">=</span> <span class="s2">&quot;657944__lilmati__skeleton-playing-piano-02.wav&quot;</span>
 
-y, sr = librosa.load(audio_path, sr=24000)
+<span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="mi">24000</span><span class="p">)</span>
 
-print(&quot;Sample Rate:&quot;, sr)
-print(&quot;Waveform shape:&quot;, y.shape)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample Rate:&quot;</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Waveform shape:&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
-ipd.display(ipd.Audio(y, rate=sr))
-</code></pre>
+<span class="n">ipd</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">ipd</span><span class="o">.</span><span class="n">Audio</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">sr</span><span class="p">))</span>
+</code></pre></div>
 <p>输出：</p>
-<pre><code>Sample Rate: 24000
+<div class="highlight"><pre><span></span><code>Sample Rate: 24000
 Waveform shape: (240011,)
-</code></pre>
+</code></pre></div>
 <div>
   <audio controls style="width: 60%;">
     <source src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/notebook/dataset/657944__lilmati__skeleton-playing-piano-02.wav" type="audio/wav">
@@ -1078,13 +1055,13 @@ Waveform shape: (240011,)
 <hr />
 <h3 id="2-time-domain-waveform-view"><strong>2. Time Domain Waveform View</strong></h3>
 <p><strong>2、时域波形</strong>：信号的振幅 随 时间 变化的图像。</p>
-<pre><code class="language-python">plt.figure(figsize=(12,4))
-plt.plot(y)
-plt.title(&quot;Waveform (Time Domain)&quot;)
-plt.xlabel(&quot;Samples&quot;)
-plt.ylabel(&quot;Amplitude&quot;)
-plt.show()
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Waveform (Time Domain)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Samples&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 <div align="center">
   <img src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/docs/images/music_representation_1.png" width="100%">
 </div>
@@ -1104,14 +1081,14 @@ plt.show()
 <li>任何复杂信号，都可以分解成很多不同频率的正弦波叠加。</li>
 <li>也就是：复杂波形（时域） = 一堆不同频率的波加在一起（频域）</li>
 </ul>
-<pre><code class="language-python">fft = np.fft.fft(y)
-magnitude = np.abs(fft)
+<div class="highlight"><pre><span></span><code><span class="n">fft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">magnitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fft</span><span class="p">)</span>
 
-plt.figure(figsize=(12,4))
-plt.plot(magnitude[:len(magnitude)//2])
-plt.title(&quot;FFT Magnitude&quot;)
-plt.show()
-</code></pre>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">magnitude</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">magnitude</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;FFT Magnitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 <div align="center">
   <img src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/docs/images/music_representation_2.png" width="100%">
 </div>
@@ -1130,15 +1107,15 @@ plt.show()
 <li>一小段一小段地做 FFT（每一小段时间里有哪些频率？它们的强度？）</li>
 <li>然后把结果拼起来</li>
 </ul>
-<pre><code class="language-python">D = librosa.stft(y)
-S_db = librosa.amplitude_to_db(np.abs(D), ref=np.max)
+<div class="highlight"><pre><span></span><code><span class="n">D</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">stft</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">S_db</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">amplitude_to_db</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">D</span><span class="p">),</span> <span class="n">ref</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
 
-plt.figure(figsize=(12,4))
-librosa.display.specshow(S_db, sr=sr, x_axis='time', y_axis='log')
-plt.colorbar()
-plt.title(&quot;Spectrogram (STFT)&quot;)
-plt.show()
-</code></pre>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">S_db</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">y_axis</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Spectrogram (STFT)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 <div align="center">
   <img src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/docs/images/music_representation_3.png" width="100%">
 </div>
@@ -1158,15 +1135,15 @@ plt.show()
 <li>高频被压缩</li>
 <li>这样就会更符合人耳听感</li>
 </ul>
-<pre><code class="language-python">mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)
-mel_db = librosa.power_to_db(mel, ref=np.max)
+<div class="highlight"><pre><span></span><code><span class="n">mel</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">melspectrogram</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">n_mels</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">mel_db</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">power_to_db</span><span class="p">(</span><span class="n">mel</span><span class="p">,</span> <span class="n">ref</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
 
-plt.figure(figsize=(12,4))
-librosa.display.specshow(mel_db, sr=sr, x_axis='time', y_axis='mel')
-plt.colorbar()
-plt.title(&quot;Mel Spectrogram&quot;)
-plt.show()
-</code></pre>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">mel_db</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">y_axis</span><span class="o">=</span><span class="s1">&#39;mel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Mel Spectrogram&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 <div align="center">
   <img src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/docs/images/music_representation_4.png" width="100%">
 </div>
@@ -1193,16 +1170,16 @@ plt.show()
 <li>Coefficients → 系数：最终输出的是一组数字</li>
 </ul>
 <p>MFCC 提取的是：<strong>声音的整体频谱形</strong>，而不是具体频率峰值。</p>
-<pre><code class="language-python">mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
+<div class="highlight"><pre><span></span><code><span class="n">mfcc</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">mfcc</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">n_mfcc</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
 
-plt.figure(figsize=(12,4))
-librosa.display.specshow(mfcc, x_axis='time')
-plt.colorbar()
-plt.title(&quot;MFCC&quot;)
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">mfcc</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;MFCC&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-print(&quot;MFCC shape:&quot;, mfcc.shape)
-</code></pre>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MFCC shape:&quot;</span><span class="p">,</span> <span class="n">mfcc</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div>
 <div align="center">
   <img src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/docs/images/music_representation_5.png" width="100%">
 </div>
@@ -1218,17 +1195,17 @@ print(&quot;MFCC shape:&quot;, mfcc.shape)
 <li>时值（duration）</li>
 <li>力度（velocity）</li>
 </ul>
-<pre><code class="language-python">import pretty_midi
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pretty_midi</span>
 
-midi = pretty_midi.PrettyMIDI(&quot;657944__lilmati__skeleton-playing-piano-02.mid&quot;)
+<span class="n">midi</span> <span class="o">=</span> <span class="n">pretty_midi</span><span class="o">.</span><span class="n">PrettyMIDI</span><span class="p">(</span><span class="s2">&quot;657944__lilmati__skeleton-playing-piano-02.mid&quot;</span><span class="p">)</span>
 
-for note in midi.instruments[0].notes[:10]:
-    print(&quot;Pitch:&quot;, note.pitch,
-          &quot;Start:&quot;, note.start,
-          &quot;End:&quot;, note.end)
-</code></pre>
+<span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">midi</span><span class="o">.</span><span class="n">instruments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">notes</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pitch:&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">.</span><span class="n">pitch</span><span class="p">,</span>
+          <span class="s2">&quot;Start:&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">.</span><span class="n">start</span><span class="p">,</span>
+          <span class="s2">&quot;End:&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
+</code></pre></div>
 <p>输出：</p>
-<pre><code>Pitch: 70 Start: 0.011363636363636364 End: 0.3704545454545454
+<div class="highlight"><pre><span></span><code>Pitch: 70 Start: 0.011363636363636364 End: 0.3704545454545454
 Pitch: 69 Start: 0.3840909090909091 End: 0.6272727272727272
 Pitch: 68 Start: 0.6272727272727272 End: 0.8818181818181817
 Pitch: 65 Start: 0.8704545454545454 End: 1.2545454545454544
@@ -1238,7 +1215,7 @@ Pitch: 69 Start: 1.2545454545454544 End: 1.625
 Pitch: 70 Start: 1.625 End: 1.95
 Pitch: 72 Start: 1.7636363636363634 End: 2.2068181818181816
 Pitch: 70 Start: 2.068181818181818 End: 2.3
-</code></pre>
+</code></pre></div>
 <p>从输出中可以看到：</p>
 <p>比如第二行：</p>
 <ul>
@@ -1249,15 +1226,15 @@ Pitch: 70 Start: 2.068181818181818 End: 2.3
 <hr />
 <h3 id="8-midi-piano-roll"><strong>8. MIDI Piano Roll</strong></h3>
 <p>8、钢琴卷轴（转换图示）</p>
-<pre><code class="language-python">piano_roll = midi.get_piano_roll(fs=100)
+<div class="highlight"><pre><span></span><code><span class="n">piano_roll</span> <span class="o">=</span> <span class="n">midi</span><span class="o">.</span><span class="n">get_piano_roll</span><span class="p">(</span><span class="n">fs</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
-plt.figure(figsize=(12,4))
-plt.imshow(piano_roll, aspect='auto', origin='lower')
-plt.title(&quot;Transcribed Piano Roll&quot;)
-plt.xlabel(&quot;Time&quot;)
-plt.ylabel(&quot;MIDI Pitch&quot;)
-plt.show()
-</code></pre>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">piano_roll</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Transcribed Piano Roll&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;MIDI Pitch&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 <div align="center">
   <img src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/docs/images/music_representation_6.png" width="100%">
 </div>
@@ -1265,9 +1242,9 @@ plt.show()
 <hr />
 <h3 id="9-midi-playback"><strong>9. MIDI Playback</strong></h3>
 <p>9、MIDI 回放（这里可以自行运行 Jupyter Notebook 文件去听转 MIDI 后的音频播放）</p>
-<pre><code class="language-python">audio = midi.synthesize()
-ipd.display(ipd.Audio(audio, rate=44100))
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">audio</span> <span class="o">=</span> <span class="n">midi</span><span class="o">.</span><span class="n">synthesize</span><span class="p">()</span>
+<span class="n">ipd</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">ipd</span><span class="o">.</span><span class="n">Audio</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">44100</span><span class="p">))</span>
+</code></pre></div>
 <div>
   <audio controls style="width: 60%;">
     <source src="https://raw.githubusercontent.com/datawhalechina/musiclm-universe/main/notebook/dataset/657944__lilmati__skeleton-playing-piano-02.wav" type="audio/wav">

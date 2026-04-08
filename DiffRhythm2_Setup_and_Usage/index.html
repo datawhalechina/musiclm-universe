@@ -262,7 +262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Audio Tokenizer.md" class="md-nav__link">
+      <a href="../Audio_Tokenizer/" class="md-nav__link">
         
   
   
@@ -336,7 +336,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Model Training.md" class="md-nav__link">
+      <a href="../Model_Training/" class="md-nav__link">
         
   
   
@@ -364,7 +364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Music Generation.md" class="md-nav__link">
+      <a href="../Music_Generation/" class="md-nav__link">
         
   
   
@@ -1435,50 +1435,50 @@
 </ul>
 <h2 id="_1">快速开始</h2>
 <h3 id="1">1. 确保环境准备就绪</h3>
-<pre><code class="language-bash"># 检查 Python 版本
-python --version  # 需要 3.10+
+<div class="highlight"><pre><span></span><code><span class="c1"># 检查 Python 版本</span>
+python<span class="w"> </span>--version<span class="w">  </span><span class="c1"># 需要 3.10+</span>
 
-# 检查 GPU 是否可用
-cd diffrhythm2
-python -c &quot;import torch; print(f'CUDA 可用: {torch.cuda.is_available()}')&quot;
-</code></pre>
+<span class="c1"># 检查 GPU 是否可用</span>
+<span class="nb">cd</span><span class="w"> </span>diffrhythm2
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import torch; print(f&#39;CUDA 可用: {torch.cuda.is_available()}&#39;)&quot;</span>
+</code></pre></div>
 <p><strong>如果没有正确配置环境</strong>，请参考 <code>DiffRhythm2_部署问题解决记录.md</code> </p>
 <p><a href="https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/Diffrhythm2%E9%83%A8%E7%BD%B2%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E8%AE%B0%E5%BD%95.md">DiffRhythm2 部署问题解决记录</a></p>
 <p>或运行：</p>
-<pre><code class="language-bash"># 安装核心依赖
-pip install torch==2.3.1+cu121 torchaudio==2.3.1+cu121 --index-url https://download.pytorch.org/whl/cu121
-pip install transformers==4.47.1 numpy==1.26.0
-pip install muq safetensors huggingface_hub pedalboard
+<div class="highlight"><pre><span></span><code><span class="c1"># 安装核心依赖</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="nv">torch</span><span class="o">==</span><span class="m">2</span>.3.1+cu121<span class="w"> </span><span class="nv">torchaudio</span><span class="o">==</span><span class="m">2</span>.3.1+cu121<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cu121
+pip<span class="w"> </span>install<span class="w"> </span><span class="nv">transformers</span><span class="o">==</span><span class="m">4</span>.47.1<span class="w"> </span><span class="nv">numpy</span><span class="o">==</span><span class="m">1</span>.26.0
+pip<span class="w"> </span>install<span class="w"> </span>muq<span class="w"> </span>safetensors<span class="w"> </span>huggingface_hub<span class="w"> </span>pedalboard
 
-# 安装音频处理依赖
-pip install phonemizer jieba cn2an pypinyin
+<span class="c1"># 安装音频处理依赖</span>
+pip<span class="w"> </span>install<span class="w"> </span>phonemizer<span class="w"> </span>jieba<span class="w"> </span>cn2an<span class="w"> </span>pypinyin
 
-# Windows 用户还需要安装 eSpeak NG:
-# 下载: https://github.com/espeak-ng/espeak-ng/releases
-</code></pre>
+<span class="c1"># Windows 用户还需要安装 eSpeak NG:</span>
+<span class="c1"># 下载: https://github.com/espeak-ng/espeak-ng/releases</span>
+</code></pre></div>
 <h3 id="2-demo">2. 运行最小化 Demo</h3>
-<pre><code class="language-bash">cd diffrhythm2
-python minimal_demo.py
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>diffrhythm2
+python<span class="w"> </span>minimal_demo.py
+</code></pre></div>
 <p><strong>第一次运行会自动下载模型</strong>（约 4.8GB，需要等待）。</p>
 <h3 id="3">3. 查看结果</h3>
 <p>生成的音乐保存在：</p>
-<pre><code>./results/demo/my_song.mp3
-</code></pre>
+<div class="highlight"><pre><span></span><code>./results/demo/my_song.mp3
+</code></pre></div>
 <h2 id="_2">如何自定义生成？</h2>
 <p>编辑 <code>minimal_demo.py</code> 开头的配置区域：</p>
 <h3 id="_3">修改歌词</h3>
 <p>找到 <code>LYRICS</code> 变量：</p>
-<pre><code class="language-python">LYRICS = &quot;&quot;&quot;[start]
-[intro]
-[verse]
-你的歌词第一行
-你的歌词第二行
-[chorus]
-副歌部分的歌词
-[outro]
-&quot;&quot;&quot;
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">LYRICS</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;[start]</span>
+<span class="s2">[intro]</span>
+<span class="s2">[verse]</span>
+<span class="s2">你的歌词第一行</span>
+<span class="s2">你的歌词第二行</span>
+<span class="s2">[chorus]</span>
+<span class="s2">副歌部分的歌词</span>
+<span class="s2">[outro]</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</code></pre></div>
 <p><strong>歌词格式说明</strong>：</p>
 <ul>
 <li>每行一句歌词</li>
@@ -1488,12 +1488,12 @@ python minimal_demo.py
 </ul>
 <h3 id="_4">修改音乐风格</h3>
 <p>找到 <code>STYLE_PROMPT</code> 变量：</p>
-<pre><code class="language-python">STYLE_PROMPT = &quot;Pop, Cheerful, Upbeat, Beatles Style, Rock and Roll&quot;
-# 可以是任何文本描述
+<div class="highlight"><pre><span></span><code><span class="n">STYLE_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;Pop, Cheerful, Upbeat, Beatles Style, Rock and Roll&quot;</span>
+<span class="c1"># 可以是任何文本描述</span>
 
-# 或者使用音频文件作为风格参考：
-# STYLE_PROMPT = &quot;./path/to/reference_audio.wav&quot;
-</code></pre>
+<span class="c1"># 或者使用音频文件作为风格参考：</span>
+<span class="c1"># STYLE_PROMPT = &quot;./path/to/reference_audio.wav&quot;</span>
+</code></pre></div>
 <p><strong>风格提示示例</strong>：</p>
 <ul>
 <li><code>Pop, Happy, Energetic, Piano, Drums</code></li>
@@ -1503,12 +1503,12 @@ python minimal_demo.py
 <li><code>Electronic, Synthwave, Retro, 80s</code></li>
 </ul>
 <h3 id="_5">修改输出设置</h3>
-<pre><code class="language-python">OUTPUT_DIR = &quot;./results/demo&quot;  # 输出目录
-SONG_NAME = &quot;my_song&quot;          # 文件名（不需要 .mp3）
-CFG_STRENGTH = 2.0             # 控制生成的一致性，1.0-3.0
-SAMPLE_STEPS = 16              # 采样步数，16（快）或 32（质量更好）
-MAX_DURATION = 210.0           # 最大时长（秒）
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">OUTPUT_DIR</span> <span class="o">=</span> <span class="s2">&quot;./results/demo&quot;</span>  <span class="c1"># 输出目录</span>
+<span class="n">SONG_NAME</span> <span class="o">=</span> <span class="s2">&quot;my_song&quot;</span>          <span class="c1"># 文件名（不需要 .mp3）</span>
+<span class="n">CFG_STRENGTH</span> <span class="o">=</span> <span class="mf">2.0</span>             <span class="c1"># 控制生成的一致性，1.0-3.0</span>
+<span class="n">SAMPLE_STEPS</span> <span class="o">=</span> <span class="mi">16</span>              <span class="c1"># 采样步数，16（快）或 32（质量更好）</span>
+<span class="n">MAX_DURATION</span> <span class="o">=</span> <span class="mf">210.0</span>           <span class="c1"># 最大时长（秒）</span>
+</code></pre></div>
 <h3 id="_6">时间控制说明</h3>
 <h4 id="_7">为什么生成的歌曲时间相似？</h4>
 <p>你生成的歌曲可能都是2分38秒左右，这是<strong>正常现象</strong>，原因如下：</p>
@@ -1527,12 +1527,12 @@ MAX_DURATION = 210.0           # 最大时长（秒）
 <p><strong>MAX_DURATION 是上限，不是精确值</strong></p>
 </li>
 </ol>
-<p><code>python
-   MAX_DURATION = 210.0  # 最多生成3.5分钟</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">MAX_DURATION</span> <span class="o">=</span> <span class="mf">210.0</span>  <span class="c1"># 最多生成3.5分钟</span>
+</code></pre></div>
 <p>这个参数限制了<strong>最长时长</strong>，实际时长由歌词内容决定</p>
 <h4 id="_8">理论时间控制公式</h4>
-<pre><code>总时长 ≈ 歌词行数 × 5秒 + 结构标签 × 2-3秒
-</code></pre>
+<div class="highlight"><pre><span></span><code>总时长 ≈ 歌词行数 × 5秒 + 结构标签 × 2-3秒
+</code></pre></div>
 <p><strong>示例</strong>：</p>
 <ul>
 <li>10行歌词 ≈ 50秒</li>
@@ -1543,78 +1543,78 @@ MAX_DURATION = 210.0           # 最大时长（秒）
 <h4 id="_9">如何控制生成时长？</h4>
 <p>有3种方法：</p>
 <p><strong>方法1：调整歌词行数（最简单）</strong></p>
-<pre><code class="language-python"># 生成短歌（约1分钟）
-LYRICS = &quot;&quot;&quot;[start]
-[intro]
-[verse]
-第一行歌词
-第二行歌词
-[chorus]
-副歌部分歌词
-[outro]
-&quot;&quot;&quot;
-# 约5-6行 ≈ 30-40秒
+<div class="highlight"><pre><span></span><code><span class="c1"># 生成短歌（约1分钟）</span>
+<span class="n">LYRICS</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;[start]</span>
+<span class="s2">[intro]</span>
+<span class="s2">[verse]</span>
+<span class="s2">第一行歌词</span>
+<span class="s2">第二行歌词</span>
+<span class="s2">[chorus]</span>
+<span class="s2">副歌部分歌词</span>
+<span class="s2">[outro]</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="c1"># 约5-6行 ≈ 30-40秒</span>
 
-# 生成长歌（约3分钟）
-LYRICS = &quot;&quot;&quot;[start]
-[intro]
-[verse]
-歌词第1行
-歌词第2行
-...
-[verse]
-歌词第N行
-[chorus]
-副歌部分
-[bridge]
-桥段歌词
-[outro]
-&quot;&quot;&quot;
-# 约40行 ≈ 3分钟
-</code></pre>
+<span class="c1"># 生成长歌（约3分钟）</span>
+<span class="n">LYRICS</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;[start]</span>
+<span class="s2">[intro]</span>
+<span class="s2">[verse]</span>
+<span class="s2">歌词第1行</span>
+<span class="s2">歌词第2行</span>
+<span class="s2">...</span>
+<span class="s2">[verse]</span>
+<span class="s2">歌词第N行</span>
+<span class="s2">[chorus]</span>
+<span class="s2">副歌部分</span>
+<span class="s2">[bridge]</span>
+<span class="s2">桥段歌词</span>
+<span class="s2">[outro]</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="c1"># 约40行 ≈ 3分钟</span>
+</code></pre></div>
 <p><strong>方法2：使用 --max-secs 参数（批量生成时）</strong></p>
 <p>如果使用 <code>inference.py</code> 批量生成，可以指定最大时长：</p>
-<pre><code class="language-bash"># 生成长达5分钟的歌
-python inference.py --max-secs 300 ...
+<div class="highlight"><pre><span></span><code><span class="c1"># 生成长达5分钟的歌</span>
+python<span class="w"> </span>inference.py<span class="w"> </span>--max-secs<span class="w"> </span><span class="m">300</span><span class="w"> </span>...
 
-# 生成1分钟短歌
-python inference.py --max-secs 60 ...
-</code></pre>
+<span class="c1"># 生成1分钟短歌</span>
+python<span class="w"> </span>inference.py<span class="w"> </span>--max-secs<span class="w"> </span><span class="m">60</span><span class="w"> </span>...
+</code></pre></div>
 <p><strong>方法3：调整 duration 系数（高级）</strong></p>
 <p>编辑 <code>inference.py</code> 第173行：</p>
-<pre><code class="language-python"># 默认：duration=int(max_secs * 5)
-# 改为：duration=int(max_secs * 3)  # 每句歌词更短
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="c1"># 默认：duration=int(max_secs * 5)</span>
+<span class="c1"># 改为：duration=int(max_secs * 3)  # 每句歌词更短</span>
+</code></pre></div>
 <h4 id="_10">实际应用示例</h4>
 <p>如果你想生成不同时长的歌曲：</p>
-<pre><code class="language-python"># 30秒铃声（简洁）
-LYRICS = &quot;&quot;&quot;[start]
-[verse]
-简短的歌词一行
-再一行
-[chorus]
-铃声音符
-[outro]
-&quot;&quot;&quot;
+<div class="highlight"><pre><span></span><code><span class="c1"># 30秒铃声（简洁）</span>
+<span class="n">LYRICS</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;[start]</span>
+<span class="s2">[verse]</span>
+<span class="s2">简短的歌词一行</span>
+<span class="s2">再一行</span>
+<span class="s2">[chorus]</span>
+<span class="s2">铃声音符</span>
+<span class="s2">[outro]</span>
+<span class="s2">&quot;&quot;&quot;</span>
 
-# 5分钟完整歌曲（详细）
-LYRICS = &quot;&quot;&quot;[start]
-[intro]
-[verse1]
-第1段主歌歌词...
-...更多行...
-[verse2]
-第2段主歌歌词...
-...更多行...
-[pre-chorus]
-[chorus]
-副歌部分...
-...重复段落...
-[bridge]
-桥段...
-[outro]
-&quot;&quot;&quot;
-</code></pre>
+<span class="c1"># 5分钟完整歌曲（详细）</span>
+<span class="n">LYRICS</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;[start]</span>
+<span class="s2">[intro]</span>
+<span class="s2">[verse1]</span>
+<span class="s2">第1段主歌歌词...</span>
+<span class="s2">...更多行...</span>
+<span class="s2">[verse2]</span>
+<span class="s2">第2段主歌歌词...</span>
+<span class="s2">...更多行...</span>
+<span class="s2">[pre-chorus]</span>
+<span class="s2">[chorus]</span>
+<span class="s2">副歌部分...</span>
+<span class="s2">...重复段落...</span>
+<span class="s2">[bridge]</span>
+<span class="s2">桥段...</span>
+<span class="s2">[outro]</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</code></pre></div>
 <p><strong>总结</strong>：</p>
 <ul>
 <li>时间完全可控</li>
@@ -1745,8 +1745,8 @@ LYRICS = &quot;&quot;&quot;[start]
 <p>A: 修改 <code>LYRICS</code> 为中文歌词即可，代码已支持中英文混输</p>
 <h3 id="q_3">Q: 可以用自己的风格音频吗？</h3>
 <p>A: 可以！将 <code>STYLE_PROMPT</code> 设置为音频文件路径：</p>
-<pre><code class="language-python">STYLE_PROMPT = &quot;./my_style.wav&quot;
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">STYLE_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;./my_style.wav&quot;</span>
+</code></pre></div>
 <h2 id="_14">如何进一步简化？</h2>
 <p>如果你想要<strong>更简化</strong>的版本（比如用于教学演示）：</p>
 <ol>
