@@ -75,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#music-transformer-step2-model-training" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -339,6 +344,26 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Model Training 模型训练
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -356,6 +381,130 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction:
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0、环境配置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1、构建训练样本（自回归格式）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-codebook-transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2、构建多 codebook 自回归 Transformer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2、构建多 codebook 自回归 Transformer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、定义部分：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、forward 部分：
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-dataset-dataloader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3、构建 Dataset，用于 DataLoader
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4、训练
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5、保存 checkpoint
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -744,6 +893,121 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction:
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0、环境配置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1、构建训练样本（自回归格式）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-codebook-transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2、构建多 codebook 自回归 Transformer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2、构建多 codebook 自回归 Transformer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、定义部分：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、forward 部分：
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-dataset-dataloader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3、构建 Dataset，用于 DataLoader
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4、训练
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5、保存 checkpoint
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -760,9 +1024,491 @@
 
 
 
-  <h1>3.1 Model Training 模型训练</h1>
+<h1 id="music-transformer-step2-model-training"><strong>Music Transformer STEP2 - Model Training</strong></h1>
+<p>把 Encodec 编码出来的 <strong>多 codebook 离散音频 token</strong>，当成“语言序列”来做自回归建模</p>
+<h4 id="introduction"><strong>Introduction:</strong></h4>
+<p><strong>1、构建训练样本</strong>：自回归格式</p>
+<p><strong>2、构建多 codebook 自回归 Transformer</strong></p>
+<p><strong>3、构建 Dataset</strong>，用于 DataLoader </p>
+<p><strong>4、训练</strong></p>
+<p>5、保存 checkpoint</p>
+<hr />
+<h3 id="0"><strong>0、环境配置</strong></h3>
+<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">q</span> <span class="n">torch</span> <span class="n">torchaudio</span> <span class="n">encodec</span> <span class="n">torchcodec</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchaudio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">encodec</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CUDA_LAUNCH_BLOCKING&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PyTorch version:&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CUDA available:&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>
+</code></pre></div>
+<h3 id="1"><strong>1、构建训练样本（自回归格式）</strong></h3>
+<p>选一个 10s 的音频，先看一下对于它 构建训练样本 是否能得到正确的样本</p>
+<p>下面主要做了：转置这个音频的矩阵 + 赋值 x 和 y（y 始终比 x 往后偏移一个时间步）来构建训练样本</p>
+<p>最终实现 “根据历史 token 序列，逐帧生成下一个帧的 token”。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 测试</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+
+<span class="c1"># 选一首歌、一个 chunk 作为最小实验</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;maestro_tokens_3kbps/music_0000.pt&quot;</span><span class="p">)</span>
+
+<span class="c1"># 取第一个 10s chunk</span>
+<span class="n">codes</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tokens&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>      <span class="c1"># Tensor[K, T]【4 本 codebook（4 行），750 个时间步（750 个纵列）】</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original codes shape:&quot;</span><span class="p">,</span> <span class="n">codes</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># 把 音频编码 矩阵 转置</span>
+<span class="n">frames</span> <span class="o">=</span> <span class="n">codes</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Frames shape:&quot;</span><span class="p">,</span> <span class="n">frames</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># 自回归 shift</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">frames</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>   <span class="c1"># [T-1, K]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">frames</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>    <span class="c1"># [T-1, K]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x shape:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y shape:&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># 看一下前 3 帧</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x[:3]:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y[:3]:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+</code></pre></div>
+<p>输出：
+<div class="highlight"><pre><span></span><code>Original codes shape: torch.Size([4, 750])
+Frames shape: torch.Size([750, 4])
+x shape: torch.Size([749, 4])
+y shape: torch.Size([749, 4])
+x[:3]:
+ tensor([[ 133,  363,  989, 1018],
+        [ 228,   87,  863,  793],
+        [ 133,  859, 1007,   74]])
+y[:3]:
+ tensor([[ 228,   87,  863,  793],
+        [ 133,  859, 1007,   74],
+        [ 999,  646,  675,  866]])
+</code></pre></div>
+以上输出验证了 我们构建自回归训练样本 的正确性。</p>
+<p>可以看到 x(输入) 的第2、3行 分别相同于 y(预测) 的第1、2行</p>
+<p>即 输入x1 预测y1；输入x2 预测y2 。</p>
+<h3 id="2-codebook-transformer"><strong>2、构建多 codebook 自回归 Transformer</strong></h3>
+<h4 id="_1"><strong>一、定义部分：</strong></h4>
+<p><strong>1、定义 4 本 codebook 分别的 embedding</strong>
+- 为每个 codebook 单独建立一个 embedding 表
+- 不同 codebook 表示不同频带/量化层，它们不是同一个“词表语义空间”，所以不能共享 embedding。</p>
+<p><strong>2、定义位置编码 embedding</strong>：告诉 transformer，输出的每个音频位置是不一样的，是有顺序的</p>
+<p><strong>3、定义 Transformer 块</strong>
+- 定义标准的 nn.TransformerEncoderLayer
+- 堆叠 6 层（默认）</p>
+<p><strong>4、定义输出头</strong>：其实就是一个 <strong>分类头</strong></p>
+<hr />
+<h4 id="forward"><strong>二、forward 部分：</strong></h4>
+<p><strong>1、输入维度拆解</strong>：读到 B = 8；T = 750；K = 4</p>
+<p><strong>2、每个 codebook 单独 embedding</strong></p>
+<p><strong>3、堆叠并展平</strong>：拉平成一个长序列</p>
+<p><strong>4、加位置编码</strong>：加一个维度 None，然后广播到各个 batch</p>
+<p><strong>5、构造自回归 mask</strong>：生成 <strong>上三角 = -inf</strong>，第 i 个音频 token 不能看未来的 音频 token。</p>
+<p><strong>6、Transformer 前向</strong>：每个 音频 token 都融合了过去所有音频 token 的信息</p>
+<p><strong>7、输出分类</strong>：进行打分 logits</p>
+<p><strong>8、还原形状</strong>：这样就可以对每个时间步、每个 codebook 做 交叉熵 loss
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MusicTransformer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> 
+        <span class="n">num_codebooks</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> 
+        <span class="n">embed_dim</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> 
+        <span class="n">max_seq_len</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span>
+        <span class="n">num_layers</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> 
+        <span class="n">num_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> 
+        <span class="n">dropout</span><span class="o">=</span><span class="mf">0.2</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_codebooks</span> <span class="o">=</span> <span class="n">num_codebooks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embed_dim</span> <span class="o">=</span> <span class="n">embed_dim</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_codebooks</span><span class="p">)</span>
+        <span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos_embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">max_seq_len</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">)</span>
+
+        <span class="n">decoder_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">TransformerEncoderLayer</span><span class="p">(</span>
+            <span class="n">d_model</span><span class="o">=</span><span class="n">embed_dim</span><span class="p">,</span> <span class="n">nhead</span><span class="o">=</span><span class="n">num_heads</span><span class="p">,</span> 
+            <span class="n">dim_feedforward</span><span class="o">=</span><span class="n">embed_dim</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="n">dropout</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transformer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">TransformerEncoder</span><span class="p">(</span><span class="n">decoder_layer</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">=</span><span class="n">num_layers</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_head</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">embed_dim</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+
+        <span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">K</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="n">h_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+            <span class="n">h_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">[</span><span class="n">k</span><span class="p">](</span><span class="n">x</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">k</span><span class="p">]))</span>
+
+        <span class="n">h</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">h_list</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span> <span class="o">*</span> <span class="n">K</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">total_len</span> <span class="o">=</span> <span class="n">T</span> <span class="o">*</span> <span class="n">K</span>
+        <span class="n">pos_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">total_len</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">h</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_embedding</span><span class="p">(</span><span class="n">pos_ids</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">total_len</span><span class="p">,</span> <span class="n">total_len</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+            <span class="n">diagonal</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
+
+        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformer</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+
+        <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_head</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+
+        <span class="n">logits</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">logits</span>
+</code></pre></div></p>
+<p>output_heads 在这里，这是一个分类头</p>
+<p>得到的 logits_k 矩阵 的真实形状是：[B, T, vocab_size] [批次大小, 时间步, 词表里词数量] [一批次几段音频, 750时间步, 词表里共1024段音频]</p>
+<p><strong>logits_k[b, t, i] 表示：打分（score）</strong></p>
+<ul>
+<li>
+<p>在第 b 个样本、第 t 个时间步、第 k 个 codebook 上，</p>
+</li>
+<li>
+<p>在给定所有可见音频上下文的条件下，模型“倾向于生成 token i 的概率评分”</p>
+</li>
+</ul>
+<hr />
+<p>真实 logits 矩阵：750行（每行表示 1 个时间步），1024列（每列表示 codebook 中一个音频词 token）</p>
+<ul>
+<li>第1行表示：在第1个时间步，“生成codebook中1024个音频分别是什么概率？”的评分值。</li>
+<li>第2行 以此类推...</li>
+<li>第750行 以此类推...</li>
+</ul>
+<p>注意：这 750 个时间步 实际是 10s。也就是：1s 是 75 个时间步。
+<div class="highlight"><pre><span></span><code><span class="c1"># 测试</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MusicTransformer</span><span class="p">(</span>
+    <span class="n">vocab_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+    <span class="n">num_codebooks</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>   <span class="c1"># x的列数：4列（4本codebook）（749行，因为10s有750个音再-1）</span>
+    <span class="n">embed_dim</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+    <span class="n">num_layers</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+    <span class="n">num_heads</span><span class="o">=</span><span class="mi">8</span>
+<span class="p">)</span>
+
+<span class="n">x_small</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="mi">512</span><span class="p">]</span>   <span class="c1"># 只取512长度</span>
+<span class="n">dummy_x</span> <span class="o">=</span> <span class="n">x_small</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">dummy_x</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of codebooks: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># logits打分矩阵的行数：4行，分别对应4本codebook里的所有音</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Logits shape for codebook 0:&quot;</span><span class="p">,</span> <span class="n">logits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div>
+输出：
+<div class="highlight"><pre><span></span><code>Number of codebooks: 1
+Logits shape for codebook 0: torch.Size([512, 4, 1024])
+</code></pre></div></p>
+<hr />
+<p><div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+<span class="n">TOKEN_DIR</span> <span class="o">=</span> <span class="s2">&quot;maestro_tokens_3kbps&quot;</span>
+
+<span class="n">song_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TOKEN_DIR</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">TOKEN_DIR</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.pt&quot;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">song_files</span><span class="p">)</span><span class="si">}</span><span class="s2"> songs.&quot;</span><span class="p">)</span>
+</code></pre></div>
+输出：
+<div class="highlight"><pre><span></span><code>Found 65 songs.
+</code></pre></div></p>
+<hr />
+<p><div class="highlight"><pre><span></span><code><span class="c1"># 看看我们存的.pt文件是什么 是dict还是tensor</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;maestro_tokens_3kbps/music_0000.pt&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</code></pre></div>
+输出：
+<div class="highlight"><pre><span></span><code>&lt;class &#39;dict&#39;&gt;
+dict_keys([&#39;tokens&#39;, &#39;num_chunks&#39;, &#39;bandwidth&#39;, &#39;sample_rate&#39;, &#39;chunk_size&#39;, &#39;music_id&#39;])
+</code></pre></div></p>
+<hr />
+<div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;maestro_tokens_3kbps/music_0000.pt&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;tokens&quot;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;tokens&quot;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;tokens&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;tokens&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div>
+<p>输出：
+<div class="highlight"><pre><span></span><code>&lt;class &#39;list&#39;&gt;
+96
+&lt;class &#39;torch.Tensor&#39;&gt;
+torch.Size([4, 750])
+</code></pre></div></p>
+<h3 id="3-dataset-dataloader"><strong>3、构建 Dataset，用于 DataLoader</strong></h3>
+<p>这个模块整体需要做的是：</p>
+<ul>
+<li>拼接所有 chunk</li>
+<li>得到整首歌 token 序列</li>
+<li>切成长度 block_size 的小片段</li>
+<li>构造 (x, y) 训练样本</li>
+</ul>
+<p><strong>1、读取 token 文件</strong>：保证顺序一致</p>
+<p><strong>2、处理每一首 music</strong>
+- 取出 chunk 列表：每个是一个 10 秒 chunk
+- 转置</p>
+<p><strong>3、滑动窗口切样本</strong>
+- 循环遍历音频的每一个采样点：构造 x、构造 y、加入样本</p>
+<hr />
+<p><strong>补充：为什么用 stride？</strong></p>
+<p><strong>重叠率：87.5%</strong>
+- 好处：数据量暴增，每个时间点被多次训练
+- 坏处：数据冗余大，训练更慢
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MusicTokenDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">token_dir</span><span class="p">,</span>
+        <span class="n">block_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
+        <span class="n">stride</span><span class="o">=</span><span class="mi">256</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">block_size</span> <span class="o">=</span> <span class="n">block_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">token_dir</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">token_dir</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.pt&quot;</span><span class="p">)</span>
+        <span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+            <span class="n">chunks</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tokens&quot;</span><span class="p">]</span>         <span class="c1"># list of [4, 750]</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">chunks</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># [4, T]</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>      <span class="c1"># [T, 4]</span>
+
+            <span class="n">T</span> <span class="o">=</span> <span class="n">tokens</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="c1"># 加 stride</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span> <span class="o">-</span> <span class="n">block_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">stride</span><span class="p">):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">block_size</span><span class="p">]</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">block_size</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+</code></pre></div></p>
+<h3 id="4"><strong>4、训练</strong></h3>
+<p>整体流程概述：</p>
+<p><strong>1、初始化构建 Dataset、DataLoader、模型、损失函数、优化器、学习率调度器</strong></p>
+<ul>
+<li><strong>标准分类损失</strong>：用于预测：token id ∈ [0,1023]</li>
+<li><strong>优化器：AdamW</strong> = Adam + 权重衰减。</li>
+<li><strong>前 5% 步数做 warmup</strong>：防止训练初期不稳定；避免梯度爆炸</li>
+</ul>
+<p>补充：为什么不用 Adam？</p>
+<ul>
+<li>Transformer 训练通常配 AdamW</li>
+<li>weight_decay=1e-2 是常见正则强度。</li>
+</ul>
+<p>补充：为什么 warmup？</p>
+<ul>
+<li>学习率曲线：线性升高 → 线性下降</li>
+<li>防止训练初期不稳定，避免梯度爆炸，这是 GPT 标准训练策略。</li>
+</ul>
+<p><strong>2、训练循环</strong>：开始 10 个 epoch。
+- <strong>进入训练模式</strong>：开启 dropout
+- <strong>遍历 batch</strong>
+- <strong>前向传播</strong>
+- <strong>加权多 codebook 损失</strong>
+- <strong>反向传播：计算梯度</strong>；梯度裁剪：防止梯度爆炸；<strong>更新参数、学习率</strong>
+- <strong>记录 loss</strong>：用于算 epoch 平均
+- <strong>打印日志</strong>：每 50 步打印一次；<strong>单独计算第一个 codebook loss</strong>。
+- 每个 epoch 结束：<strong>输出平均损失</strong></p>
+<hr />
+<p>补充：</p>
+<p><strong>加权多 codebook 损失</strong>：</p>
+<ul>
+<li>weights = [1.0, 0.5, 0.25, 0.1]</li>
+<li>loss = 0</li>
+</ul>
+<p>为什么这样设定：第一个 codebook 权重最高，越往后权重越低？</p>
+<p>因为 <strong>Encodec 的第一个 codebook 通常包含最重要的低频信息</strong>。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_linear_schedule_with_warmup</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">MusicTokenDataset</span><span class="p">(</span>
+    <span class="s2">&quot;maestro_tokens_3kbps&quot;</span><span class="p">,</span>
+    <span class="n">block_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+    <span class="n">stride</span><span class="o">=</span><span class="mi">256</span>
+<span class="p">)</span>
+
+<span class="n">loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dataset size:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Batches per epoch:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">loader</span><span class="p">))</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MusicTransformer</span><span class="p">(</span>
+    <span class="n">vocab_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+    <span class="n">num_codebooks</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">embed_dim</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+    <span class="n">max_seq_len</span><span class="o">=</span><span class="mi">8192</span><span class="p">,</span>
+    <span class="n">num_layers</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+    <span class="n">num_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">dropout</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">AdamW</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+    <span class="n">lr</span><span class="o">=</span><span class="mf">3e-4</span><span class="p">,</span>
+    <span class="n">weight_decay</span><span class="o">=</span><span class="mf">1e-2</span>
+<span class="p">)</span>
+
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">total_steps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">loader</span><span class="p">)</span> <span class="o">*</span> <span class="n">epochs</span>
+
+<span class="n">warmup_steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_steps</span> <span class="o">*</span> <span class="mf">0.05</span><span class="p">)</span>
+
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">get_linear_schedule_with_warmup</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="p">,</span>
+    <span class="n">num_warmup_steps</span><span class="o">=</span><span class="n">warmup_steps</span><span class="p">,</span>
+    <span class="n">num_training_steps</span><span class="o">=</span><span class="n">total_steps</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">loader</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+        <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># [B, T, K, 1024]</span>
+
+        <span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="n">l_k</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span>
+                <span class="n">logits</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">k</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">),</span> 
+                <span class="n">y</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">loss</span> <span class="o">+=</span> <span class="n">weights</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">l_k</span>
+
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">step</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="n">cb1_loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">logits</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">),</span> <span class="n">y</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2"> | Step </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">loader</span><span class="p">)</span><span class="si">}</span><span class="s2"> | &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Total Loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | CB1 Loss: </span><span class="si">{</span><span class="n">cb1_loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2">: Average loss = </span><span class="si">{</span><span class="n">total_loss</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">loader</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>输出：
+<div class="highlight"><pre><span></span><code>Dataset size: 12124
+Batches per epoch: 1516
+Epoch 0 | Step 0/1516 | Total Loss: 13.1681 | CB1 Loss: 7.1360
+Epoch 0 | Step 50/1516 | Total Loss: 12.4348 | CB1 Loss: 6.5062
+Epoch 0 | Step 100/1516 | Total Loss: 12.1048 | CB1 Loss: 6.1696
+Epoch 0 | Step 150/1516 | Total Loss: 12.1125 | CB1 Loss: 6.1280
+Epoch 0 | Step 200/1516 | Total Loss: 11.9614 | CB1 Loss: 5.9766
+Epoch 0 | Step 250/1516 | Total Loss: 11.4711 | CB1 Loss: 5.6517
+Epoch 0 | Step 300/1516 | Total Loss: 10.9681 | CB1 Loss: 5.2020
+Epoch 0 | Step 350/1516 | Total Loss: 10.7473 | CB1 Loss: 5.0230
+Epoch 0 | Step 400/1516 | Total Loss: 10.2655 | CB1 Loss: 4.6984
+Epoch 0 | Step 450/1516 | Total Loss: 10.0230 | CB1 Loss: 4.5502
+Epoch 0 | Step 500/1516 | Total Loss: 10.0525 | CB1 Loss: 4.6381
+Epoch 0 | Step 550/1516 | Total Loss: 9.9627 | CB1 Loss: 4.5851
+Epoch 0 | Step 600/1516 | Total Loss: 9.8013 | CB1 Loss: 4.4313
+Epoch 0 | Step 650/1516 | Total Loss: 9.7768 | CB1 Loss: 4.4808
+Epoch 0 | Step 700/1516 | Total Loss: 9.2992 | CB1 Loss: 4.1366
+Epoch 0 | Step 750/1516 | Total Loss: 9.5975 | CB1 Loss: 4.3616
+Epoch 0 | Step 800/1516 | Total Loss: 9.7100 | CB1 Loss: 4.4841
+Epoch 0 | Step 850/1516 | Total Loss: 9.5965 | CB1 Loss: 4.4378
+Epoch 0 | Step 900/1516 | Total Loss: 9.4299 | CB1 Loss: 4.3070
+Epoch 0 | Step 950/1516 | Total Loss: 9.5516 | CB1 Loss: 4.4275
+Epoch 0 | Step 1000/1516 | Total Loss: 9.0184 | CB1 Loss: 4.0058
+Epoch 0 | Step 1050/1516 | Total Loss: 8.5885 | CB1 Loss: 3.7543
+Epoch 0 | Step 1100/1516 | Total Loss: 8.9285 | CB1 Loss: 4.0639
+Epoch 0 | Step 1150/1516 | Total Loss: 9.2187 | CB1 Loss: 4.2103
+Epoch 0 | Step 1200/1516 | Total Loss: 9.0627 | CB1 Loss: 4.0787
+Epoch 0 | Step 1250/1516 | Total Loss: 9.1363 | CB1 Loss: 4.1802
+Epoch 0 | Step 1300/1516 | Total Loss: 9.0649 | CB1 Loss: 4.1065
+Epoch 0 | Step 1350/1516 | Total Loss: 8.8088 | CB1 Loss: 3.8661
+Epoch 0 | Step 1400/1516 | Total Loss: 8.6759 | CB1 Loss: 3.8462
+Epoch 0 | Step 1450/1516 | Total Loss: 8.5416 | CB1 Loss: 3.7931
+Epoch 0 | Step 1500/1516 | Total Loss: 8.7619 | CB1 Loss: 3.8879
+Epoch 0: Average loss = 9.959296647351147
+Epoch 1 | Step 0/1516 | Total Loss: 8.8611 | CB1 Loss: 4.0412
+...
+Epoch 1: Average loss = 8.619560586431096
+...
+Epoch 3 | Step 0/1516 | Total Loss: 8.2190 | CB1 Loss: 3.5659
+...
+Epoch 3: Average loss = 8.13771899960601
+Epoch 4 | Step 0/1516 | Total Loss: 8.1016 | CB1 Loss: 3.4350
+Epoch 4 | Step 50/1516 | Total Loss: 7.6791 | CB1 Loss: 3.2969
+Epoch 4 | Step 100/1516 | Total Loss: 7.5307 | CB1 Loss: 3.1364
+...
+</code></pre></div></p>
+<p><strong>训练日志分析：</strong></p>
+<p>我们先看 <strong>每个 epoch 的平均 loss</strong>：</p>
+<p>Epoch 0 → 1 下降很明显（-1.3），之后下降变缓，到 epoch 3 已经接近平稳</p>
+<p>这是符合正常的 Transformer 收敛曲线。</p>
+<p>接下来 <strong>CB1 Loss 分析：</strong></p>
+<p>CB1 是最重要的频带（低频主旋律结构）。</p>
+<p>它从 <strong>7.1 下降到 3.3</strong>，这是一个非常健康的下降。说明模型确实学到音乐结构。</p>
+<p>最后，<strong>Total Loss 是加权的：</strong></p>
+<p>1.0 * CB1 + 0.5 * CB2 + 0.25 * CB3 + 0.1 * CB4</p>
+<p>这会导致模型 <strong>更关注低频，高频可能学得慢</strong>。这对生成音乐来说是合理的。</p>
+<h3 id="5-checkpoint"><strong>5、保存 checkpoint</strong></h3>
+<div class="highlight"><pre><span></span><code><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;maestro_checkpoints&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">({</span>
+    <span class="s2">&quot;model_state_dict&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+    <span class="s2">&quot;optimizer_state_dict&quot;</span><span class="p">:</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+    <span class="s2">&quot;epoch&quot;</span><span class="p">:</span> <span class="n">epoch</span><span class="p">,</span>
+<span class="p">},</span> <span class="sa">f</span><span class="s2">&quot;maestro_checkpoints/checkpoint_epoch</span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2">.pt&quot;</span><span class="p">)</span>
+</code></pre></div>
 
 
 
