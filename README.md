@@ -66,14 +66,10 @@ python -m ipykernel install --user --name musictransformer --display-name "Pytho
 | [第四章 **Transformer** 架构模型应用 **- MusicGen**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/MusicGen)                 | [**4.1 MusicGen** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/MusicGen/MusicGen_Setup_and_Usage.md) <br> [**4.2 MusicGen** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/MusicGen/MusicGen_Codebase_Analysis.md)  | ✅    | 
 | [第五章 **Diffusion** 架构模型应用 **- Diffrhythm2**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/Diffrhythm2) | [**5.1 Diffrhythm2** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/DiffRhythm2_Setup_and_Usage.md) <br> [**5.2 Diffrhythm2** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/DiffRhythm2_Codebase_Analysis.md)   | ✅    |
 | [第六章 **Transformer & Diffusion** 架构模型应用 **- ACE-Step**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/ACE-Step)                             | [**6.1 ACE-Step** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Setup_and_Usage.md) <br> [**6.2 ACE-Step 1.5** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Codebase_Analysis.md) | ✅    |
-| <strong>第三部分 • 进阶：音乐生成优化框架实践：<br> **（MusicGen）SFT + DPO + Reasoning** </strong>                                                     |              |
-| [第七章 **SFT：** 分布对齐]                               | 高质量的文本-音频对微调 MusicGen                            | 进行中  |
-| [第八章 **DPO：** 偏好优化]                              | 构建偏好对，优化模型生成                         |  进行中  |
-| [第九章 **Reasoning：** 音乐结构规划]                     | 生成前推理，增强音乐结构性                      |  进行中   |
-| <strong>第四部分 • 进阶：音乐生成与音效融合实践：<br> **MusicSFX-Fusion** </strong>                                                     |              |
-| [第十章 音乐与音效生成]                           |                             | 进行中  |
-| [第十一章 智能混音策略学习]                            |训练混音策略模型                          |  进行中  |
-| [第十二章 音效融合及可视化]                    |Gradio 搭建前端应用                       |  进行中   |
+| <strong>第三部分 • 进阶：音乐生成与音效融合实践：<br> **MusicSFX-Fusion** </strong>                                                     |              |
+| 第七章 音乐与音效生成                           |                             | 进行中  |
+| 第八章 智能混音策略学习                            |训练混音策略模型                          |  进行中  |
+| 第九章 音效融合及可视化                    |Gradio 搭建前端应用                       |  进行中   |
 
 
 ## 各部分详细介绍
@@ -95,17 +91,7 @@ python -m ipykernel install --user --name musictransformer --display-name "Pytho
 - Diffrhythm2：关注轻量化与高效生成，掌握低资源环境下的使用方式。
 - ACE-Step：侧重风格生成与节奏控制，对比不同模型的适用场景。
 
-#### 第三部分：进阶：音乐生成优化框架实践（开发中）
-
-本部分将构建基于 MusicGen 的优化框架，提升生成质量与可控性。
-
-核心思路为三阶段优化：
-
-- SFT（分布对齐）：通过高质量数据微调模型，提高语义一致性
-- DPO（偏好优化）：基于偏好数据优化生成质量与审美表现
-- Reasoning（可选）：引入生成前规划，增强结构性与可控性
-
-#### 第四部分：进阶：音乐生成与音效融合实践（开发中）
+#### 第三部分：进阶：音乐生成与音效融合实践（开发中）
 
 本部分整体围绕三个模块展开：音乐生成、环境音生成、音频合成。
 
@@ -127,7 +113,7 @@ MusicLM-Universe 是一个兼顾理论与实践的项目，它的核心并不在
 
 进入第二部分时，学习重点将从原理转向工程。你会接触到真实可用的开源模型，并理解它们是如何被设计与实现的。建议在这一阶段多做对比与拆解，思考不同模型在生成质量、效率和可控性上的取舍。 
 
-第三部分与第四部分则更偏向“系统构建”。在这一阶段，思考如何优化生成效果，以及如何将多个模型组合成一个完整应用。可以尝试根据自己的需求修改生成逻辑，甚至设计属于自己的优化策略。 
+第三部分更偏向“系统构建”。在这一阶段，思考如何优化生成效果，以及如何将多个模型组合成一个完整应用。可以尝试根据自己的需求修改生成逻辑，甚至设计属于自己的优化策略。 
 
 整个学习过程中，最重要的一点是：一定要动手实践。当你完成全部内容后，你将不仅理解 MusicLM，更具备设计和构建音乐生成系统的能力。
 
