@@ -11,10 +11,6 @@
         <link rel="canonical" href="https://datawhalechina.github.io/musiclm-universe/DiffRhythm2_Setup_and_Usage/">
       
       
-        <link rel="prev" href="../MusicGen_Codebase_Analysis/">
-      
-      
-        <link rel="next" href="../DiffRhythm2_Codebase_Analysis/">
       
       
         
@@ -25,7 +21,7 @@
     
     
       
-        <title>5.1 Diffrhythm2 部署及使用 - MusicLM Universe</title>
+        <title>DiffRhythm2_minimal_Demo 使用指南 - MusicLM Universe</title>
       
     
     
@@ -112,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              5.1 Diffrhythm2 部署及使用
+              DiffRhythm2_minimal_Demo 使用指南
             
           </span>
         </div>
@@ -473,6 +469,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../MusicGen_Colab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 MusicGen colab 部署及使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../MusicGen_Setup_and_Usage/" class="md-nav__link">
         
   
@@ -533,20 +557,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -567,7 +589,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -582,44 +604,17 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    5.1 Diffrhythm2 部署及使用
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../DiffRhythm2_Colab/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    5.1 Diffrhythm2 部署及使用
+    5.1 Diffrhythm2 colab 部署及使用
   
 
     
@@ -628,331 +623,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        快速开始
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="快速开始">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. 确保环境准备就绪
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. 运行最小化 Demo
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. 查看结果
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        如何自定义生成？
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="如何自定义生成？">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        修改歌词
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        修改音乐风格
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        修改输出设置
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        时间控制说明
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="时间控制说明">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么生成的歌曲时间相似？
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        理论时间控制公式
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        如何控制生成时长？
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实际应用示例
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#vs-demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        对比：完整框架 vs 最小化 Demo
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        技术要点（如果你想理解代码）
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="技术要点（如果你想理解代码）">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        核心流程（5个步骤）
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_12" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        关键技术
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_13" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        常见问题
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="常见问题">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q-unknown-language" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Q: 运行时报错 "Unknown language"
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Q: 生成时间太长
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Q: 生成的音乐质量不好
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Q: 想生成中文歌曲
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Q: 可以用自己的风格音频吗？
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_14" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        如何进一步简化？
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_15" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        如何扩展功能？
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 

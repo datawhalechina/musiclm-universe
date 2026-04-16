@@ -2,74 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/4.1/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/4.2/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/4.3/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/4.4/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/ACE-Step_Codebase_Analysis/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/ACE-Step_Setup_and_Usage/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/Audio_Tokenizer/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
+    </url>
+    <url>
+         <loc>https://datawhalechina.github.io/musiclm-universe/Colab/</loc>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/DiffRhythm2_Codebase_Analysis/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
+    </url>
+    <url>
+         <loc>https://datawhalechina.github.io/musiclm-universe/DiffRhythm2_Colab/</loc>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/DiffRhythm2_Setup_and_Usage/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/Model_Training/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/MusicGen_Codebase_Analysis/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
+    </url>
+    <url>
+         <loc>https://datawhalechina.github.io/musiclm-universe/MusicGen_Colab/</loc>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/MusicGen_Setup_and_Usage/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/Music_Generation/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/Music_Representations/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/chapter4_intro/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/generation/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
     <url>
          <loc>https://datawhalechina.github.io/musiclm-universe/readme/</loc>
-         <lastmod>2026-04-10</lastmod>
+         <lastmod>2026-04-16</lastmod>
     </url>
 </urlset>
