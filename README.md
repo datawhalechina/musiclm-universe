@@ -24,10 +24,10 @@
 
 随着 AI 生成技术的迭代，音乐生成语言模型（Music Language Model）已成为音频领域的研究与应用热点。本项目旨在搭建一个从基础到进阶的完整学习路径，带领学习者掌握音乐生成的核心原理、部署方法与优化思路，实现从使用模型到优化模型、融合应用的进阶。
 
-项目聚焦 MusicLM 相关技术，覆盖数据表示、模型部署、优化框架及多模块融合，以实战为核心，配套相关代码演示，适合有基础Python编程能力、对AI音乐生成感兴趣的开发者、学生及自学者。
+项目聚焦 MusicLM 相关技术，覆盖数据表示、模型部署及多模块融合，以实战为核心，配套相关代码演示，适合有基础Python编程能力、对AI音乐生成感兴趣的开发者、学习者。
 
 
-####  在线文档：https://datawhalechina.github.io/musiclm-universe/
+####  学习本教程请点击在线文档：https://datawhalechina.github.io/musiclm-universe/
 
 本项目内容按模块逐步推进，可直接克隆仓库，结合Notebook演示与代码示例，快速上手实践。
 ```bash
@@ -60,12 +60,12 @@ python -m ipykernel install --user --name musictransformer --display-name "Pytho
 | [引言：音乐生成模型基础知识](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/docs)   |                     | ✅    |
 | <strong>第一部分：音乐生成模型完整实现流程 Notebook 演示</strong>                                                                                            |
 | [第一章 **Music Representations** 音乐数据表示](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c1_Music_Representations.ipynb)    |     | ✅    |
-| [第二章 **Audio Tokenizer**](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c2_Audio_Tokenizer_Encodec.ipynb)                             | Encodec 音频编码器            | ✅    |
-| [第三章 **Music Transformer**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/notebook) | [**3.1 Model Training** 模型训练](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c3_1_MusicTransformer_Training.ipynb) <br>[**3.2 Music Generation** 音乐生成](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c3_2_MusicTransformer_Generation.ipynb)         | ✅    |
+| [第二章 **Audio Tokenizer** 音频编码器](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c2_Audio_Tokenizer_Encodec.ipynb)                             |             | ✅    |
+| [第三章 **Music Transformer**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/notebook) | [**3.1 Model Training** 模型训练](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/notebook/c3_1_MusicTransformer_Training.ipynb) <br>[**3.2 Music Generation** 音乐生成](https://datawhalechina.github.io/musiclm-universe/Music_Generation/)         | ✅    |
 | <strong>第二部分：开源音乐生成模型部署实践与代码分析</strong>                                         |                                               |      |
-| [第四章 **Transformer** 架构模型应用 **- MusicGen**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/MusicGen)                 | [**4.1 MusicGen** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/MusicGen/MusicGen_Setup_and_Usage.md) <br> [**4.2 MusicGen** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/MusicGen/MusicGen_Codebase_Analysis.md)  | ✅    | 
-| [第五章 **Diffusion** 架构模型应用 **- Diffrhythm2**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/Diffrhythm2) | [**5.1 Diffrhythm2** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/DiffRhythm2_Setup_and_Usage.md) <br> [**5.2 Diffrhythm2** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/Diffrhythm2/DiffRhythm2_Codebase_Analysis.md)   | ✅    |
-| [第六章 **Transformer & Diffusion** 架构模型应用 **- ACE-Step**](https://github.com/minimum-generated-pig/musiclm-universe/tree/main/tutorial/ACE-Step)                             | [**6.1 ACE-Step** 部署及使用](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Setup_and_Usage.md) <br> [**6.2 ACE-Step 1.5** 开源代码分析](https://github.com/minimum-generated-pig/musiclm-universe/blob/main/tutorial/ACE-Step/ACE-Step_Codebase_Analysis.md) | ✅    |
+| [第四章 **Transformer** 架构模型应用 **- MusicGen**](https://datawhalechina.github.io/musiclm-universe/MusicGen_Colab/)                 | [**4.1 MusicGen** 部署及使用](https://datawhalechina.github.io/musiclm-universe/MusicGen_Colab/) <br> [**4.2 MusicGen** 开源代码分析](https://datawhalechina.github.io/musiclm-universe/MusicGen_Codebase_Analysis/)  | ✅    | 
+| [第五章 **Diffusion** 架构模型应用 **- Diffrhythm2**](https://datawhalechina.github.io/musiclm-universe/DiffRhythm2_Colab/) | [**5.1 Diffrhythm2** 部署及使用](https://datawhalechina.github.io/musiclm-universe/DiffRhythm2_Colab/) <br> [**5.2 Diffrhythm2** 开源代码分析](https://datawhalechina.github.io/musiclm-universe/DiffRhythm2_Codebase_Analysis/)   | ✅    |
+| [第六章 **Transformer & Diffusion** 架构模型应用 **- ACE-Step**](https://datawhalechina.github.io/musiclm-universe/ACE-Step_Setup_and_Usage/)                             | [**6.1 ACE-Step** 部署及使用](https://datawhalechina.github.io/musiclm-universe/ACE-Step_Setup_and_Usage/) <br> [**6.2 ACE-Step 1.5** 开源代码分析](https://datawhalechina.github.io/musiclm-universe/ACE-Step_Codebase_Analysis/) | ✅    |
 | <strong>第三部分 • 进阶：音乐生成与音效融合实践：<br> **MusicSFX-Fusion** </strong>                                                     |              |
 | 第七章 音乐与音效生成                           |                             | 进行中  |
 | 第八章 智能混音策略学习                            |训练混音策略模型                          |  进行中  |
@@ -113,7 +113,7 @@ MusicLM-Universe 是一个兼顾理论与实践的项目，它的核心并不在
 
 进入第二部分时，学习重点将从原理转向工程。你会接触到真实可用的开源模型，并理解它们是如何被设计与实现的。建议在这一阶段多做对比与拆解，思考不同模型在生成质量、效率和可控性上的取舍。 
 
-第三部分更偏向“系统构建”。在这一阶段，思考如何优化生成效果，以及如何将多个模型组合成一个完整应用。可以尝试根据自己的需求修改生成逻辑，甚至设计属于自己的优化策略。 
+第三部分更偏向“系统构建”。在这一阶段，思考如何将多个模型组合成一个完整应用以及优化生成效果。可以尝试根据自己的需求修改生成逻辑，甚至设计属于自己的优化策略。 
 
 整个学习过程中，最重要的一点是：一定要动手实践。当你完成全部内容后，你将不仅理解 MusicLM，更具备设计和构建音乐生成系统的能力。
 
